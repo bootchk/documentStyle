@@ -1,0 +1,58 @@
+
+Copyright 2012 Lloyd Konneker
+
+This is free software, covered by the GNU General Public License.
+
+
+About
+=====
+
+This is a subsystem of classes for styling document elements of a document.
+
+The subsystem includes GUI, for editing stylesheets and editing the style of document elements.
+
+One emphasis is on understandable object design (not performance.)  
+Certain of the classes (e.g. StyleSheet, Selector) are familiar.
+Other classes (abstractions) might be new to you.
+
+See the test app: testStyling.py.  It uses this subsystem to style a document of QGraphicsItems.
+The app lets you experience cascading style.
+
+The subsystem uses the Qt framework.  It should be adaptable to other frameworks.
+
+
+Styling subsystem requirements
+==============================
+Styling systems can support:
+- named styles
+- cascading stylesheets OR templating stylesheets
+
+The styling system discussed in Wirfs-Brock supports named styles but not cascading.
+This subsystem supports cascading stylesheets.
+It is designed to also support named styles (but they are TODO.)
+Templating stylesheets is supported but broken.
+
+
+Object models for style
+=======================
+
+I don't know of any really good discussion of object models for styling documents.
+
+See Wirfs-Brock "Designing Object Oriented Software" for a basic discussion of named styling of documents.
+
+The W3C Cascading Stylesheet (CSS) specification is mostly about serialization and browsers.
+But the W3C specs are poor as object models, especially about behavior.
+This subsystem implements the behavior of some of the W3C CSS classes.
+For example, Selector class.
+For another example, our StylingAct class is roughly a W3C Descriptor.
+
+The Qt framework has stylesheets that cascade, but they are specific to style of application widgets, for platform independence. 
+This subsystem is not based on that object model (just uses them to style a few widgets so they reflect a user-chosen style.)
+
+Older Qt versions apparently had a QStyleSheet class for styling text documents, but this subsystem does not borrow that class.
+
+
+Status
+======
+IN PROGRESS see the TODO list
+

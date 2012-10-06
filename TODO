@@ -1,0 +1,21 @@
+TODO
+
+selectors refer to groups e.g. (..., instrument=(Brush, Pen), field=Color)
+
+named styles
+
+serializing stylesheets
+- XML CSS (use tinyCSS.py ?)
+- pickled
+
+template styling: broken
+
+configurable dynamically instead of in the code
+
+more adaptable to other GUI frameworks
+
+selectivity of selectors, and applying StylingActSets in order of selectivity
+
+QPattern combobox not correct
+
+isolate DEType i.e. constant for "Line", etc.
