@@ -3,9 +3,9 @@
 
 from PySide.QtGui import QGraphicsBlurEffect, QGraphicsDropShadowEffect, QGraphicsEffect
 
-from ...format.graphicEffectFormat import PGraphicEffectFormat
+from format.graphicEffectFormat import PGraphicEffectFormat
 from instrumentFormation import InstrumentFormation
-from ..styleProperty import ComboBoxStyleProperty
+from formation.styleProperty import ComboBoxStyleProperty
 
 
 '''

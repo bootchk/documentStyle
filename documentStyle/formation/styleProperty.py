@@ -6,10 +6,10 @@ This is free software, covered by the GNU General Public License.
 
 from PySide.QtCore import QObject
 
-from ..selector import fieldSelector
-from ..userInterface.layout.stylePropertyLayout import FloatStylePropertyLayout, IntStylePropertyLayout
-from ..userInterface.layout.stylePropertyLayout import ColorStylePropertyLayout, FontStylePropertyLayout
-from ..userInterface.layout.stylePropertyLayout import ComboBoxStylePropertyLayout
+from selector import fieldSelector
+from userInterface.layout.stylePropertyLayout import FloatStylePropertyLayout, IntStylePropertyLayout
+from userInterface.layout.stylePropertyLayout import ColorStylePropertyLayout, FontStylePropertyLayout
+from userInterface.layout.stylePropertyLayout import ComboBoxStylePropertyLayout
 
 from resettableValue import ResettableValue
 

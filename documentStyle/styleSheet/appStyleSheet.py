@@ -7,14 +7,14 @@ This is free software, covered by the GNU General Public License.
 from PySide.QtCore import QCoreApplication
 
 from styleSheet import StyleSheet
-from ..selector import newAllSelector
+from selector import newAllSelector
 
-from ..formation.formation import Formation
-from ..formation.instrumentFormation.penFormation import PenFormation
-from ..formation.instrumentFormation.opacityFormation import OpacityFormation
-from ..formation.morphFormation import ShapeFormation, LineFormation, TextFormation, PixmapFormation
+from formation.formation import Formation
+from formation.instrumentFormation.penFormation import PenFormation
+from formation.instrumentFormation.opacityFormation import OpacityFormation
+from formation.morphFormation import ShapeFormation, LineFormation, TextFormation, PixmapFormation
 
-from ..userInterface.styleDialog.noneditableStyleDialog import NoneditableStyleDialog
+from userInterface.styleDialog.noneditableStyleDialog import NoneditableStyleDialog
 
 
 class AppStyleSheet(StyleSheet):
@@ -83,7 +83,7 @@ class AppStyleSheet(StyleSheet):
     Selector selects one, or all, of default DocumentElementFormat (MorphFormation).
     '''
     assert self.parent is None  # invariant: AppStyleSheet is root
-    assert selector.DEType in ("Shape", "Line", "Text", "Pixmap", "*")
+    assert selector.DEType in ("Shape", "Line", "Text", "Pixmap", "*"), "Unknown document element type" + selector.DEType
     appFormation = self._newAppStyleSheetFormation()
     result = appFormation.selectSubformation(selector)
     assert result is not None

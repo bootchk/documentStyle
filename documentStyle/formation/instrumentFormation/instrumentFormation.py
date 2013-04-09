@@ -1,7 +1,7 @@
 '''
 '''
-from ...selector import instrumentSelector
-from ...formation.formation import Formation
+from selector import instrumentSelector
+from formation.formation import Formation
 
 
 

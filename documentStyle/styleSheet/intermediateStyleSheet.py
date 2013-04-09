@@ -5,17 +5,17 @@ This is free software, covered by the GNU General Public License.
 '''
 
 from PySide.QtCore import QCoreApplication
-from PySide.QtGui import QDialog, QFont  # TEMP QFont
+from PySide.QtGui import QDialog, QFont
 
 from styleSheet import StyleSheet
 
-from ..styling.stylingAct import StylingAct
-from ..styling.stylingActSet import StylingActSet
-from ..styling.stylingActSetCollection import StylingActSetCollection
+from documentStyle.styling.stylingAct import StylingAct
+from documentStyle.styling.stylingActSet import StylingActSet
+from documentStyle.styling.stylingActSetCollection import StylingActSetCollection
 
-from ..selector import newAllSelector
+from documentStyle.selector import newAllSelector
 # from userInterface.noneditableStyleDialog import NoneditableStyleDialog
-from ..userInterface.styleDialog.styleDialog import StyleDialog
+from documentStyle.userInterface.styleDialog.styleDialog import StyleDialog
 
 
 

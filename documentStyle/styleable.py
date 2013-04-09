@@ -97,14 +97,17 @@ class Styleable(object):
   '''
   Behavior of DocumentElements: let user edit style using a context (RMB) Dialog.
   Mixin.
+  
+  No __init__: since mixin, let init pass up MRO.
   '''
-  def __init__(self, DEType):
-    self.selector = DETypeSelector(DEType)
-    
+  
+  def setStylingDocumentElementType(self, DEType):
+    " Styler depends on document element type."
     # Choose one.  Defines the broad behaviour of app.  Need Factory?
-    self.styler = DynamicStyler(self.selector)
+    self.styler = DynamicStyler(DETypeSelector(DEType))
     #self.styler = TemplateStyler(self.selector)
     
+  
     
   def contextMenuEvent(self, event):
     ''' 
@@ -120,7 +123,8 @@ class Styleable(object):
     Let user edit style of DocumentElement. 
     '''
     editedFormation = self.styler.formation()
-    styleDialog = StyleDialog(parent=QCoreApplication.instance().documentView, formation=editedFormation)
+    # Parent to app's activeWindow
+    styleDialog = StyleDialog(parent=QCoreApplication.instance().activeWindow(), formation=editedFormation)
     styleDialog.exec_()
     if styleDialog.result() == QDialog.Accepted:
       editedFormation.applyTo(self)

@@ -4,7 +4,7 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from ..selector import DETypeSelector
+from selector import DETypeSelector
 from formation import Formation
 from instrumentFormation.penFormation import PenFormation
 from instrumentFormation.brushFormation import BrushFormation

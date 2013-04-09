@@ -26,20 +26,20 @@ DocumentElements (aka Morph, QGraphicItem, or other custom classes)
 class LineItem(Styleable, QGraphicsLineItem):
   def __init__(self, x1, y1, x2, y2):
     QGraphicsLineItem.__init__(self, x1, y1, x2, y2)
-    Styleable.__init__(self, "Line")
+    self.setStylingDocumentElementType("Line")
   
 
 class TextItem(Styleable, QGraphicsTextItem):
   def __init__(self, text):
     QGraphicsTextItem.__init__(self, text)
-    Styleable.__init__(self, "Text")
+    self.setStylingDocumentElementType("Text")
     
   
 class EllipseItem(Styleable, QGraphicsEllipseItem):
   def __init__(self):
     QGraphicsEllipseItem.__init__(self)
     self.setRect(30, 30, 40, 40)
-    Styleable.__init__(self, "Shape")
+    self.setStylingDocumentElementType("Shape")
     
   
 class PixmapItem(Styleable, QGraphicsPixmapItem ):
@@ -48,7 +48,7 @@ class PixmapItem(Styleable, QGraphicsPixmapItem ):
     assert not pic.isNull()  # file or encoding exceptions
     QGraphicsPixmapItem.__init__(self, pic)
     self.setPos(100,100)
-    Styleable.__init__(self, "Pixmap")
+    self.setStylingDocumentElementType("Pixmap")
     
  
  
