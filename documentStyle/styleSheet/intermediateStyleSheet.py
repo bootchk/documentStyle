@@ -4,7 +4,6 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PySide.QtCore import QCoreApplication
 from PySide.QtGui import QDialog, QFont
 
 from styleSheet import StyleSheet
@@ -15,7 +14,7 @@ from documentStyle.styling.stylingActSetCollection import StylingActSetCollectio
 
 from documentStyle.selector import newAllSelector
 # from userInterface.noneditableStyleDialog import NoneditableStyleDialog
-from documentStyle.userInterface.styleDialog.styleDialog import StyleDialog
+from documentStyle.userInterface.styleDialog.styleDialog import StyleSheetDialog
 
 
 
@@ -95,10 +94,10 @@ class IntermediateStyleSheet(StyleSheet):
   
     editedFormation = self.getFormation(newAllSelector())
     assert editedFormation is not None
-    # dialog = NoneditableStyleDialog(parent=None, formation=formation)
+    # dialog = NoneditableStyleDialog(parentWindow=None, formation=formation)
     
-    # Parent is document so dialog centers in document.  If parent were mainWindow (toplevel), Qt not center dialog
-    dialog = StyleDialog(parent=QCoreApplication.instance().documentView, formation=editedFormation)
+    # parentWindow is document so dialog centers in document.  If parentWindow were mainWindow (toplevel), Qt not center dialog
+    dialog = StyleSheetDialog(formation=editedFormation)
     dialog.exec_()
     if dialog.result() == QDialog.Accepted:
       self.reflectEditsToStylingActSetCollection(editedFormation)

@@ -4,10 +4,11 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
+from PySide.QtCore import QCoreApplication
 from PySide.QtGui import QDialog, QVBoxLayout
 
 
-class NoneditableStyleDialog(QDialog):
+class NoneditableStyleSheetDialog(QDialog):
   '''
   Let user view (not change) style.
   Used for AppStyleSheet, not editable.
@@ -18,8 +19,9 @@ class NoneditableStyleDialog(QDialog):
   '''
 
 
-  def __init__(self, parent, formation):
-    super(NoneditableStyleDialog, self).__init__(parent)
+  def __init__(self, formation):
+    parentWindow = parentWindow = QCoreApplication.instance().activeWindow()
+    super(NoneditableStyleSheetDialog, self).__init__(parentWindow)
     
     # Create component widgets
     formationLayout = formation.display()

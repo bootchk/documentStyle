@@ -4,8 +4,6 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PySide.QtCore import QCoreApplication
-
 from styleSheet import StyleSheet
 from selector import newAllSelector
 
@@ -14,7 +12,7 @@ from formation.instrumentFormation.penFormation import PenFormation
 from formation.instrumentFormation.opacityFormation import OpacityFormation
 from formation.morphFormation import ShapeFormation, LineFormation, TextFormation, PixmapFormation
 
-from userInterface.styleDialog.noneditableStyleDialog import NoneditableStyleDialog
+from userInterface.styleDialog.noneditableStyleDialog import NoneditableStyleSheetDialog
 
 
 class AppStyleSheet(StyleSheet):
@@ -98,7 +96,7 @@ class AppStyleSheet(StyleSheet):
     This may not seem useful, but user needs to know what styling is default,
     so can understand inheritance via cascading.
     '''
-    dialog = NoneditableStyleDialog(parent=QCoreApplication.instance().documentView, formation=self._newAppStyleSheetFormation())
+    dialog = NoneditableStyleSheetDialog(formation=self._newAppStyleSheetFormation())
     dialog.exec_()
     
   

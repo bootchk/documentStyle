@@ -123,8 +123,12 @@ class Styleable(object):
     Let user edit style of DocumentElement. 
     '''
     editedFormation = self.styler.formation()
-    # Parent to app's activeWindow
-    styleDialog = StyleDialog(parent=QCoreApplication.instance().activeWindow(), formation=editedFormation)
+    '''
+    Parent to app's activeWindow.
+    FUTURE, if a document element is its own window, parent to it?
+    Or position the dialog closer to the document element.
+    '''
+    styleDialog = StyleDialog(parentWindow=QCoreApplication.instance().activeWindow(), formation=editedFormation)
     styleDialog.exec_()
     if styleDialog.result() == QDialog.Accepted:
       editedFormation.applyTo(self)

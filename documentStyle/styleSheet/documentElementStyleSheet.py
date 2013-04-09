@@ -19,6 +19,7 @@ class DocumentElementStyleSheet(IntermediateStyleSheet):
   - name is generic
   '''
   def __init__(self):
+    # assert the application has docStyleSheet attribute
     IntermediateStyleSheet.__init__(self, parent=QCoreApplication.instance().docStyleSheet, name="DocElement")
     
     

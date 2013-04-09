@@ -21,6 +21,32 @@ The app lets you experience cascading style.
 The subsystem uses the Qt framework.  It should be adaptable to other frameworks.
 
 
+API
+===
+
+This discusses the interface between an app and the DocumentStyle subsystem.
+
+See testStyling.py as an example.
+
+DocumentElements should multiply inherit Styleable.
+DocumentElements at initialization should call Styleable.setStylingDocumentElementType() 
+with one of DocumentElementStylingTypes ...  This creates a Styler for the DocumentElement.
+
+Application should:
+- create StyleSheets at initialization time.
+- call StyleSheet.edit() when user requests.
+- connect StyleSheet.styleSheetChanged signal to app's polish() method
+- have a polish method, which should call Styleable.polish() method of all DocumentElements
+(the app knows the set of DocumentElements.)
+
+Application should also:
+- persist the DocumentStyleSheet with the Document TODO
+- persist the UserStyleSheet with the application's settings.  TODO
+Note that the ApplicationStyleSheet actually comes from the framework's defaults, not the application.
+The DocumentElement attributes that contain the style should also be persisted,
+but DocumentStyle subsystem doesn't know those attributes except via a Styler.
+
+
 Styling subsystem requirements
 ==============================
 Styling systems can support:
@@ -29,7 +55,7 @@ Styling systems can support:
 
 The styling system discussed in Wirfs-Brock supports named styles but not cascading.
 This subsystem supports cascading stylesheets.
-It is designed to also support named styles (but they are TODO.)
+It is designed to also support named styles (but they are FUTURE.)
 Templating stylesheets is supported but broken.
 
 
@@ -55,4 +81,7 @@ Older Qt versions apparently had a QStyleSheet class for styling text documents,
 Status
 ======
 IN PROGRESS see the TODO list
+
+Also TODO: singleton Styler for each kind of DocumentElement.
+Factory for Styler.
 
