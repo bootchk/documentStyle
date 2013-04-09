@@ -20,7 +20,7 @@ class NoneditableStyleSheetDialog(QDialog):
 
 
   def __init__(self, formation):
-    parentWindow = parentWindow = QCoreApplication.instance().activeWindow()
+    parentWindow = QCoreApplication.instance().activeWindow()
     super(NoneditableStyleSheetDialog, self).__init__(parentWindow)
     
     # Create component widgets

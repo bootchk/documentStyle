@@ -33,7 +33,8 @@ DocumentElements at initialization should call Styleable.setStylingDocumentEleme
 with one of DocumentElementStylingTypes ...  This creates a Styler for the DocumentElement.
 
 Application should:
-- create StyleSheets at initialization time.
+- create StyleSheets attributes at initialization time, with certain names: 
+  docStyleSheet, userStyleSheet, appStyleSheet(? not used ?)
 - call StyleSheet.edit() when user requests.
 - connect StyleSheet.styleSheetChanged signal to app's polish() method
 - have a polish method, which should call Styleable.polish() method of all DocumentElements
