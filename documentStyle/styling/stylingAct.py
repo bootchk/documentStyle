@@ -4,7 +4,7 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from selector import Selector
+from documentStyle.selector import Selector
 
 
 class StylingAct(object):

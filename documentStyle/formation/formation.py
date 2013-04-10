@@ -4,8 +4,8 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from userInterface.layout.formationLayout import FormationLayout
-from styling.stylingAct import StylingAct
+from documentStyle.userInterface.layout.formationLayout import FormationLayout
+from documentStyle.styling.stylingAct import StylingAct
 
 class Formation(list):
   '''

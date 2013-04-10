@@ -4,14 +4,14 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from selector import DETypeSelector
-from formation import Formation
-from instrumentFormation.penFormation import PenFormation
-from instrumentFormation.brushFormation import BrushFormation
-from instrumentFormation.characterFormation import CharacterFormation
-from instrumentFormation.blockFormation import BlockFormation
-from instrumentFormation.opacityFormation import OpacityFormation
-from instrumentFormation.graphicEffectFormation import GraphicEffectFormation
+from documentStyle.selector import DETypeSelector
+from documentStyle.formation.formation import Formation
+from documentStyle.formation.instrumentFormation.penFormation import PenFormation
+from documentStyle.formation.instrumentFormation.brushFormation import BrushFormation
+from documentStyle.formation.instrumentFormation.characterFormation import CharacterFormation
+from documentStyle.formation.instrumentFormation.blockFormation import BlockFormation
+from documentStyle.formation.instrumentFormation.opacityFormation import OpacityFormation
+from documentStyle.formation.instrumentFormation.graphicEffectFormation import GraphicEffectFormation
 
 
 

@@ -1,9 +1,9 @@
 '''
 '''
 
-from format.opacityFormat import POpacityFormat
-from instrumentFormation import InstrumentFormation
-from formation.styleProperty import FloatStyleProperty
+from documentStyle.format.opacityFormat import POpacityFormat
+from documentStyle.formation.instrumentFormation.instrumentFormation import InstrumentFormation
+from documentStyle.formation.styleProperty import FloatStyleProperty
 
 class OpacityFormation(InstrumentFormation):
   '''

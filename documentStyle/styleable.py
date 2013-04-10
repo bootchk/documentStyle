@@ -8,9 +8,10 @@ This is free software, covered by the GNU General Public License.
 from PySide.QtCore import QCoreApplication
 from PySide.QtGui import QDialog
 
-from styler import DynamicStyler
-from selector import DETypeSelector
-from userInterface.styleDialog.styleDialog import StyleDialog
+from documentStyle.styler import DynamicStyler
+from documentStyle.selector import DETypeSelector
+from documentStyle.userInterface.styleDialog.styleDialog import StyleDialog
+from documentStyle.formation.formation import Formation
                                                   
 
 
@@ -47,22 +48,38 @@ class Styleable(object):
     '''
     self.editStyle()
   
-
+  
+  def setStyle(self, style):
+    "Set style of DocumentElement.  Hides implementation of Style as a Formation"
+    #assert isinstance(style, Formation), str(type(style))
+    self.styler.setFormation(style)
+  
+  
+  def getStyle(self):
+    "Get style of DocumentElement.  "
+    return self.styler.formation()
+  
+  
   def editStyle(self):
     ''' 
-    Let user edit style of DocumentElement. 
+    Let user edit style of DocumentElement.
+    If not canceled, apply style and return True.
+    Return False if canceled.
     '''
-    editedFormation = self.styler.formation()
+    editableCopyOfStyle = self.getStyle()
     '''
     Parent to app's activeWindow.
     FUTURE, if a document element is its own window, parent to it?
     Or position the dialog closer to the document element.
     '''
-    styleDialog = StyleDialog(parentWindow=QCoreApplication.instance().activeWindow(), formation=editedFormation)
+    styleDialog = StyleDialog(parentWindow=QCoreApplication.instance().activeWindow(), formation=editableCopyOfStyle)
     styleDialog.exec_()
     if styleDialog.result() == QDialog.Accepted:
-      editedFormation.applyTo(self)
-    self.styler.setFormation(editedFormation)
+      editableCopyOfStyle.applyTo(self)
+      self.setStyle(editableCopyOfStyle)
+      return True
+    else:
+      return False
 
 
   def polish(self):
@@ -73,7 +90,7 @@ class Styleable(object):
     Renews style Formation via cascading and applies. 
     '''
     # print "Polish ", self.selector
-    self.styler.formation().applyTo(self)
+    self.getStyle().applyTo(self)
 
 
   

@@ -5,14 +5,14 @@ This is free software, covered by the GNU General Public License.
 '''
 
 from styleSheet import StyleSheet
-from selector import newAllSelector
+from documentStyle.selector import newAllSelector
 
-from formation.formation import Formation
-from formation.instrumentFormation.penFormation import PenFormation
-from formation.instrumentFormation.opacityFormation import OpacityFormation
-from formation.morphFormation import ShapeFormation, LineFormation, TextFormation, PixmapFormation
+from documentStyle.formation.formation import Formation
+from documentStyle.formation.instrumentFormation.penFormation import PenFormation
+from documentStyle.formation.instrumentFormation.opacityFormation import OpacityFormation
+from documentStyle.formation.morphFormation import ShapeFormation, LineFormation, TextFormation, PixmapFormation
 
-from userInterface.styleDialog.noneditableStyleDialog import NoneditableStyleSheetDialog
+from documentStyle.userInterface.styleDialog.noneditableStyleDialog import NoneditableStyleSheetDialog
 
 
 class AppStyleSheet(StyleSheet):

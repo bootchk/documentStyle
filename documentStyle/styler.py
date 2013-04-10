@@ -10,7 +10,7 @@ import copy
 from PySide.QtCore import QCoreApplication
 
 from styleSheet.documentElementStyleSheet import DocumentElementStyleSheet
-
+from documentStyle.formation.formation import Formation
 
 
 
@@ -78,8 +78,10 @@ class DynamicStyler(object):
     self._styleSheet = DocumentElementStyleSheet()
     self.selector = selector
   
+  
   def formation(self):
     return self._styleSheet.getFormation(self.selector)
+  
     
   def setFormation(self, newFormation):
     '''
