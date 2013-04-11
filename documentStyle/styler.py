@@ -10,7 +10,6 @@ import copy
 from PySide.QtCore import QCoreApplication
 
 from styleSheet.documentElementStyleSheet import DocumentElementStyleSheet
-from documentStyle.formation.formation import Formation
 
 
 

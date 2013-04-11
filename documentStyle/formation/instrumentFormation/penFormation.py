@@ -28,6 +28,7 @@ class PenFormation(InstrumentFormation):
 
 
   def applyTo(self, morph):
+    print "PenFormation.applyTo setPen.width ", self.base.width(), " on morph", morph
     morph.setPen(self.base)
     
 

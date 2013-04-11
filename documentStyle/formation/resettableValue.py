@@ -22,6 +22,10 @@ class ResettableValue(object):
     self._wasReset = False
     
     
+  def __str__(self):
+    return "ResettableValue(original=" + str(self._originalValue) + " value=" + str(self._value)
+  
+  
   def setValue(self, newValue):
     ''' To resettable state if new value is different from original. '''
     self._isReset = newValue == self._originalValue

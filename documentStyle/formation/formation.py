@@ -58,6 +58,7 @@ class Formation(list):
     Apply all contained Formations to morph.
     '''
     for formation in self:
+      print "Formation.applyTo", formation
       formation.applyTo(morph)
     
   
