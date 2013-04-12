@@ -16,7 +16,7 @@ from documentStyle.selector import newAllSelector
 # from userInterface.noneditableStyleDialog import NoneditableStyleDialog
 from documentStyle.userInterface.styleDialog.styleDialog import StyleSheetDialog
 
-
+from documentStyle.debugDecorator import report
 
 
 class IntermediateStyleSheet(StyleSheet):
@@ -40,7 +40,7 @@ class IntermediateStyleSheet(StyleSheet):
     print "Displaying intermediate style sheet's stylingActSetCollection"  # name from formation?
     print self.stylingActSetCollection
     
-
+  @report
   def getFormation(self, selector):
     '''
     Crux of cascading:

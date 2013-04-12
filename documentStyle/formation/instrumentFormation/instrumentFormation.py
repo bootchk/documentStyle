@@ -88,6 +88,16 @@ class InstrumentFormation(Formation):
       yield item
   
 
+  def propagateValuesToBase(self):
+    '''
+    Base is defaulted by framework (NOT same values as held by this Formation) until either:
+    - edited
+    - call propagateValuesToBase
+    '''
+    for item in self.styleProperties:
+      item.propagateValueToBase()
+    
+    
   def applyTo(self):
     raise "NotImplementedError" # deferred
   

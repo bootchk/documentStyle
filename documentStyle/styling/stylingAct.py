@@ -6,6 +6,7 @@ This is free software, covered by the GNU General Public License.
 
 from documentStyle.selector import Selector
 
+from documentStyle.debugDecorator import report
 
 class StylingAct(object):
   '''
@@ -29,7 +30,7 @@ class StylingAct(object):
   def selector(self):
     return self._selector
   
-
+  @report
   def applyToFormation(self, formation):
     '''
     Copy self.value to formation's StyleProperty selected by my selector.
@@ -41,9 +42,10 @@ class StylingAct(object):
     - Formation ancestors changed underneath StylingAct
     TODO rethink this.
     '''
+    #print "Applying styling Act", self
     styleProperty = formation.selectStyleProperty(self._selector)
     if styleProperty is not None:
-      #print "Overriding ", styleProperty, "with args", self.value
+      print "Overriding ", styleProperty, "with args", self.value
       # TODO, if not a change, won't set the inherit button
       styleProperty.set(self.value)
     else:

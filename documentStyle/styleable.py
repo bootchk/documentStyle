@@ -4,6 +4,8 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
+import copy
+
 # Accesses QCoreApplication for global widgets and global stylesheet
 from PySide.QtCore import QCoreApplication
 from PySide.QtGui import QDialog
@@ -102,14 +104,39 @@ class Styleable(object):
       self.applyStyle(newStyle)
   
   
+  def contextMenuEvent2(self, event):
+    ''' 
+    Test handler for Qt event.
+    Let user style with RMB (context button), but if cancels, revert document element to original.
+    '''
+    try:
+      if self.oldStyle is None:
+        pass
+    except AttributeError:
+      print ">>>capturing original Style"
+      self.oldStyle = self.getSerializableStyle()
+    
+    newStyle = self.editStyle()
+    if newStyle is None:
+      # TEST
+      print ">>>Restoring oldStyle"
+      self.setStyleFromSerializable(self.oldStyle)
+      self.styler.formation().applyTo(self)
+      
+      return # canceled
+    else:
+      self.applyStyle(newStyle)
+  
+  
   def setStyle(self, style):
     '''
     Set style of DocumentElement.  
-    Hides implementation of Style as a Formation.
+    Hides implementation of Style (e.g. as a Formation derived by cascading.)
+    !!! Styler (certain subclasses) may convert Formation into StylingActs on StyleSheet.
     !!! Does not apply style (i.e. send it to GraphicsFramework.
     '''
     self.styler.setFormation(style)
-  
+  """
   
   def getStyle(self):
     '''
@@ -117,13 +144,21 @@ class Styleable(object):
     DocumentElements draw having a style defaulted by and cached by the GraphicsFramework,
     but that is not the same as a Style.
     '''
-    return self.styler.formation()
+    return copy.deepcopy(self.styler.formation())
+  """
   
+  def getSerializableStyle(self):
+    return copy.deepcopy(self.styler._styleSheet.stylingActSetCollection)
   
+  def setStyleFromSerializable(self, serializableStyle):
+    self.styler._styleSheet.stylingActSetCollection = serializableStyle
+    
+    
   def applyStyle(self, style):
     " Apply given style (to model, then from model to view.)"
     self.setStyle(style)
-    self.getStyle().applyTo(self)
+    self.styler.formation().applyTo(self)
+    ##self.getStyle().applyTo(self)
     
   
   def editStyle(self):
@@ -132,7 +167,8 @@ class Styleable(object):
     Return Style, or None if canceled.
     !!! Does not apply Style to DocumentElement
     '''
-    editableCopyOfStyle = self.getStyle()
+    ##editableCopyOfStyle = self.getStyle()
+    editableCopyOfStyle = self.styler.formation()
     '''
     Parent to app's activeWindow.
     FUTURE, if a document element is its own window, parent to it?
@@ -154,7 +190,8 @@ class Styleable(object):
     Renews style Formation via cascading and applies. 
     '''
     # print "Polish ", self.selector
-    self.getStyle().applyTo(self)
+    ## self.getStyle().applyTo(self)
+    self.styler.formation().applyTo(self)
 
 
   

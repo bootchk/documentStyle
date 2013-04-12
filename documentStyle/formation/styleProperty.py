@@ -13,19 +13,26 @@ from documentStyle.userInterface.layout.stylePropertyLayout import ComboBoxStyle
 
 from resettableValue import ResettableValue
 
-class BaseStyleProperty(QObject): # QObject if signals
+class BaseStyleProperty(object): # QObject if signals
   '''
   StyleProperty: leaves of a Formation tree.
   A Property: (name, value) pair.
   The thing that a StylingAct changes.
   
   A property that:
-  - facades a framework styling value
+  - facades a framework styling value 
   - knows a widget(layout) that displays it for editing
   
-  Facades a framework styling value: knows getter and setter methods for holder (in framework) of the value.
+  Facades a framework styling value (e.g. QPen.width ).
+  Knows getter and setter methods for holder (in framework) of the value (e.g. QPen.width() and QPen.setWidth())
   
   Abstract: partially deferred.
+  
+  Responsibilities:
+  - conventional Property responsibilities: get and set
+  - knows selector
+  - knows resetness and how to roll: delegated to ResettableValue
+  - 
   '''
 
   # stylePropertyValueChanged = Signal()
@@ -76,8 +83,15 @@ class BaseStyleProperty(QObject): # QObject if signals
   def _throughSet(self, value):
     ''' Set cached value and propagate to base. '''
     self.resettableValue.setValue(value)
-    # TODO propagate, OR flush values at end (dumb dialog)
-    self.setter(value)  # propagate to base
+    # TODO propagate now, OR flush values at end (dumb dialog)
+    self.propagateValueToBase()
+  
+  
+  def propagateValueToBase(self):
+    '''
+    Propagate my value thru facade to framework holder.
+    '''
+    self.setter(self.resettableValue.value())
   
   
   def isReset(self):
