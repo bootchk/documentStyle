@@ -24,7 +24,7 @@ class StyleSheet(QObject):  # QObject for signals
   - know StylingActs on self (subclass Intermediate)
   - get a Formation for a Selector
   - display self (some subclasses editable i.e. non-empty stylingActSet)
-  - persist TODO
+  - persist
   - signal when changed (editable subclasses)
   '''
 
@@ -38,11 +38,15 @@ class StyleSheet(QObject):  # QObject for signals
       
   
   def getFormation(self, selector):
-    raise NotImplementedError # deferred
+    raise NotImplementedError, 'Deferred'
 
   
   def edit(self):
-    raise NotImplementedError # deferred
+    raise NotImplementedError, 'Deferred'
+  
+  
+  def getSerializable(self):
+    raise NotImplementedError, 'Deferred'
 
-
-
+  def resetFromSerializable(self, serializable):
+    raise NotImplementedError, 'Deferred'

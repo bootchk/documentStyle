@@ -3,6 +3,7 @@ Copyright 2012 Lloyd Konneker
 
 This is free software, covered by the GNU General Public License.
 '''
+import copy
 
 from PySide.QtGui import QDialog, QFont
 
@@ -121,6 +122,28 @@ class IntermediateStyleSheet(StyleSheet):
       target = self.stylingActSetCollection.getOrNew(topLevelFormation.selector())
       editedFormation.reflectToStylingActSet(derivingStylingActSet=target)
     
+  
+  def getSerializable(self):
+    '''
+    Instance that is minimally essential to represent state: StylingActs.
+    
+    Implementation notes:
+    1.  deepcopy so subsequent changes to my copy does not change returned copy
+    '''
+    return copy.deepcopy(self.stylingActSetCollection)
+
+  def resetFromSerializable(self, serializable):
+    '''
+    Restore to prior state.  
+    
+    Implementation notes:
+    1.  deepcopy so subsequent changes to my copy does not change passed copy
+    2.  Requires recomputation (cascading) which signal styleSheetChanged will trigger.
+    '''
+    self.stylingActSetCollection = copy.deepcopy(serializable)
+    self.styleSheetChanged.emit() # force cascade and restyling of all styled instances
+  
+  
 
   def testSAS(self):
     # Canned SAS's for testing

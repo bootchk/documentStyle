@@ -4,8 +4,6 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-import copy
-
 # Accesses QCoreApplication for global widgets and global stylesheet
 from PySide.QtCore import QCoreApplication
 from PySide.QtGui import QDialog
@@ -120,7 +118,7 @@ class Styleable(object):
     if newStyle is None:
       # TEST
       print ">>>Restoring oldStyle"
-      self.setStyleFromSerializable(self.oldStyle)
+      self.resetStyleFromSerializable(self.oldStyle)
       self.styler.formation().applyTo(self)
       
       return # canceled
@@ -154,19 +152,17 @@ class Styleable(object):
     
     Object is StylingActSetCollection, but don't rely on that; that fact should remain hidden.
     '''
-    result = copy.deepcopy(self.styler._styleSheet.stylingActSetCollection)
-    print "Count get styling acts", len(result)
-    return result
+    return self.styler.getSerializable()
+
   
   
-  def setStyleFromSerializable(self, serializableStyle):
+  def resetStyleFromSerializable(self, serializableStyle):
     '''
     Set style of DocumentElement from an object instance that was returned by getSerializableStyle
     
     !!! The instance will be copied so that user's subsequent style changes do NOT affect the passed instance.
     '''
-    print "Count set styling acts", len(serializableStyle)
-    self.styler.replaceStylingActSetCollection(serializableStyle)
+    self.styler.resetFromSerializable(serializableStyle)
     
     
   def applyStyle(self, style):

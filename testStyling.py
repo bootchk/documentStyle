@@ -7,16 +7,36 @@ Copyright 2012 Lloyd Konneker
 
 This is free software, covered by the GNU General Public License.
 '''
+import sys
+import cPickle
 
 from PySide.QtCore import *
 from PySide.QtGui import *
-import sys
+
 
 from documentStyle.styleSheet.appStyleSheet import AppStyleSheet
 from documentStyle.styleSheet.intermediateStyleSheet import IntermediateStyleSheet
 from documentStyle.styleable import Styleable
 
 
+'''
+Test cases:
+
+Undo/Redo (nonstacking.)
+Style an element.
+Undo style an element.
+Redo style an element.
+-> element is restored
+Style element again.
+Redo (really a reset)
+-> element is restored to original
+
+Saving Stylesheet:
+Save.
+Change.
+Restore
+-> document is restored to original style
+'''
     
 
 '''
@@ -90,7 +110,6 @@ class GraphicsView(QGraphicsView):
     self.scene = scene
     
   
-  
   def keyPressEvent(self, event):
     # Let user edit a StyleSheet
     # TODO user and morph stylesheets
@@ -99,6 +118,14 @@ class GraphicsView(QGraphicsView):
       QCoreApplication.instance().appStyleSheet.edit()
     elif key == Qt.Key_D:
       QCoreApplication.instance().docStyleSheet.edit()
+    elif key == Qt.Key_S:
+      serializableDSS = QCoreApplication.instance().docStyleSheet.getSerializable()
+      self.pickledDSS = cPickle.dumps(serializableDSS)
+      print "Saved document style sheet"
+    elif key == Qt.Key_R:
+      unpickledDSS = cPickle.loads(self.pickledDSS)
+      QCoreApplication.instance().docStyleSheet.resetFromSerializable(unpickledDSS)
+      print "Restored document style sheet"
     
     #self.morphStyleSheet.edit()
 

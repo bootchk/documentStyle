@@ -92,14 +92,20 @@ class DynamicStyler(object):
     '''
     target = self._styleSheet.stylingActSetCollection.getOrNew(newFormation.selector())
     newFormation.reflectToStylingActSet(target)
-                                                  
-                                                  
-  def replaceStylingActSetCollection(self, serializableStyle):
+                             
+  
+  " Delegate serialization to my stylesheet"
+                                 
+  def getSerializable(self):
+    return self._styleSheet.getSerializable()
+  
+  def resetFromSerializable(self, serializableStyle):
     '''
     Reset to an earlier state.
     
-    !!! copy passed parameter so user's subsequent changes do not alter the caller's instance of serializableStyle.
+    !!! Assert parameter will be copied so user's subsequent changes do not alter the caller's instance of serializableStyle.
     '''
-    self._styleSheet.stylingActSetCollection = copy.deepcopy(serializableStyle)
+    self._styleSheet.resetFromSerializable(serializableStyle)
+                                          
 
   
