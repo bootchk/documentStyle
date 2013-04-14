@@ -4,7 +4,7 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PySide.QtCore import QObject
+#from PySide.QtCore import QObject
 
 from documentStyle.selector import fieldSelector
 from documentStyle.userInterface.layout.stylePropertyLayout import FloatStylePropertyLayout, IntStylePropertyLayout
@@ -12,6 +12,8 @@ from documentStyle.userInterface.layout.stylePropertyLayout import ColorStylePro
 from documentStyle.userInterface.layout.stylePropertyLayout import ComboBoxStylePropertyLayout
 
 from resettableValue import ResettableValue
+
+from documentStyle.debugDecorator import report
 
 class BaseStyleProperty(object): # QObject if signals
   '''
@@ -62,6 +64,7 @@ class BaseStyleProperty(object): # QObject if signals
     raise NotImplementedError # deferred
   
   
+  @report
   def set(self, newValue):
     '''
     Set value. TODO rename??

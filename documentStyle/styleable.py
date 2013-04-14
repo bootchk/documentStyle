@@ -90,7 +90,7 @@ class Styleable(object):
     #self.styler = TemplateStyler(self.selector)
   
     
-  def contextMenuEvent(self, event):
+  def contextMenuEvent2(self, event):
     ''' 
     Handler for Qt event.
     This for the demo, a real app might not use this.
@@ -104,7 +104,7 @@ class Styleable(object):
       self.applyStyle(newStyle)
   
   
-  def contextMenuEvent2(self, event):
+  def contextMenuEvent(self, event):
     ''' 
     Test handler for Qt event.
     Let user style with RMB (context button), but if cancels, revert document element to original.
@@ -148,10 +148,25 @@ class Styleable(object):
   """
   
   def getSerializableStyle(self):
-    return copy.deepcopy(self.styler._styleSheet.stylingActSetCollection)
+    '''
+    Object instance that is serializable e.g. via pickling.
+    And suitable as parameter to setStyleFromSerializable.
+    
+    Object is StylingActSetCollection, but don't rely on that; that fact should remain hidden.
+    '''
+    result = copy.deepcopy(self.styler._styleSheet.stylingActSetCollection)
+    print "Count get styling acts", len(result)
+    return result
+  
   
   def setStyleFromSerializable(self, serializableStyle):
-    self.styler._styleSheet.stylingActSetCollection = serializableStyle
+    '''
+    Set style of DocumentElement from an object instance that was returned by getSerializableStyle
+    
+    !!! The instance will be copied so that user's subsequent style changes do NOT affect the passed instance.
+    '''
+    print "Count set styling acts", len(serializableStyle)
+    self.styler.replaceStylingActSetCollection(serializableStyle)
     
     
   def applyStyle(self, style):

@@ -7,6 +7,8 @@ This is free software, covered by the GNU General Public License.
 from documentStyle.userInterface.layout.formationLayout import FormationLayout
 from documentStyle.styling.stylingAct import StylingAct
 
+from documentStyle.debugDecorator import report
+
 class Formation(list):
   '''
   Defines how something draws (appears.)
@@ -51,6 +53,7 @@ class Formation(list):
     return self._selector
                      
                       
+  @report
   def applyTo(self, morph):
     '''
     Responsibility: apply self to morph.
@@ -58,7 +61,6 @@ class Formation(list):
     Apply all contained Formations to morph.
     '''
     for formation in self:
-      print "Formation.applyTo", formation
       formation.applyTo(morph)
     
   

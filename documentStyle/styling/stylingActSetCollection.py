@@ -25,7 +25,7 @@ class StylingActSetCollection(dict):
   
   def getOrNew(self, selector):
     '''
-    StylingActSet that matches, or a new one.
+    Existing StylingActSet that matches selector, OR a new, empty StylingActSet.
     '''
     if selector in self:
       result = self[selector]

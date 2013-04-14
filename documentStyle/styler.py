@@ -26,7 +26,11 @@ class Styler(object):
 
   Abstract.
   '''
-  pass
+  def formation(self):
+    raise NotImplementedError, "Deferred"
+    
+  def setFormation(self, newFormation):
+    raise NotImplementedError, "Deferred"
 
   
 
@@ -89,6 +93,13 @@ class DynamicStyler(object):
     target = self._styleSheet.stylingActSetCollection.getOrNew(newFormation.selector())
     newFormation.reflectToStylingActSet(target)
                                                   
-
+                                                  
+  def replaceStylingActSetCollection(self, serializableStyle):
+    '''
+    Reset to an earlier state.
+    
+    !!! copy passed parameter so user's subsequent changes do not alter the caller's instance of serializableStyle.
+    '''
+    self._styleSheet.stylingActSetCollection = copy.deepcopy(serializableStyle)
 
   
