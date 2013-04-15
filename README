@@ -33,19 +33,29 @@ DocumentElements at initialization should call Styleable.setStylingDocumentEleme
 with one of DocumentElementStylingTypes ...  This creates a Styler for the DocumentElement.
 
 Application should:
-- create StyleSheets attributes at initialization time, with certain names: 
-  docStyleSheet, userStyleSheet, appStyleSheet(? not used ?)
+- create StyleSheetCascadion initialization time (built-in certain names: 
+  docStyleSheet, userStyleSheet, appStyleSheet
 - call StyleSheet.edit() when user requests.
-- connect StyleSheet.styleSheetChanged signal to app's polish() method
+- connect styleSheetCascadion signal to app's polish() method
 - have a polish method, which should call Styleable.polish() method of all DocumentElements
 (the app knows the set of DocumentElements.)
 
 Application should also:
 - persist the DocumentStyleSheet with the Document TODO
-- persist the UserStyleSheet with the application's settings.  TODO
 Note that the ApplicationStyleSheet actually comes from the framework's defaults, not the application.
 The DocumentElement attributes that contain the style should also be persisted,
 but DocumentStyle subsystem doesn't know those attributes except via a Styler.
+
+
+App requirements on a styling subsystem
+=======================================
+
+Persist style of document elements with the document.
+Persist document stylesheet with the document.
+Persist user stylesheet as settings.
+Persist app stylesheet.
+
+Reset stylesheets TODO
 
 
 Styling subsystem requirements

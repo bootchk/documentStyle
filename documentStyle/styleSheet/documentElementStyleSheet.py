@@ -20,7 +20,7 @@ class DocumentElementStyleSheet(IntermediateStyleSheet):
   '''
   def __init__(self):
     # assert the application has docStyleSheet attribute
-    IntermediateStyleSheet.__init__(self, parent=QCoreApplication.instance().docStyleSheet, name="DocElement")
+    IntermediateStyleSheet.__init__(self, parent=QCoreApplication.instance().cascadion.docStyleSheet, name="DocElement")
     
     
   

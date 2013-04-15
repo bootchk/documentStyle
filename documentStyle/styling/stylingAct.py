@@ -30,7 +30,7 @@ class StylingAct(object):
   def selector(self):
     return self._selector
   
-  @report
+  #@report
   def applyToFormation(self, formation):
     '''
     Copy self.value to formation's StyleProperty selected by my selector.
@@ -45,15 +45,18 @@ class StylingAct(object):
     #print "Applying styling Act", self
     styleProperty = formation.selectStyleProperty(self._selector)
     if styleProperty is not None:
-      print "Overriding ", styleProperty, "with args", self.value
-      # TODO, if not a change, won't set the inherit button
-      styleProperty.set(self.value)
+      self._overrideStyleProperty(styleProperty)
     else:
       # print "StylingAct not match ???"
       ''' It is NOT an assertion that self matches formation. '''
       pass
 
-    
+  @report
+  def _overrideStyleProperty(self, styleProperty):
+    " Override a styleProperty (before defaulted or value from upstream, now with new value.) "
+    # print "Overriding ", styleProperty, "with args", self.value
+    # TODO, if not a change, won't set the inherit button
+    styleProperty.set(self.value)
     
     
     

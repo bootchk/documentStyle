@@ -8,14 +8,11 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 import sys
-import cPickle
 
 from PySide.QtCore import *
 from PySide.QtGui import *
 
-
-from documentStyle.styleSheet.appStyleSheet import AppStyleSheet
-from documentStyle.styleSheet.intermediateStyleSheet import IntermediateStyleSheet
+from documentStyle.styleSheetCascadion import StyleSheetCascadion
 from documentStyle.styleable import Styleable
 
 
@@ -78,7 +75,7 @@ class DiagramScene(QGraphicsScene):
   def __init__(self, *args):
     QGraphicsScene.__init__(self, *args)
     
-    self.addItem(TextItem("RMB to style item, a or d key to edit stylesheets"))
+    self.addItem(TextItem("RMB styles item, a,u,d, keys edit stylesheets, s,r save/restore doc stylesheet"))
     self.addItem(EllipseItem())
     # Two lines to show that both are styled by docStyleSheet change
     self.addItem(LineItem(80, 80, 80, 150))
@@ -93,6 +90,7 @@ class DiagramScene(QGraphicsScene):
     '''
     Restyle on signal styleSheetchanged.
     '''
+    print "polishing"
     for item in self.items():
       item.polish()
     
@@ -112,22 +110,17 @@ class GraphicsView(QGraphicsView):
   
   def keyPressEvent(self, event):
     # Let user edit a StyleSheet
-    # TODO user and morph stylesheets
     key = event.key()
     if key == Qt.Key_A:
-      QCoreApplication.instance().appStyleSheet.edit()
+      QCoreApplication.instance().cascadion.appStyleSheet.edit()
     elif key == Qt.Key_D:
-      QCoreApplication.instance().docStyleSheet.edit()
+      QCoreApplication.instance().cascadion.docStyleSheet.edit()
+    elif key == Qt.Key_U:
+      QCoreApplication.instance().cascadion.userStyleSheet.edit()
     elif key == Qt.Key_S:
-      serializableDSS = QCoreApplication.instance().docStyleSheet.getSerializable()
-      self.pickledDSS = cPickle.dumps(serializableDSS)
-      print "Saved document style sheet"
+      QCoreApplication.instance().cascadion.pickleDocStyleSheet()
     elif key == Qt.Key_R:
-      unpickledDSS = cPickle.loads(self.pickledDSS)
-      QCoreApplication.instance().docStyleSheet.resetFromSerializable(unpickledDSS)
-      print "Restored document style sheet"
-    
-    #self.morphStyleSheet.edit()
+      QCoreApplication.instance().cascadion.restoreDocStyleSheet()
 
        
 class MainWindow(QMainWindow):
@@ -141,38 +134,36 @@ class MainWindow(QMainWindow):
     self.setCentralWidget(self.view)
     return self.view
     
-        
+  def closeEvent(self, event):
+    print "App closed"
+    QCoreApplication.instance().cascadion.saveUserStylesheetAsSettings()
+    event.accept()
+  
+  
+    
+       
 class App(QApplication):
   
   def __init__(self, args):
     super(App, self).__init__(args)
-    self._createStyleSheets()  # Must precede window
+    
+    self.setOrganizationName("DocumentStyle")
+    self.setOrganizationDomain("lloyd konneker")
+    self.setApplicationName("testStyling")
+    
+    self.cascadion = StyleSheetCascadion() # Must precede window?
+    
     mainWindow = MainWindow()
     self.documentView = mainWindow.newDocument()
     mainWindow.setGeometry(100, 100, 500, 400)
     mainWindow.show()
     self.mainWindow = mainWindow
-    self.docStyleSheet.styleSheetChanged.connect(mainWindow.scene.polish)
+    
+    self.cascadion.connectSignals(mainWindow.scene.polish)
+    
     self.exec_()
-    
-    
+ 
     
   
-  def _createStyleSheets(self):
-    ''' 
-    Create inheriting sequence of stylesheets.
-    Ordering is important.
-    '''
-    # !!! styleSheet() also a method of Qt QGV
-    
-    # Root (default) stylesheet
-    self.appStyleSheet = AppStyleSheet() 
-    # Serialized to user preferences, identical between sessions with different docs
-    self.userStyleSheet = IntermediateStyleSheet(parent=self.appStyleSheet, name="User")
-    # Serialized, attached to document.
-    self.docStyleSheet = IntermediateStyleSheet(parent=self.userStyleSheet, name="Doc")
-    # DocumentElementStyleSheets are created and owned by DocumentElements
-
-
-
 app = App(sys.argv)
+

@@ -64,7 +64,7 @@ class BaseStyleProperty(object): # QObject if signals
     raise NotImplementedError # deferred
   
   
-  @report
+  #@report
   def set(self, newValue):
     '''
     Set value. TODO rename??
