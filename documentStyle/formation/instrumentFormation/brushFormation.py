@@ -1,7 +1,7 @@
 '''
 '''
 from PySide.QtCore import Qt
-from PySide.QtGui import QBrush
+from PySide.QtGui import QBrush #, QTransform
 from instrumentFormation import InstrumentFormation
 from ..styleProperty import ColorStyleProperty, ComboBoxStyleProperty
 
@@ -29,5 +29,24 @@ class BrushFormation(InstrumentFormation):
   
   def applyTo(self, morph):
     #print "setBrush on morph", self.base.color()
+    ##self.scaledPropagateToInstrument(morph)
     morph.setBrush(self.base) 
+  
+  
+  """
+  def scaledPropagateToInstrument(self, morph):
+    '''
+    Propagate my values that are transformed,
+    after unscaling by the local (item) transform.
+    '''
+    unscaledWidth = self.styleProperties[1].resettableValue.value()
+    # TODO wrong property
+    itemScale = morph.scale()
+    scaledWidthF = 1.0/itemScale * unscaledWidth
     
+    # !!! Note float value and setWidthF is float setter
+    transform = QTransform()
+    transform.scale(scaledWidthF, scaledWidthF)
+    self.base.setTransform(transform)
+    print "BrushFormation.applyTo setPen.width ", unscaledWidth, scaledWidthF, " on morph", morph
+  """

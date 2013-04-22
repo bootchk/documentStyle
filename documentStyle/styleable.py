@@ -31,7 +31,7 @@ class Styleable(object):
   ADT algebra, i.e. API
   
   1. Exceptional case
-  setStyle()-> raises exception, must be preceded by setStylingDocumentElementType()
+  editStyle()-> raises exception, must be preceded by setStylingDocumentElementType()
   
   2. Idempotent case (document element is Styleable, but not styled by user.)
   draw()-> succeeds, (where draw() is a framework method) an element can be drawn without any styling (framework supplies default look)
@@ -44,7 +44,7 @@ class Styleable(object):
   foo = editStyle(self)
   if foo is not None:
     applyStyle(foo)
-  getStyle() -> returns None (if user canceled) or foo, and visual style equivalent to foo
+  getSerializableStyle() -> returns emptySerializeableStyle (if user canceled) or foo, and visual style equivalent to foo
   
   
   5.  Common case, user edits stylesheet
@@ -59,21 +59,21 @@ class Styleable(object):
   
   7.  Undo case
   setStylingDocumentElementType()
-  bar = getStyle(): returns current style
+  bar = getSerializableStyle(): returns current style
   foo = editStyle(self)
   if foo is not None:
     applyStyle(foo)
-  setStyle(bar) -> visual style of document element restored to style prior to user edit of style
-  TODO not working
+  resetStyleFromSerializable(bar) -> visual style of document element restored to style prior to user edit of style
+
   
   8. Undo past stylesheet change case
   setStylingDocumentElementType()
-  bar = getStyle(): returns current style
+  bar = getSerializableStyle(): returns current style
   foo = editStyle(self)
   if foo is not None:
     applyStyle(foo)
   'user change style sheet'
-  setStyle(bar) -> visual style of document element restored to style prior to user edit of style AND stylesheet
+  resetStyleFromSerializable(bar) -> visual style of document element restored to style prior to user edit of style AND stylesheet
   '''
   
   def setStylingDocumentElementType(self, DEType):
@@ -87,24 +87,14 @@ class Styleable(object):
     self.styler = DynamicStyler(DETypeSelector(DEType))
     #self.styler = TemplateStyler(self.selector)
   
-    
-  def contextMenuEvent2(self, event):
-    ''' 
-    Handler for Qt event.
-    This for the demo, a real app might not use this.
-    
-    Let user style with RMB (context button). 
-    '''
-    newStyle = self.editStyle()
-    if newStyle is None:
-      return # canceled
-    else:
-      self.applyStyle(newStyle)
+
   
   
   def contextMenuEvent(self, event):
     ''' 
-    Test handler for Qt event.
+    Proof-of-concept handler for Qt event.
+    A real app should implement context menu and undo/redo.
+    
     Let user style with RMB (context button), but if cancels, revert document element to original.
     '''
     try:
@@ -116,34 +106,33 @@ class Styleable(object):
     
     newStyle = self.editStyle()
     if newStyle is None:
-      # TEST
+      # TEST undo
       print ">>>Restoring oldStyle"
       self.resetStyleFromSerializable(self.oldStyle)
-      self.styler.formation().applyTo(self)
+      
       
       return # canceled
     else:
       self.applyStyle(newStyle)
   
   
-  def setStyle(self, style):
+  def _setStyle(self, style):
     '''
-    Set style of DocumentElement.  
+    Set style of DocumentElement.
+    
+    The usual source of style is editStyle().
+    
+    There is no getStyle() exported.  Only this module knows that 'style' is a Styler's Formation.
+    Only serializableStyle is exported.
+    
+    Do not confuse with Qt.QBrush.setStyle().
+    
     Hides implementation of Style (e.g. as a Formation derived by cascading.)
     !!! Styler (certain subclasses) may convert Formation into StylingActs on StyleSheet.
     !!! Does not apply style (i.e. send it to GraphicsFramework.
     '''
     self.styler.setFormation(style)
-  """
   
-  def getStyle(self):
-    '''
-    Get style of DocumentElement, as known by DocumentStyle subsystem.
-    DocumentElements draw having a style defaulted by and cached by the GraphicsFramework,
-    but that is not the same as a Style.
-    '''
-    return copy.deepcopy(self.styler.formation())
-  """
   
   def getSerializableStyle(self):
     '''
@@ -163,13 +152,14 @@ class Styleable(object):
     !!! The instance will be copied so that user's subsequent style changes do NOT affect the passed instance.
     '''
     self.styler.resetFromSerializable(serializableStyle)
+    self.styler.formation().applyTo(self)
     
     
   def applyStyle(self, style):
     " Apply given style (to model, then from model to view.)"
-    self.setStyle(style)
+    self._setStyle(style)
     self.styler.formation().applyTo(self)
-    ##self.getStyle().applyTo(self)
+
     
   
   def editStyle(self):
@@ -178,7 +168,6 @@ class Styleable(object):
     Return Style, or None if canceled.
     !!! Does not apply Style to DocumentElement
     '''
-    ##editableCopyOfStyle = self.getStyle()
     editableCopyOfStyle = self.styler.formation()
     '''
     Parent to app's activeWindow.

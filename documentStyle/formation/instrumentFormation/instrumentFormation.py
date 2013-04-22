@@ -93,6 +93,8 @@ class InstrumentFormation(Formation):
     Base is defaulted by framework (NOT same values as held by this Formation) until either:
     - edited
     - call propagateValuesToBase
+    
+    Currently not used???
     '''
     for item in self.styleProperties:
       item.propagateValueToBase()

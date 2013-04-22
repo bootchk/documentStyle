@@ -23,7 +23,7 @@ class StyleDialog(QDialog):
     super(StyleDialog, self).__init__(parentWindow)
     
     # Create component widgets
-    formationLayout = formation.display()
+    formationLayout = formation.display() # top=True)
     buttonBox = QDialogButtonBox(QDialogButtonBox.Ok
                                  | QDialogButtonBox.Cancel)
     

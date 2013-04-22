@@ -45,6 +45,14 @@ class LineItem(Styleable, QGraphicsLineItem):
     QGraphicsLineItem.__init__(self, x1, y1, x2, y2)
     self.setStylingDocumentElementType("Line")
   
+  def scalePen(self, pen, value):
+    unscaledWidth = value
+    itemScale = self.scale()  # !!! scale is used for 1D sizing
+    scaledWidthF = 1.0/itemScale * unscaledWidth
+    
+    # !!! Note float value and setWidthF is float setter
+    pen.setWidthF(scaledWidthF)
+    
 
 class TextItem(Styleable, QGraphicsTextItem):
   def __init__(self, text):
@@ -52,12 +60,26 @@ class TextItem(Styleable, QGraphicsTextItem):
     self.setStylingDocumentElementType("Text")
     
   
+  
 class EllipseItem(Styleable, QGraphicsEllipseItem):
   def __init__(self):
     QGraphicsEllipseItem.__init__(self)
     self.setRect(30, 30, 40, 40)
     self.setStylingDocumentElementType("Shape")
+  
+  def scalePen(self, pen, value):
+    unscaledWidth = value
+    '''
+    !!! transform is used for 2D sizing.
+    Scale pen to min of x,y dimension.
+    '''
+    itemScale = min(self.transform().m11(), self.transform().m22())
+    scaledWidthF = 1.0/itemScale * unscaledWidth
     
+    # !!! Note float value and setWidthF is float setter
+    pen.setWidthF(scaledWidthF)
+
+  
   
 class PixmapItem(Styleable, QGraphicsPixmapItem ):
   def __init__(self, filename):
