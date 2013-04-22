@@ -97,11 +97,11 @@ class Formation(list):
     
 
   
-  def display(self):
+  def display(self, top=False):
     '''
     Responsibility: Display for editing in tree like form.
     '''
-    return FormationLayout(self)
+    return FormationLayout(self, top)
   
 
   def displayContentsInLayout(self, layout):

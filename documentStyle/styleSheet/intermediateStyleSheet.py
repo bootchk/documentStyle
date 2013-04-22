@@ -97,7 +97,7 @@ class IntermediateStyleSheet(StyleSheet):
     # dialog = NoneditableStyleDialog(parentWindow=None, formation=formation)
     
     # parentWindow is document so dialog centers in document.  If parentWindow were mainWindow (toplevel), Qt not center dialog
-    dialog = EditableStyleSheetDialog(formation=editedFormation)
+    dialog = EditableStyleSheetDialog(formation=editedFormation, title = self.name + " StyleSheet")
     dialog.exec_()
     if dialog.result() == QDialog.Accepted:
       self.reflectEditsToStylingActSetCollection(editedFormation)

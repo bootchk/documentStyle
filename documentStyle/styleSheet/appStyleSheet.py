@@ -96,7 +96,7 @@ class AppStyleSheet(StyleSheet):
     This may not seem useful, but user needs to know what styling is default,
     so can understand inheritance via cascading.
     '''
-    dialog = NoneditableStyleSheetDialog(formation=self._newAppStyleSheetFormation())
+    dialog = NoneditableStyleSheetDialog(formation=self._newAppStyleSheetFormation(), title="App Style Defaults")
     dialog.exec_()
     
   

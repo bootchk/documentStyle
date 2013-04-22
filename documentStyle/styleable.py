@@ -174,7 +174,7 @@ class Styleable(object):
     FUTURE, if a document element is its own window, parent to it?
     Or position the dialog closer to the document element.
     '''
-    styleDialog = EditableStyleSheetDialog(formation=editableCopyOfStyle)
+    styleDialog = EditableStyleSheetDialog(formation=editableCopyOfStyle, title="Element Style")
     styleDialog.exec_()
     if styleDialog.result() == QDialog.Accepted:
       return editableCopyOfStyle

@@ -13,16 +13,16 @@ class FormationLayout(QVBoxLayout):
   '''
 
 
-  def __init__(self, formation):
+  def __init__(self, formation, top):
     super(FormationLayout, self).__init__()
     
     if formation.isSingleValued():
       self._singleChildLayout(formation)
     else:
-      self._multipleChildLayout(formation)
+      self._multipleChildLayout(formation, top)
       
       
-  def _multipleChildLayout(self, formation):
+  def _multipleChildLayout(self, formation, top):
     '''
     A tree-like, indented layout/widget.
     
@@ -33,8 +33,12 @@ class FormationLayout(QVBoxLayout):
       |
      '''
   
-    label = QLabel(formation.name)
-    self.addWidget(label)
+    if not top:
+      # display formation name in the layout
+      label = QLabel(formation.name)
+      self.addWidget(label)
+    # else display name in window title
+      
     
     indentedLayout = QHBoxLayout()
     indentedLayout.addSpacing(20) # Apparently pixels

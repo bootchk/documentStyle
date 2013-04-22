@@ -21,14 +21,14 @@ class StyleSheetDialog(QDialog):
   '''
 
 
-  def __init__(self, formation):
+  def __init__(self, formation, title):
     
     # TODO, parentWindow should be the document, which may not be the activeWindow?
     parentWindow = QCoreApplication.instance().activeWindow()
     super(StyleSheetDialog, self).__init__(parentWindow)
     
     # Create component widgets for formation
-    formationLayout = formation.display() # top=True)
+    formationLayout = formation.display(top=True)
     
     # Layout components
     dialogLayout = QVBoxLayout()
@@ -37,7 +37,7 @@ class StyleSheetDialog(QDialog):
       dialogLayout.addWidget(self.buttonBox())
     self.setLayout(dialogLayout)
     
-    self.setWindowTitle(formation.name + " Style")
+    self.setWindowTitle(title)  # formation.name + " Style")
     
     self.setDisabled(not self.isEditable())
     
