@@ -10,7 +10,7 @@ from PySide.QtGui import QDialog
 
 from documentStyle.styler import DynamicStyler
 from documentStyle.selector import DETypeSelector
-from documentStyle.userInterface.styleDialog.styleDialog import StyleDialog
+from documentStyle.userInterface.styleDialog.styleDialog import EditableStyleSheetDialog
                                                   
 
 
@@ -174,7 +174,7 @@ class Styleable(object):
     FUTURE, if a document element is its own window, parent to it?
     Or position the dialog closer to the document element.
     '''
-    styleDialog = StyleDialog(parentWindow=QCoreApplication.instance().activeWindow(), formation=editableCopyOfStyle)
+    styleDialog = EditableStyleSheetDialog(formation=editableCopyOfStyle)
     styleDialog.exec_()
     if styleDialog.result() == QDialog.Accepted:
       return editableCopyOfStyle

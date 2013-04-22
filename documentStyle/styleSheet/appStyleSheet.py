@@ -12,7 +12,7 @@ from documentStyle.formation.instrumentFormation.penFormation import PenFormatio
 from documentStyle.formation.instrumentFormation.opacityFormation import OpacityFormation
 from documentStyle.formation.morphFormation import ShapeFormation, LineFormation, TextFormation, PixmapFormation
 
-from documentStyle.userInterface.styleDialog.noneditableStyleDialog import NoneditableStyleSheetDialog
+from documentStyle.userInterface.styleDialog.styleDialog import NoneditableStyleSheetDialog
 
 
 class AppStyleSheet(StyleSheet):

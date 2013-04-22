@@ -14,8 +14,7 @@ from documentStyle.styling.stylingActSet import StylingActSet
 from documentStyle.styling.stylingActSetCollection import StylingActSetCollection
 
 from documentStyle.selector import newAllSelector
-# from userInterface.noneditableStyleDialog import NoneditableStyleDialog
-from documentStyle.userInterface.styleDialog.styleDialog import StyleSheetDialog
+from documentStyle.userInterface.styleDialog.styleDialog import EditableStyleSheetDialog
 
 from documentStyle.debugDecorator import report
 
@@ -98,7 +97,7 @@ class IntermediateStyleSheet(StyleSheet):
     # dialog = NoneditableStyleDialog(parentWindow=None, formation=formation)
     
     # parentWindow is document so dialog centers in document.  If parentWindow were mainWindow (toplevel), Qt not center dialog
-    dialog = StyleSheetDialog(formation=editedFormation)
+    dialog = EditableStyleSheetDialog(formation=editedFormation)
     dialog.exec_()
     if dialog.result() == QDialog.Accepted:
       self.reflectEditsToStylingActSetCollection(editedFormation)
