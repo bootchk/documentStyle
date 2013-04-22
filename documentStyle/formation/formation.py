@@ -13,6 +13,12 @@ class Formation(list):
   '''
   Defines how something draws (appears.)
   
+  A Formation is applied to an Instrument, which is applied to a Document Element.
+  Here, and in Qt, these applies are copies of the attributes of the Formation.
+  That is, Formation attributes applied to an Instrument are copies,
+  and Instrument attributes applied to a DocumentElement are copies
+  (The Formation and Instrument itself are not copied, it is a stamping process.)
+  
   Composite via inherit List.
   
   Called a Formation (not Format): is a noun, and distinguishes from Qt Q...Format.

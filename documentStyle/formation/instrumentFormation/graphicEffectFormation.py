@@ -46,14 +46,14 @@ class GraphicEffectFormation(InstrumentFormation):
   
   def __init__(self, parentSelector):
     InstrumentFormation.__init__(self, name="Graphic Effect", parentSelector=parentSelector)
-    self.base = PGraphicEffectFormat()
+    self.instrument = PGraphicEffectFormat()
     self.styleProperties=[ComboBoxStyleProperty("Graphic Effect", 
-                                                self.base.setGraphicEffect, self.base.graphicEffect, self.selector(),
+                                                self.instrument.setGraphicEffect, self.instrument.graphicEffect, self.selector(),
                                                 model = graphicEffectModel)]  
   
   
   def applyTo(self, morph):
-    effect = self.adaptEncoding(self.base.graphicEffect())
+    effect = self.adaptEncoding(self.instrument.graphicEffect())
     
     global effects
     effects.append(effect)

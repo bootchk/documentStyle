@@ -20,10 +20,10 @@ class PenFormation(InstrumentFormation):
     '''
     '''
     InstrumentFormation.__init__(self, name="Pen", parentSelector=parentSelector)
-    self.base = QPen()
-    self.styleProperties=[ColorStyleProperty("Color", self.base.setColor, self.base.color, self.selector()), 
-                          IntStyleProperty("Width", self.base.setWidth, self.base.width, self.selector(), 0, 10),
-                          ComboBoxStyleProperty("Style", self.base.setStyle, self.base.style, self.selector(),
+    self.instrument = QPen()
+    self.styleProperties=[ColorStyleProperty("Color", self.instrument.setColor, self.instrument.color, self.selector()), 
+                          IntStyleProperty("Width", self.instrument.setWidth, self.instrument.width, self.selector(), 0, 10),
+                          ComboBoxStyleProperty("Style", self.instrument.setStyle, self.instrument.style, self.selector(),
                                                 model = Qt.PenStyle)
                           ]
 
@@ -32,12 +32,12 @@ class PenFormation(InstrumentFormation):
     '''
     Apply my instrument to DocumentElement
     
-    Assert this formation's values are propagated to base via editing (which calls Instrument.setters())
+    Assert this formation's values are applied to instrument via editing (which calls Instrument.setters())
     '''
-    morph.scalePen(self.base, self.styleProperties[1].resettableValue.value())
-    morph.setPen(self.base)
+    morph.scalePen(self.instrument, self.styleProperties[1].resettableValue.value())
+    morph.setPen(self.instrument)
     
-
+  """
   def scaledPropagateToInstrument(self, morph):
     '''
     Propagate my values that are transformed,
@@ -57,8 +57,8 @@ class PenFormation(InstrumentFormation):
     scaledWidthF = 1.0/itemScale * unscaledWidth
     
     # !!! Note float value and setWidthF is float setter
-    self.base.setWidthF(scaledWidthF)
+    self.instrument.setWidthF(scaledWidthF)
     print "PenFormation.applyTo width: item scale, unscaled width, scaled width", itemScale, unscaledWidth, scaledWidthF, " on morph", morph
-    
+  """
     
     

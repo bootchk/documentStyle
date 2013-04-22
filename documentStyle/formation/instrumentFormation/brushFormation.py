@@ -10,10 +10,10 @@ class BrushFormation(InstrumentFormation):
   
   def __init__(self, parentSelector):
     InstrumentFormation.__init__(self, name="Brush", parentSelector=parentSelector)
-    self.base = QBrush()
-    self.styleProperties=[ColorStyleProperty("Color", self.base.setColor, self.base.color, self.selector()),
+    self.instrument = QBrush()
+    self.styleProperties=[ColorStyleProperty("Color", self.instrument.setColor, self.instrument.color, self.selector()),
                           ComboBoxStyleProperty("Pattern", 
-                                                self.base.setStyle, self.base.style, self.selector(),
+                                                self.instrument.setStyle, self.instrument.style, self.selector(),
                                                 model = Qt.BrushStyle),]
     '''
     sic, BrushPattern is called Style in Qt
@@ -28,9 +28,9 @@ class BrushFormation(InstrumentFormation):
   
   
   def applyTo(self, morph):
-    #print "setBrush on morph", self.base.color()
+    #print "setBrush on morph", self.instrument.color()
     ##self.scaledPropagateToInstrument(morph)
-    morph.setBrush(self.base) 
+    morph.setBrush(self.instrument) 
   
   
   """
@@ -47,6 +47,6 @@ class BrushFormation(InstrumentFormation):
     # !!! Note float value and setWidthF is float setter
     transform = QTransform()
     transform.scale(scaledWidthF, scaledWidthF)
-    self.base.setTransform(transform)
+    self.instrument.setTransform(transform)
     print "BrushFormation.applyTo setPen.width ", unscaledWidth, scaledWidthF, " on morph", morph
   """

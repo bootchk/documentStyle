@@ -17,11 +17,11 @@ class CharacterFormation(TextFormation):
   
   def __init__(self, parentSelector):
     InstrumentFormation.__init__(self, name="Character", parentSelector=parentSelector)
-    self.base = QTextCharFormat()
+    self.instrument = QTextCharFormat()
     self.styleProperties=[ColorStyleProperty("Color", 
-                                             self.base.foreground().setColor, self.base.foreground().color, self.selector(),
+                                             self.instrument.foreground().setColor, self.instrument.foreground().color, self.selector(),
                                              0, 0), 
-                      FontStyleProperty("Font", self.base.setFont, self.base.font, self.selector(), 0, 0),]
+                      FontStyleProperty("Font", self.instrument.setFont, self.instrument.font, self.selector(), 0, 0),]
   
   
   def applyToCursor(self, cursor):
@@ -34,10 +34,10 @@ class CharacterFormation(TextFormation):
     (Elsewhere, StyleProperty calling the setter does seem to work.)
     So this hack sets the QBrush at the last moment, using cached value of the StyleProperty.
     '''
-    brush = self.base.foreground()
+    brush = self.instrument.foreground()
     brush.setColor( self.styleProperties[0].get() ) # HACK: hardcoded
     brush.setStyle(Qt.SolidPattern) # HACK: doesn't allow brush pattern editable by user
-    self.base.setForeground(brush)
+    self.instrument.setForeground(brush)
   
     
     """
@@ -50,12 +50,12 @@ class CharacterFormation(TextFormation):
     #print "applyToCursor: brush again", brush
     """
     
-    cursor.mergeCharFormat(self.base)
+    cursor.mergeCharFormat(self.instrument)
     
 '''
 Notes:
 
-TODO base.setTextOutline(QPen) another StyleProperty ???
+TODO instrument.setTextOutline(QPen) another StyleProperty ???
 
 TODO brush.setStyle(Qt.SolidPattern) another StyleProperty so can have non-filled Shapes or non-filled Text ???
 

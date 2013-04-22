@@ -22,7 +22,7 @@ class InstrumentFormation(Formation):
   Abstract.
   
   Deferred attributes:
-  - base: the underlying object from GUI framework that styles an instrument
+  - instrument: the underlying object from GUI framework that carries style to a drawable
   - name: the name of instrument, used in selectors
   - styleProperties: list of elemental properties
   
@@ -88,16 +88,16 @@ class InstrumentFormation(Formation):
       yield item
   
 
-  def propagateValuesToBase(self):
+  def applyValuesToInstrument(self):
     '''
-    Base is defaulted by framework (NOT same values as held by this Formation) until either:
+    Instrument is defaulted by framework (NOT same values as held by this Formation) until either:
     - edited
-    - call propagateValuesToBase
+    - call applyValuesToInstrument
     
     Currently not used???
     '''
     for item in self.styleProperties:
-      item.propagateValueToBase()
+      item.applyValueToInstrument()
     
     
   def applyTo(self):
