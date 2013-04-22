@@ -3,7 +3,7 @@
 
 from PySide.QtGui import QGraphicsBlurEffect, QGraphicsDropShadowEffect, QGraphicsEffect
 
-from documentStyle.format.graphicEffectFormat import PGraphicEffectFormat
+from documentStyle.instrument.graphicEffectInstrument import PGraphicEffectInstrument
 from documentStyle.formation.instrumentFormation.instrumentFormation import InstrumentFormation
 from documentStyle.formation.styleProperty import ComboBoxStyleProperty
 
@@ -41,12 +41,12 @@ class GraphicEffectFormation(InstrumentFormation):
   '''
   Styling attributes of filter instrument (graphics effect.)
   
-  Specialize to <PGraphicEffectFormat>
+  Specialize to <PGraphicEffectInstrument>
   '''
   
   def __init__(self, parentSelector):
     InstrumentFormation.__init__(self, name="Graphic Effect", parentSelector=parentSelector)
-    self.instrument = PGraphicEffectFormat()
+    self.instrument = PGraphicEffectInstrument()
     self.styleProperties=[ComboBoxStyleProperty("Graphic Effect", 
                                                 self.instrument.setGraphicEffect, self.instrument.graphicEffect, self.selector(),
                                                 model = graphicEffectModel)]  

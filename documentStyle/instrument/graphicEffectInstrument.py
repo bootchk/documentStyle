@@ -7,14 +7,10 @@ This is free software, covered by the GNU General Public License.
 from PySide.QtCore import QObject # ???
 
 '''
-"...Format" Objects which the Qt framework does not supply,
-but similar API to Q...Format objects e.g. QBrushFormat
-
-A ...Format object has stereotype: information holder.
-It is simply a set of parameters.
+See instrument.py
 '''
 
-class PGraphicEffectFormat(QObject):  # QObject so members memory managed??
+class PGraphicEffectInstrument(QObject):  # QObject so members memory managed??
   '''
   Contain GraphicEffect parameters.
   '''

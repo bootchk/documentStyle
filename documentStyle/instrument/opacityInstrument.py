@@ -5,14 +5,10 @@ This is free software, covered by the GNU General Public License.
 '''
 
 '''
-"...Format" Objects which the Qt framework does not supply,
-but similar API to Q...Format objects e.g. QBrushFormat
-
-A ...Format object has stereotype: information holder.
-It is simply a set of parameters.
+see instrument.py
 '''
 
-class POpacityFormat(object):
+class POpacityInstrument(object):
   '''
   Contain opacity parameters.
   '''
