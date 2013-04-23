@@ -10,8 +10,7 @@ from documentStyle.selector import fieldSelector
 from documentStyle.userInterface.layout.stylePropertyLayout import FloatStylePropertyLayout, IntStylePropertyLayout
 from documentStyle.userInterface.layout.stylePropertyLayout import ColorStylePropertyLayout, FontStylePropertyLayout
 from documentStyle.userInterface.layout.stylePropertyLayout import ComboBoxStylePropertyLayout
-
-from resettableValue import ResettableValue
+from documentStyle.formation.resettableValue import ResettableValue
 
 from documentStyle.debugDecorator import report
 
@@ -87,10 +86,10 @@ class BaseStyleProperty(object): # QObject if signals
     ''' Set cached value and propagate to base. '''
     self.resettableValue.setValue(value)
     # TODO propagate now, OR flush values at end (dumb dialog)
-    self.propagateValueToBase()
+    self.propagateValueToInstrument()
   
   
-  def propagateValueToBase(self):
+  def propagateValueToInstrument(self):
     '''
     Propagate my value thru facade to framework holder.
     '''

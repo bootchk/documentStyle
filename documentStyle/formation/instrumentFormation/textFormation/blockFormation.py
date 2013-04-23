@@ -3,8 +3,8 @@
 
 from PySide.QtGui import QTextBlockFormat
 from textFormation import TextFormation
-from instrumentFormation import InstrumentFormation
-from ..styleProperty import IntStyleProperty
+from documentStyle.formation.instrumentFormation.instrumentFormation import InstrumentFormation
+from documentStyle.formation.styleProperty import IntStyleProperty
 
 class BlockFormation(TextFormation):
   '''

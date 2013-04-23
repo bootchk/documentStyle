@@ -4,8 +4,8 @@
 from PySide.QtCore import Qt
 from PySide.QtGui import QTextCharFormat
 from textFormation import TextFormation
-from instrumentFormation import InstrumentFormation
-from ..styleProperty import ColorStyleProperty, FontStyleProperty
+from documentStyle.formation.instrumentFormation.instrumentFormation import InstrumentFormation
+from documentStyle.formation.styleProperty import ColorStyleProperty, FontStyleProperty
 
 
 class CharacterFormation(TextFormation):

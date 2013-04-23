@@ -1,7 +1,7 @@
 '''
 '''
 from PySide.QtGui import QTextCursor
-from instrumentFormation import InstrumentFormation
+from documentStyle.formation.instrumentFormation.instrumentFormation import InstrumentFormation
 
 class TextFormation(InstrumentFormation):
   '''

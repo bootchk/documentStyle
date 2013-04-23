@@ -8,8 +8,8 @@ from documentStyle.selector import DETypeSelector
 from documentStyle.formation.formation import Formation
 from documentStyle.formation.instrumentFormation.penFormation import PenFormation
 from documentStyle.formation.instrumentFormation.brushFormation import BrushFormation
-from documentStyle.formation.instrumentFormation.characterFormation import CharacterFormation
-from documentStyle.formation.instrumentFormation.blockFormation import BlockFormation
+from documentStyle.formation.instrumentFormation.textFormation.characterFormation import CharacterFormation
+from documentStyle.formation.instrumentFormation.textFormation.blockFormation import BlockFormation
 from documentStyle.formation.instrumentFormation.opacityFormation import OpacityFormation
 from documentStyle.formation.instrumentFormation.graphicEffectFormation import GraphicEffectFormation
 

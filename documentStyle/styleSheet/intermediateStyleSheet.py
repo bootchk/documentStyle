@@ -35,6 +35,9 @@ class IntermediateStyleSheet(StyleSheet):
     # Collection may include many NamedStylingActSets
     self.stylingActSetCollection = StylingActSetCollection()
     
+  def __repr__(self):
+    return "IntermediateStyleSheet:" + self.name
+  
   
   def _dump(self):
     print "Displaying intermediate style sheet's stylingActSetCollection"  # name from formation?

@@ -22,6 +22,11 @@ class Selector(namedtuple('Selector', 'name DEType instrument field')):
   
   __slots__ = ()  # Eliminate per instance dictionary
   
+  
+  def __repr__(self):
+    return "Selector(" + self.name + "," + self.DEType + "," + self.instrument + "," + self.field + ")"
+  
+  
   def matches(self, other):
     return ( self.name == other.name or other.name == "*" or self.name == "*" ) \
       and  ( self.DEType == other.DEType or other.DEType == "*" or self.DEType == "*" ) \
