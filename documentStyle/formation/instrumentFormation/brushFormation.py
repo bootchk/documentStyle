@@ -11,9 +11,9 @@ class BrushFormation(InstrumentFormation):
   def __init__(self, parentSelector):
     InstrumentFormation.__init__(self, name="Brush", parentSelector=parentSelector)
     self.instrument = QBrush()
-    self.styleProperties=[ColorStyleProperty("Color", self.instrument.setColor, self.instrument.color, self.selector()),
+    self.styleProperties=[ColorStyleProperty("Color", self.instrument.setColor, self.instrument.color, self.selector),
                           ComboBoxStyleProperty("Pattern", 
-                                                self.instrument.setStyle, self.instrument.style, self.selector(),
+                                                self.instrument.setStyle, self.instrument.style, self.selector,
                                                 model = Qt.BrushStyle),]
     '''
     sic, BrushPattern is called Style in Qt

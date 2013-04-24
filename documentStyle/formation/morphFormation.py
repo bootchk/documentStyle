@@ -37,8 +37,8 @@ class LineFormation(MorphFormation):
   
   def __init__(self):
     MorphFormation.__init__(self, "Line")
-    self.append(PenFormation(parentSelector=self.selector()))
-    self.append(OpacityFormation(parentSelector=self.selector()))
+    self.append(PenFormation(parentSelector=self.selector))
+    self.append(OpacityFormation(parentSelector=self.selector))
 
 
 
@@ -47,9 +47,9 @@ class ShapeFormation(MorphFormation):
   
   def __init__(self):
     MorphFormation.__init__(self, "Shape")
-    self.append(PenFormation(parentSelector=self.selector()))
-    self.append(BrushFormation(parentSelector=self.selector()))
-    self.append(OpacityFormation(parentSelector=self.selector()))
+    self.append(PenFormation(parentSelector=self.selector))
+    self.append(BrushFormation(parentSelector=self.selector))
+    self.append(OpacityFormation(parentSelector=self.selector))
     
     
     
@@ -58,9 +58,9 @@ class TextFormation(MorphFormation):
   
   def __init__(self):
     MorphFormation.__init__(self, "Text")
-    self.append(CharacterFormation(parentSelector=self.selector()))
-    self.append(BlockFormation(parentSelector=self.selector()))
-    self.append(OpacityFormation(parentSelector=self.selector()))
+    self.append(CharacterFormation(parentSelector=self.selector))
+    self.append(BlockFormation(parentSelector=self.selector))
+    self.append(OpacityFormation(parentSelector=self.selector))
     
 
 
@@ -73,8 +73,8 @@ class PixmapFormation(MorphFormation):
   
   def __init__(self):
     MorphFormation.__init__(self, "Pixmap")
-    self.append(OpacityFormation(parentSelector=self.selector()))
-    self.append(GraphicEffectFormation(parentSelector=self.selector()))
+    self.append(OpacityFormation(parentSelector=self.selector))
+    self.append(GraphicEffectFormation(parentSelector=self.selector))
 
 
     

@@ -4,7 +4,7 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PySide.QtCore import Slot
+from PySide.QtCore import Slot  # , QSize
 from PySide.QtGui import QPushButton
 
 class BuddyButton(QPushButton):
@@ -20,6 +20,8 @@ class BuddyButton(QPushButton):
     self.clicked.connect(self.handleClicked)
     self.buddyReset = buddyReset  # buddy's reset method
     
+    self.setFixedSize(60, 25)
+    
   # QPushButton.toggle() is for "checked", but this button is not checkable
   @Slot()
   def handleClicked(self):
@@ -31,3 +33,8 @@ class BuddyButton(QPushButton):
     self.setEnabled(False)
     # print "calling buddyReset", self.buddyReset
     self.buddyReset()
+
+  """
+  def sizeHint(self):
+    return QSize(40,28)
+  """

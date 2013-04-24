@@ -12,7 +12,7 @@ from documentStyle.userInterface.layout.stylePropertyLayout import ColorStylePro
 from documentStyle.userInterface.layout.stylePropertyLayout import ComboBoxStylePropertyLayout
 from documentStyle.formation.resettableValue import ResettableValue
 
-from documentStyle.debugDecorator import report
+#from documentStyle.debugDecorator import report
 
 class BaseStyleProperty(object): # QObject if signals
   '''
@@ -50,12 +50,12 @@ class BaseStyleProperty(object): # QObject if signals
     self.maximum = maximum
     self.model = model  # enum dictionary maps GUI strings to values
     # My selector describes parents and field of self e.g. Foo,Line,Pen,Color
-    self._selector = fieldSelector(parentSelector, name)
+    self.selector = fieldSelector(parentSelector, name)
     
     
-  def __str__(self):
+  def __repr__(self):
     # return self.name + "setter " + str(self.setter) + "getter " + str(self.getter)
-    return self.name + ":" + str(self.resettableValue)
+    return self.name + ":" + str(self.selector) + ":" + str(self.resettableValue)
   
   
   def layout(self):
@@ -105,8 +105,6 @@ class BaseStyleProperty(object): # QObject if signals
   def roll(self):
     self.resettableValue.roll()
 
-  def selector(self):
-    return self._selector
 
 
 # TODO refactor using Pluggable Behavior??

@@ -47,16 +47,11 @@ class Formation(list):
     '''
     assert name is not None
     self.name = name
-    self._selector = selector # immutable
+    self.selector = selector # immutable
   
   
   def __repr__(self):
     return self.name +"[" +  ",".join( map( str, self) ) + "]"
-  
-  
-  def selector(self):
-    ''' Responsibility: know selector. '''
-    return self._selector
                      
                       
   @report
@@ -95,7 +90,7 @@ class Formation(list):
     '''
     for formation in self:
       # Recurse into child Formations
-      if selector.matches(formation.selector()):
+      if selector.matches(formation.selector):
         styleProperty = formation.selectStyleProperty(selector)
         if styleProperty is not None:
           return styleProperty
@@ -142,17 +137,21 @@ class Formation(list):
         property was inherited, but was overridden.  StylingAct will be new.
         OR property was not inherited, but might have been changed.  StylingAct will be updated.
         '''
-        stylingAct = StylingAct(item.selector(), item.get())
+        stylingAct = StylingAct(item.selector, item.get())
         derivingStylingActSet.put(stylingAct)
       elif item.wasReset():
         # property was not inherited (overridden), but was reinherited.  StylingAct revoked.
-        derivingStylingActSet.delete(item.selector())
+        derivingStylingActSet.delete(item.selector)
       # else item isReset, was inherited, and still inherited.  No StylingAct
         
   
-  def resetResettableStyleProperties(self):
+  #@report
+  def rollStyleProperties(self):
     '''
-    Reset user's changes.
+    Roll forward all styleProperty, meaning: not overridden by subsequent (in cascade) inline StylingAct.
+    That is, when cascading, non-inherited value at one level becomes inherited again at next level.
+    If user chooses "Inherit" button, it inherits only from original value from previous cascade,
+    not all the way back to the App StyleSheet original values.
     '''
     for item in self.generateStyleProperties():
       item.roll()

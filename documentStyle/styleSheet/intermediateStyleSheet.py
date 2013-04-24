@@ -67,8 +67,11 @@ class IntermediateStyleSheet(StyleSheet):
     
     ''' Post-recursion processing. '''
     #print "Uncascaded stylesheet", selector, repr(formation)
-    # StyleProperties show whether overridden from previous cascade.  Reset all to "inherited"
-    formation.resetResettableStyleProperties()
+    '''
+    StyleProperties show whether stylingAct overrides from previous cascade.  
+    Initialize all to show "not overridden" i.e. inherited.
+    '''
+    formation.rollStyleProperties()
     self._overrideFormationBySelectedStylingActs(formation, selector)
     #print "Cascaded stylesheet", repr(formation)
 
@@ -121,7 +124,7 @@ class IntermediateStyleSheet(StyleSheet):
       Otherwise, SASCollection has many empty SAS?
       '''
       # when formation was derived through None stylingActSet, create a new one.
-      target = self.stylingActSetCollection.getOrNew(topLevelFormation.selector())
+      target = self.stylingActSetCollection.getOrNew(topLevelFormation.selector)
       editedFormation.reflectToStylingActSet(derivingStylingActSet=target)
     
   
@@ -134,6 +137,7 @@ class IntermediateStyleSheet(StyleSheet):
     '''
     return copy.deepcopy(self.stylingActSetCollection)
 
+  @report
   def resetFromSerializable(self, serializable):
     '''
     Restore to prior state.  
@@ -151,7 +155,7 @@ class IntermediateStyleSheet(StyleSheet):
     # Canned SAS's for testing
     stylingActSet = StylingActSet()
     
-    from selector import Selector
+    from documentStyle.selector import Selector
 
     # These SAS must be well-formed: not specify a instrument, field that doesn't apply to the DEType
     """

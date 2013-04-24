@@ -4,7 +4,7 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PySide.QtGui import QHBoxLayout, QLabel # QPushButton, QSlider, QColor, QFont
+from PySide.QtGui import QHBoxLayout, QBoxLayout, QLabel # QPushButton, QSlider, QColor, QFont
 
 from ..resettableDoubleSpinBox import ResettableDoubleSpinBox
 from ..resettableSpinBox import ResettableSpinBox
@@ -52,6 +52,8 @@ class StylePropertyLayout(QHBoxLayout):
     '''
     super(StylePropertyLayout, self).__init__()
     
+    # self.setDirection(QBoxLayout.RightToLeft)
+    
     self.parentStyleProperty = parentStyleProperty
     self.addWidget(QLabel(parentStyleProperty.name))
     
@@ -81,6 +83,7 @@ class StylePropertyLayout(QHBoxLayout):
       ...
       assert self.get() == value
     '''
+  
   
   def propagateValueFromWidgetToModel(self):
     '''

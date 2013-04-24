@@ -23,12 +23,13 @@ class StylingAct(object):
     '''
     #print "new StylingAct", selector, value
     assert isinstance(selector, Selector)
-    self._selector = selector
+    self.selector = selector
     self.value = value
 
 
-  def selector(self):
-    return self._selector
+  def __repr__(self):
+    return "StylingAct(" + str(self.selector) + "," + str(self.value) + ")"
+  
   
   #@report
   def applyToFormation(self, formation):
@@ -43,7 +44,7 @@ class StylingAct(object):
     TODO rethink this.
     '''
     #print "Applying styling Act", self
-    styleProperty = formation.selectStyleProperty(self._selector)
+    styleProperty = formation.selectStyleProperty(self.selector)
     if styleProperty is not None:
       self._overrideStyleProperty(styleProperty)
     else:
@@ -51,12 +52,22 @@ class StylingAct(object):
       ''' It is NOT an assertion that self matches formation. '''
       pass
 
-  @report
+  #@report
   def _overrideStyleProperty(self, styleProperty):
-    " Override a styleProperty (before defaulted or value from upstream, now with new value.) "
+    '''
+    StyleProperty has value from upstream (defaulted or already overridden.)
+    Ensure it has my value (which is not necessarily different value.)
+    
+    If my value is not a different value, then self is non-effective now,
+    but self may become effective later if the cascade changes.
+    That is, self (StylingAct) exists even if non-effective at times.
+    (The "Inherit" button will not be enabled when self is non-effective,
+    so user cannot delete self StylingAct when it is non-effective.)
+    Is that a user interface problem?
+    '''
     # print "Overriding ", styleProperty, "with args", self.value
-    # TODO, if not a change, won't set the inherit button
-    styleProperty.set(self.value)
+    if styleProperty.get() != self.value:
+      styleProperty.set(self.value)
     
     
     

@@ -19,9 +19,9 @@ class CharacterFormation(TextFormation):
     InstrumentFormation.__init__(self, name="Character", parentSelector=parentSelector)
     self.instrument = QTextCharFormat()
     self.styleProperties=[ColorStyleProperty("Color", 
-                                             self.instrument.foreground().setColor, self.instrument.foreground().color, self.selector(),
+                                             self.instrument.foreground().setColor, self.instrument.foreground().color, self.selector,
                                              0, 0), 
-                      FontStyleProperty("Font", self.instrument.setFont, self.instrument.font, self.selector(), 0, 0),]
+                      FontStyleProperty("Font", self.instrument.setFont, self.instrument.font, self.selector, 0, 0),]
   
   
   def applyToCursor(self, cursor):

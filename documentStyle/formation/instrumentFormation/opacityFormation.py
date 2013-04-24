@@ -16,7 +16,7 @@ class OpacityFormation(InstrumentFormation):
   def __init__(self, parentSelector):
     InstrumentFormation.__init__(self, name="Opacity", parentSelector=parentSelector)
     self.instrument = POpacityInstrument()
-    self.styleProperties=[FloatStyleProperty("Opacity", self.instrument.setOpacity, self.instrument.opacity, self.selector(), 0.0, 1.0), ]
+    self.styleProperties=[FloatStyleProperty("Opacity", self.instrument.setOpacity, self.instrument.opacity, self.selector, 0.0, 1.0), ]
   
   
   def applyTo(self, morph):

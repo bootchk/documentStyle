@@ -21,9 +21,9 @@ class PenFormation(InstrumentFormation):
     '''
     InstrumentFormation.__init__(self, name="Pen", parentSelector=parentSelector)
     self.instrument = QPen()
-    self.styleProperties=[ColorStyleProperty("Color", self.instrument.setColor, self.instrument.color, self.selector()), 
-                          IntStyleProperty("Width", self.instrument.setWidth, self.instrument.width, self.selector(), 0, 10),
-                          ComboBoxStyleProperty("Style", self.instrument.setStyle, self.instrument.style, self.selector(),
+    self.styleProperties=[ColorStyleProperty("Color", self.instrument.setColor, self.instrument.color, self.selector), 
+                          IntStyleProperty("Width", self.instrument.setWidth, self.instrument.width, self.selector, 0, 10),
+                          ComboBoxStyleProperty("Style", self.instrument.setStyle, self.instrument.style, self.selector,
                                                 model = Qt.PenStyle)
                           ]
 

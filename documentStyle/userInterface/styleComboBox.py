@@ -4,7 +4,7 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PySide.QtCore import Signal, Slot
+from PySide.QtCore import Signal, Slot, Qt
 from PySide.QtGui import QComboBox
 
 from resettable import Resettable
@@ -37,6 +37,7 @@ class StyleComboBox(Resettable, QComboBox):
     # !!! connecting to str type signal
     self.currentIndexChanged[str].connect(self.adaptValueChanged)
     
+    self.alignItems()
   
 
   '''
@@ -96,6 +97,14 @@ class StyleComboBox(Resettable, QComboBox):
       i += 1
     assert foundKey, "Missing value: " + str(searchValue) + " in model" + str(self.model) # dict is complete on values
     return i
-  
 
-  
+
+  def alignItems(self):
+    " See web. "
+    self.setEditable(True)
+    self.lineEdit().setReadOnly(True)
+    self.lineEdit().setAlignment(Qt.AlignRight)
+    for i in range(0, self.count()):
+      self.setItemData(i, Qt.AlignRight, Qt.TextAlignmentRole)
+    
+    

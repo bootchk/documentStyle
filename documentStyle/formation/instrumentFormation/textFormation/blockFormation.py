@@ -16,7 +16,7 @@ class BlockFormation(TextFormation):
   def __init__(self, parentSelector):
     InstrumentFormation.__init__(self, name="Block", parentSelector=parentSelector)
     self.instrument = QTextBlockFormat()
-    self.styleProperties=[IntStyleProperty("Indent", self.instrument.setIndent, self.instrument.indent, self.selector(), 0, 10),]
+    self.styleProperties=[IntStyleProperty("Indent", self.instrument.setIndent, self.instrument.indent, self.selector, 0, 10),]
     '''
     Alignment property not working yet: it is a Boolean combination of flags, not handled by this code.
     Need a BooleanOfFlagsStyleProperty ???

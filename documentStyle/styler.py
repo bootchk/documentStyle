@@ -90,7 +90,7 @@ class DynamicStyler(object):
     '''
     Reflect newFormation into new SAS
     '''
-    target = self._styleSheet.stylingActSetCollection.getOrNew(newFormation.selector())
+    target = self._styleSheet.stylingActSetCollection.getOrNew(newFormation.selector)
     newFormation.reflectToStylingActSet(target)
                              
   

@@ -61,7 +61,7 @@ class InstrumentFormation(Formation):
     Redefines the composite recursive method, to be terminal.
     '''
     '''
-    Could use: if selector.matches(self.selector())
+    Could use: if selector.matches(self.selector)
     As an optimization, assert prefix of selector matches, and only check the suffix.
     '''
     result = None

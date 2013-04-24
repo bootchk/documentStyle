@@ -48,7 +48,7 @@ class GraphicEffectFormation(InstrumentFormation):
     InstrumentFormation.__init__(self, name="Graphic Effect", parentSelector=parentSelector)
     self.instrument = PGraphicEffectInstrument()
     self.styleProperties=[ComboBoxStyleProperty("Graphic Effect", 
-                                                self.instrument.setGraphicEffect, self.instrument.graphicEffect, self.selector(),
+                                                self.instrument.setGraphicEffect, self.instrument.graphicEffect, self.selector,
                                                 model = graphicEffectModel)]  
   
   

@@ -40,8 +40,13 @@ Application should:
 - have a polish method, which should call Styleable.polish() method of all DocumentElements
 (the app knows the set of DocumentElements.)
 
+Document elements should:
+- have a polish method (redraw with changed style)
+- have a scalePen() method (for frameworks where line widths transform, and a transform is used to size DocumentElement)
+- when persisted, also persist serializable form of style
+
 Application should also:
-- persist the DocumentStyleSheet with the Document TODO
+- persist the DocumentStyleSheet with the Document (getSerializable() method)
 Note that the ApplicationStyleSheet actually comes from the framework's defaults, not the application.
 The DocumentElement attributes that contain the style should also be persisted,
 but DocumentStyle subsystem doesn't know those attributes except via a Styler.

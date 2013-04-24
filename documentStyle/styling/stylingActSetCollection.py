@@ -21,7 +21,7 @@ class StylingActSetCollection(dict):
   '''
 
   def put(self, stylingActSet):
-    self[stylingActSet.selector()] = stylingActSet
+    self[stylingActSet.selector] = stylingActSet
   
   def getOrNew(self, selector):
     '''
