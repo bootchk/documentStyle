@@ -20,7 +20,9 @@ class BuddyButton(QPushButton):
     self.clicked.connect(self.handleClicked)
     self.buddyReset = buddyReset  # buddy's reset method
     
-    self.setFixedSize(60, 25)
+    ## TODO Want it a constant size, but chosen by the framework.
+    ## setFixedSize() is not platform independent
+    ## self.setFixedSize(60, 25)
     
   # QPushButton.toggle() is for "checked", but this button is not checkable
   @Slot()

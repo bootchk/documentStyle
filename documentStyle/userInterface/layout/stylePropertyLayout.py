@@ -4,7 +4,7 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PySide.QtGui import QHBoxLayout, QBoxLayout, QLabel # QPushButton, QSlider, QColor, QFont
+from PySide.QtGui import QHBoxLayout, QLabel # QPushButton, QSlider, QColor, QFont, QBoxLayout, 
 
 from ..resettableDoubleSpinBox import ResettableDoubleSpinBox
 from ..resettableSpinBox import ResettableSpinBox
@@ -37,7 +37,7 @@ class StylePropertyLayout(QHBoxLayout):
   Layout for a StyleProperty.
   
   Layout includes:
-  - name
+  - name: label
   - value: controlWidget that gets/sets parent StyleProperty on valueChange
   - buddyButton that undoes changes (reverts to original, inherited value)
   
@@ -55,25 +55,46 @@ class StylePropertyLayout(QHBoxLayout):
     # self.setDirection(QBoxLayout.RightToLeft)
     
     self.parentStyleProperty = parentStyleProperty
-    self.addWidget(QLabel(parentStyleProperty.name))
     
-    # Control widget
-    # Some widgets don't use parentStyleProperty
-    self.controlWidget = self.createControlWidget(self.parentStyleProperty)
-    self.addWidget(self.controlWidget)  # TODO, stretch=0, alignment=Qt.AlignLeft)
+    self._layoutChildWidgets(parentStyleProperty)
+    
     self.controlWidget.setValue(self.parentStyleProperty.get()) # initial value
     
     # only one connect to valueChanged, not connect directly to buddyButton
     result = self.controlWidget.valueChanged.connect(self.propagateValueFromWidgetToModel)
     assert result
     
-    # Buddy button
+    
+    
+  def _layoutChildWidgets(self, parentStyleProperty):
+    '''
+    Create and layout child widgets.
+    
+    Note layout strategy: 
+    Children added left to right.
+    Middle widget has non-zero stretch and expands.
+    The resulting layout of a column of these layouts has:
+    - a fixed width column of buddy buttons, right aligned.
+    - control values and their control arrows right aligned to the buddy buttons.
+    
+    TODO maybe the controls should be left aligned to the labels?
+    '''
+    # Child: label
+    self.addWidget(QLabel(self.parentStyleProperty.name))
+    
+    # Child: Control
+    # Some widgets don't use parentStyleProperty
+    self.controlWidget = self.createControlWidget(parentStyleProperty) # delegate to subclass
+    self.addWidget(self.controlWidget, stretch=1)  # TODO, stretch=0, alignment=Qt.AlignLeft)
+   
+    # Child: Buddy button
     self.buddyButton = BuddyButton("Inherit", 
                                 initialState= not parentStyleProperty.isReset(),
                                 # Reset the view, not the model.  View will change the model.
                                 buddyReset=self.controlWidget.reset)  # pass reset method
     self.addWidget(self.buddyButton)
-    
+   
+   
    
     '''
     Each parentStyleProperty must implement:

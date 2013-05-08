@@ -90,7 +90,7 @@ class StyleComboBox(Resettable, QComboBox):
     # searchValue is an enum value or None, and None can be a value in dictionary
     i = 0
     foundKey = False
-    for key, value in self.model.values.items():
+    for _, value in self.model.values.items():
       if value is searchValue:  # !!! is, not ==, to match None
         foundKey = True
         break
