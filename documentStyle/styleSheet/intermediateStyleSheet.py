@@ -137,7 +137,7 @@ class IntermediateStyleSheet(StyleSheet):
     '''
     return copy.deepcopy(self.stylingActSetCollection)
 
-  @report
+  #@report
   def resetFromSerializable(self, serializable):
     '''
     Restore to prior state.  

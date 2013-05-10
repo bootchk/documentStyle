@@ -28,11 +28,11 @@ class StyleSheetDialog(QDialog):
     super(StyleSheetDialog, self).__init__(parentWindow)
     
     # Create component widgets for formation
-    formationLayout = formation.display(top=True)
+    formationDisplay = formation.display(top=True)
     
     # Layout components
     dialogLayout = QVBoxLayout()
-    dialogLayout.addItem(formationLayout)
+    formationDisplay.addTo(dialogLayout) # inversion: tell formationDisplay to add itself to layout
     if self.hasButtons():
       dialogLayout.addWidget(self.buttonBox())
     self.setLayout(dialogLayout)

@@ -4,7 +4,8 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from documentStyle.userInterface.layout.formationLayout import FormationLayout
+# from documentStyle.userInterface.layout.formationLayout import FormationLayout
+from documentStyle.userInterface.listview.formationListview import FormationListview
 from documentStyle.styling.stylingAct import StylingAct
 
 from documentStyle.debugDecorator import report
@@ -102,7 +103,8 @@ class Formation(list):
     '''
     Responsibility: Display for editing in tree like form.
     '''
-    return FormationLayout(self, top)
+    # return FormationLayout(formation=self, top=top)
+    return FormationListview(formation=self)
   
 
   def displayContentsInLayout(self, layout):
