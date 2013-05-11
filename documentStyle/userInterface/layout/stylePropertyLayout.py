@@ -12,7 +12,7 @@ from ..resettableSpinBox import ResettableSpinBox
 from ..stylePickerWidget.colorPickerWidget import ColorPicker
 from ..stylePickerWidget.fontPickerWidget import FontPicker
 from ..styleComboBox import StyleComboBox
-from ..buddyButton import BuddyButton
+from ..buddyButton import BuddyPushButton, BuddyIconButton
 
 
 '''
@@ -88,10 +88,10 @@ class StylePropertyLayout(QHBoxLayout):
     self.addWidget(self.controlWidget, stretch=1)  # TODO, stretch=0, alignment=Qt.AlignLeft)
    
     # Child: Buddy button
-    self.buddyButton = BuddyButton("Inherit", 
-                                initialState= not parentStyleProperty.isReset(),
+    self.buddyButton = BuddyIconButton("Inherit", 
+                                initialState = not parentStyleProperty.isReset(),
                                 # Reset the view, not the model.  View will change the model.
-                                buddyReset=self.controlWidget.reset)  # pass reset method
+                                buddyReset = self.controlWidget.reset)  # pass reset method
     self.addWidget(self.buddyButton)
    
    

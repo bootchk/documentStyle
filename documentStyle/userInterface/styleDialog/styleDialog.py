@@ -3,8 +3,8 @@ Copyright 2012 Lloyd Konneker
 
 This is free software, covered by the GNU General Public License.
 '''
-from PySide.QtCore import QCoreApplication
-from PySide.QtGui import QDialog, QDialogButtonBox, QVBoxLayout
+from PySide.QtCore import QCoreApplication, Qt
+from PySide.QtGui import QDialog, QDialogButtonBox, QVBoxLayout, QWidget, QScrollArea
 
 
 class StyleSheetDialog(QDialog):
@@ -27,12 +27,11 @@ class StyleSheetDialog(QDialog):
     parentWindow = QCoreApplication.instance().activeWindow()
     super(StyleSheetDialog, self).__init__(parentWindow)
     
-    # Create component widgets for formation
-    formationDisplay = formation.display(top=True)
-    
     # Layout components
     dialogLayout = QVBoxLayout()
-    formationDisplay.addTo(dialogLayout) # inversion: tell formationDisplay to add itself to layout
+    
+    dialogLayout.addWidget(self.createDialogCenterWidget(formation))
+    
     if self.hasButtons():
       dialogLayout.addWidget(self.buttonBox())
     self.setLayout(dialogLayout)
@@ -40,6 +39,13 @@ class StyleSheetDialog(QDialog):
     self.setWindowTitle(title)  # formation.name + " Style")
     
     self.setDisabled(not self.isEditable())
+    self.setSizeGripEnabled(True)
+    
+    ## This does not make the dialog have not horizontal scroll bar
+    ## self.adjustSize()
+    
+    # TODO for user friendliness, size should be set so that horizontal scroll bar not visible,
+    # and vertical scroll bar not visible unless necessary.
     
   """
   def apply(self):
@@ -48,6 +54,24 @@ class StyleSheetDialog(QDialog):
     self.emit(SIGNAL("changed"))
   """
   
+  
+  def createDialogCenterWidget(self, formation):
+    '''
+    Scrolling list of editor widgets for editing StyleProperty.
+    List comprises labels, and labeled editing widgets.
+    But labels are indented as a tree.
+    
+    Canonical way: nest widget, layout, scrollarea
+    '''
+    formationLayout = formation.display(top=True)
+    viewport = QWidget()
+    viewport.setLayout(formationLayout)
+    scrollArea = QScrollArea()
+    scrollArea.setWidget(viewport)
+    ## This does not work: it obscures contents
+    ## scrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+    return scrollArea
+    
   
 class EditableStyleSheetDialog(StyleSheetDialog):
   '''

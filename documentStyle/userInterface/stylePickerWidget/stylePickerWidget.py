@@ -78,7 +78,8 @@ class StylePicker(Resettable, QPushButton):
     Parent in self's StyleDialog.
     '''
     myDialog = self.parentWidget()
-    assert isinstance(myDialog, QDialog)
+    ## myDialog is not QDialog if self is nested inside a QScrollArea
+    ## assert isinstance(myDialog, QDialog)
     newValue = self.subDialogMethod(parent=myDialog)
     # TODO if no real change in value?
     

@@ -1,0 +1,5 @@
+This is scrap.
+
+To get a scrolling stylesheet,
+I started to implement a subclass of QListView,
+but found that I could just put a QScrollArea inside the QDialog.

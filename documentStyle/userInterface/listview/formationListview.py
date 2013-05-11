@@ -37,7 +37,8 @@ class FormationListview(QListView):
     Only self knows whether self is widget or layout.
     '''
     layout.addWidget(self)
-    
+  
+  
   def model(self):
     model = FormationListModel()
     # model.

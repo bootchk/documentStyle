@@ -8,8 +8,12 @@ from styleSheet import StyleSheet
 from documentStyle.selector import newAllSelector
 
 from documentStyle.formation.formation import Formation
+
 from documentStyle.formation.instrumentFormation.penFormation import PenFormation
+from documentStyle.formation.instrumentFormation.brushFormation import BrushFormation
 from documentStyle.formation.instrumentFormation.opacityFormation import OpacityFormation
+from documentStyle.formation.instrumentFormation.graphicEffectFormation import GraphicEffectFormation
+
 from documentStyle.formation.morphFormation import ShapeFormation, LineFormation, TextFormation, PixmapFormation
 
 from documentStyle.userInterface.styleDialog.styleDialog import NoneditableStyleSheetDialog
@@ -33,6 +37,23 @@ class AppStyleSheet(StyleSheet):
     '''
     super(AppStyleSheet, self).__init__(name="App")
     
+    
+  def _allSharedInstrumentFormationClasses(self):
+    '''
+    List of all classes of InstrumentFormation that are shared between morph formations.
+    
+    Note missing since not shared :
+    - CharFormation only of Text morph.
+    - GraphicEffectFormation only of Pixmap morph.
+    '''
+    return [PenFormation, BrushFormation, OpacityFormation ]
+    
+    
+  def _allDocumentElementTypeFormationClasses(self):
+    '''
+    List of all classes of MorphFormation (for each document element type.)
+    '''
+    return [LineFormation, ShapeFormation, TextFormation, PixmapFormation]
     
     
   def _newAppStyleSheetFormation(self):
@@ -60,18 +81,16 @@ class AppStyleSheet(StyleSheet):
     Optional: if not defined, the app does not allow user to edit.
     E.G. if opacity is not here, user can not edit opacity of whole document in one place.
     '''
-    formation.append(PenFormation(parentSelector=newAllSelector()))
-    formation.append(OpacityFormation(parentSelector=newAllSelector()))
-    
+    for instrumentFormationClass in self._allSharedInstrumentFormationClasses():
+      formation.append(instrumentFormationClass(parentSelector=newAllSelector()))
     
     '''
     Configure DEType formations.
     Not optional: each DocumentElement type that the app can draw must be represented here.
     '''
-    formation.append(LineFormation())
-    formation.append(ShapeFormation())
-    formation.append(TextFormation())
-    formation.append(PixmapFormation())
+    for shapeFormationClass in self._allDocumentElementTypeFormationClasses():
+      formation.append(shapeFormationClass())
+    
     return formation
   
     
