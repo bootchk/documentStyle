@@ -66,6 +66,12 @@ class StyleSheetDialog(QDialog):
     formationLayout = formation.display(top=True)
     viewport = QWidget()
     viewport.setLayout(formationLayout)
+    
+    # A hack so scroll bars not obscure buttons.
+    # TODO Size dialog so horiz scroll bar not necessary, and not obscure
+    # !!! left, top, right, bottom (not top, left... as usual.)
+    viewport.setContentsMargins(10, 10, 20, 10)
+    
     scrollArea = QScrollArea()
     scrollArea.setWidget(viewport)
     ## This does not work: it obscures contents
