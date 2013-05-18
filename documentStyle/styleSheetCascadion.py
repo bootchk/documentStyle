@@ -12,6 +12,8 @@ class StyleSheetCascadion(object):
   '''
   Conventional cascading set of style sheets: app, user, doc.
   Cascadion is noun, cascade is verb.
+  
+  Methods are exported to app (a document editing app.)
   '''
 
   def __init__(self):
@@ -25,13 +27,25 @@ class StyleSheetCascadion(object):
     self.appStyleSheet = AppStyleSheet() 
     
     # Serialized to user preferences, identical between sessions with different docs
-    self.userStyleSheet = IntermediateStyleSheet(parent=self.appStyleSheet, name="User")
+    savedUserStyleSheet = self._getUserStylesheetFromSettings()
+    if savedUserStyleSheet is None:
+      self.userStyleSheet = IntermediateStyleSheet(name="User")
+    else:
+      self.userStyleSheet = savedUserStyleSheet
+    self.userStyleSheet.setParent(self.appStyleSheet)
     
-    # Serialized, attached to document.
-    self.docStyleSheet = IntermediateStyleSheet(parent=self.userStyleSheet, name="Doc")
+    '''
+    A DocStyleSheet is usually serialized, attached to document.
+    Here, create cascade with default DocStyleSheet (with empty StylingActSetCollection)
+    Don't assume that a document and its stylesheet exists when cascadion is created.
+    If it does exists, caller should call restoreDocStyleSheet
+    '''
+    self.docStyleSheet = IntermediateStyleSheet(name="Doc")
+    self.docStyleSheet.setParent(self.userStyleSheet)
     
     # DocumentElementStyleSheets are created and owned by DocumentElements
-    self._restoreUserStylesheetFromSettings()
+    # and are parented automatically (in init()) to docStyleSheet
+    
     
     
     
@@ -46,38 +60,39 @@ class StyleSheetCascadion(object):
     self.userStyleSheet.styleSheetChanged.connect(handler)
     self.docStyleSheet.styleSheetChanged.connect(handler)
     
-    # Initial cascaded styling of document
-    handler()
-    
   
   def saveUserStylesheetAsSettings(self):
-    " Exported to app "
     settings = QSettings()
-    pickledUserStyleSheet = cPickle.dumps(self.userStyleSheet.getSerializable())
+    pickledUserStyleSheet = cPickle.dumps(self.userStyleSheet, cPickle.HIGHEST_PROTOCOL)
     settings.setValue("UserStyleSheet", pickledUserStyleSheet)
     
     
-  def _restoreUserStylesheetFromSettings(self):
+  def _getUserStylesheetFromSettings(self):
     " Private, called at init. "
     print "UserStyleSheetFromSettings"
     settings = QSettings()
-    settingStyleSheet = settings.value("UserStyleSheet")
-    if settingStyleSheet is not None:
-      # use pickle to restore type (class)
-      serializable = cPickle.loads(str(settingStyleSheet))
-      self.userStyleSheet.resetFromSerializable(serializable)
-
+    styleSheetPickledInSettings = settings.value("UserStyleSheet")
+    if styleSheetPickledInSettings is not None:
+      # convert unicode to str
+      print styleSheetPickledInSettings
+      return cPickle.loads(str(styleSheetPickledInSettings))
+    else:
+      return None
+    # Assert caller will link stylesheet into cascade and restyle document
+      
 
   def pickleDocStyleSheet(self):
-    print "Saved document style sheet"
-    serializableDSS = self.docStyleSheet.getSerializable()
-    self.pickledDSS = cPickle.dumps(serializableDSS)
+    return cPickle.dumps(self.docStyleSheet, cPickle.HIGHEST_PROTOCOL)
     
     
-  def restoreDocStyleSheet(self):
-    print "Restored document style sheet"
-    unpickledDSS = cPickle.loads(self.pickledDSS)
-    self.docStyleSheet.resetFromSerializable(unpickledDSS)
-  
+  def restoreDocStyleSheet(self, pickle):
+    self.docStyleSheet = cPickle.loads(pickle)
+    
+    # Restore cascade of styleSheets, i.e. insert into linked tree.
+    self.docStyleSheet.setParent(self.userStyleSheet)
+    
+    # Assert caller will reparent documentElements and restyle (polish) document
+    # signal styleSheetChanged is NOT emitted on setParent()
+
   
     

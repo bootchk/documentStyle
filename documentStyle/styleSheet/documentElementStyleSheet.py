@@ -16,11 +16,16 @@ class DocumentElementStyleSheet(IntermediateStyleSheet):
   Specializes StyleSheet:
   - leaf. No NamedStylingActSet since nothing can refer to it (Design might change.)
   - ALWAYS parented to docStyleSheet
-  - name is generic
+  - name is generic (not a user-given name to instance)
   '''
   def __init__(self):
-    # assert the application has docStyleSheet attribute
-    IntermediateStyleSheet.__init__(self, parent=QCoreApplication.instance().cascadion.docStyleSheet, name="DocElement")
+    IntermediateStyleSheet.__init__(self, name="DocElement")
+    '''
+    Always parented to docStyleSheet.
+    assert app has docStyleSheet attribute, i.e. parent style sheet exists.
+    Note that when unpickling a document, its docStyleSheet must be unpickled first.
+    '''
+    self.setParent(QCoreApplication.instance().cascadion.docStyleSheet)
     
     
   

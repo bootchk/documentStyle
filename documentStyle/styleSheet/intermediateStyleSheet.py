@@ -3,7 +3,6 @@ Copyright 2012 Lloyd Konneker
 
 This is free software, covered by the GNU General Public License.
 '''
-import copy
 
 from PySide.QtGui import QDialog, QFont
 
@@ -30,8 +29,8 @@ class IntermediateStyleSheet(StyleSheet):
   - cascades
   - editable
   '''
-  def __init__(self, parent, name):
-    StyleSheet.__init__(self, parent, name)
+  def __init__(self, name):
+    StyleSheet.__init__(self, name)
     # Collection may include many NamedStylingActSets
     self.stylingActSetCollection = StylingActSetCollection()
     
@@ -63,6 +62,7 @@ class IntermediateStyleSheet(StyleSheet):
     '''
     
     ''' Recurse: cascade: get Formation from parent. '''
+    assert self.parent is not None, 'Cascade broken at ' + self.name
     formation = self.parent.getFormation(selector)
     
     ''' Post-recursion processing. '''
@@ -127,7 +127,27 @@ class IntermediateStyleSheet(StyleSheet):
       target = self.stylingActSetCollection.getOrNew(topLevelFormation.selector)
       editedFormation.reflectToStylingActSet(derivingStylingActSet=target)
     
+    
+  '''
+  Persistence (pickling)
+  '''
   
+  def __reduce__(self):
+    '''
+    Implement pickling protocol 2 using reduce.
+    Needed since unadorned StyleSheet is not pickleable (problems with signals.)
+    
+    Return tuple: (class factory, args to class factory, state dictionary)
+    
+    !!! Note we disown from parent: only pickle this StyleSheet, not the chain of styleSheets.
+    Because pickling the cascade would finally attempt to pickle the AppStyleSheet, 
+    which by design should NOT be pickled.
+    '''
+    print "pickling stylesheet"
+    return (IntermediateStyleSheet, (self.name, ), {'stylingActSetCollection': self.stylingActSetCollection})
+  
+  """
+  OLD
   def getSerializable(self):
     '''
     Instance that is minimally essential to represent state: StylingActs.
@@ -148,7 +168,7 @@ class IntermediateStyleSheet(StyleSheet):
     '''
     self.stylingActSetCollection = copy.deepcopy(serializable)
     self.styleSheetChanged.emit() # force cascade and restyling of all styled instances
-  
+  """
   
 
   def testSAS(self):

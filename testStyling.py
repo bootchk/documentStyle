@@ -140,9 +140,12 @@ class GraphicsView(QGraphicsView):
     elif key == Qt.Key_U:
       QCoreApplication.instance().cascadion.userStyleSheet.edit()
     elif key == Qt.Key_S:
-      QCoreApplication.instance().cascadion.pickleDocStyleSheet()
+      print "Saved doc stylesheet"
+      self.pickledDSS = QCoreApplication.instance().cascadion.pickleDocStyleSheet()
     elif key == Qt.Key_R:
-      QCoreApplication.instance().cascadion.restoreDocStyleSheet()
+      print "Restored doc stylesheet"
+      QCoreApplication.instance().cascadion.restoreDocStyleSheet(self.pickledDSS)
+      # This is just a test. A real app might tell document to reparent documentElements (if they already exist) and polish
 
        
 class MainWindow(QMainWindow):
@@ -173,7 +176,8 @@ class App(QApplication):
     self.setOrganizationDomain("lloyd konneker")
     self.setApplicationName("testStyling")
     
-    self.cascadion = StyleSheetCascadion() # Must precede window?
+    # Must precede creation of document because documentElementStyleSheets parented to docStyleSheet
+    self.cascadion = StyleSheetCascadion() 
     
     mainWindow = MainWindow()
     self.documentView = mainWindow.newDocument()
@@ -181,7 +185,11 @@ class App(QApplication):
     mainWindow.show()
     self.mainWindow = mainWindow
     
+    # Arrange that changes to styleSheets will polish doc
     self.cascadion.connectSignals(mainWindow.scene.polish)
+    
+    # Initial polishing (using Styleable)
+    mainWindow.scene.polish()
     
     self.exec_()
  

@@ -12,7 +12,7 @@ from documentStyle.formation.formation import Formation
 from documentStyle.formation.instrumentFormation.penFormation import PenFormation
 from documentStyle.formation.instrumentFormation.brushFormation import BrushFormation
 from documentStyle.formation.instrumentFormation.opacityFormation import OpacityFormation
-from documentStyle.formation.instrumentFormation.graphicEffectFormation import GraphicEffectFormation
+#from documentStyle.formation.instrumentFormation.graphicEffectFormation import GraphicEffectFormation
 
 from documentStyle.formation.morphFormation import ShapeFormation, LineFormation, TextFormation, PixmapFormation
 
@@ -24,6 +24,9 @@ class AppStyleSheet(StyleSheet):
   Specializes StyleSheet:
   - root stylesheet. Parent is None.  Terminal for cascading.
   - has no StylingActSet (edit is view only, not changeable.)
+  - builds its formation
+  
+  Not serializable.  No state: its formation is not state, and is computed, ultimately by the framework
   
   Singleton
   '''

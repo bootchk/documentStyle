@@ -3,16 +3,15 @@ Copyright 2012 Lloyd Konneker
 
 This is free software, covered by the GNU General Public License.
 '''
+import cPickle
 
-# Accesses QCoreApplication for global widgets and global stylesheet
-from PySide.QtCore import QCoreApplication
 from PySide.QtGui import QDialog
 
-from documentStyle.styler import DynamicStyler
+from documentStyle.styler.dynamicStyler import DynamicStyler
 from documentStyle.selector import DETypeSelector
 from documentStyle.userInterface.styleDialog.styleDialog import EditableStyleSheetDialog
                                                   
-
+from documentStyle.debugDecorator import report
 
 class Styleable(object):
   '''
@@ -44,7 +43,7 @@ class Styleable(object):
   foo = editStyle(self)
   if foo is not None:
     applyStyle(foo)
-  getSerializableStyle() -> returns emptySerializeableStyle (if user canceled) or foo, and visual style equivalent to foo
+  serializedStyle() -> returns emptySerializeableStyle (if user canceled) or foo, and visual style equivalent to foo
   
   
   5.  Common case, user edits stylesheet
@@ -59,21 +58,21 @@ class Styleable(object):
   
   7.  Undo case
   setStylingDocumentElementType()
-  bar = getSerializableStyle(): returns current style
+  bar = serializedStyle(): returns current style
   foo = editStyle(self)
   if foo is not None:
     applyStyle(foo)
-  resetStyleFromSerializable(bar) -> visual style of document element restored to style prior to user edit of style
+  resetStyleFromSerialized(bar) -> visual style of document element restored to style prior to user edit of style
 
   
   8. Undo past stylesheet change case
   setStylingDocumentElementType()
-  bar = getSerializableStyle(): returns current style
+  bar = serializedStyle(): returns current style
   foo = editStyle(self)
   if foo is not None:
     applyStyle(foo)
   'user change style sheet'
-  resetStyleFromSerializable(bar) -> visual style of document element restored to style prior to user edit of style AND stylesheet
+  resetStyleFromSerialized(bar) -> visual style of document element restored to style prior to user edit of style AND stylesheet
   '''
   
   def setStylingDocumentElementType(self, DEType):
@@ -102,15 +101,13 @@ class Styleable(object):
         pass
     except AttributeError:
       print ">>>capturing original Style"
-      self.oldStyle = self.getSerializableStyle()
+      self.oldStyle = self.serializedStyle()
     
     newStyle = self.editStyle()
     if newStyle is None:
       # TEST undo
       print ">>>Restoring oldStyle"
-      self.resetStyleFromSerializable(self.oldStyle)
-      
-      
+      self.resetStyleFromSerialized(self.oldStyle)
       return # canceled
     else:
       self.applyStyle(newStyle)
@@ -134,24 +131,33 @@ class Styleable(object):
     self.styler.setFormation(style)
   
   
-  def getSerializableStyle(self):
+  @report
+  def serializedStyle(self):
     '''
-    Object instance that is serializable e.g. via pickling.
+    Object attribute that is serializable e.g. via pickling.
     And suitable as parameter to setStyleFromSerializable.
     
-    Object is StylingActSetCollection, but don't rely on that; that fact should remain hidden.
+    Since this is a mixin class, we explicitly expose serializiable part.
+    A class that inherits Styleable might have attributes that are not pickleable.
+    If your class that inherits Styleable IS pickleable, you don't need to call this,
+    but then you do need to call a method to apply style after unpickling your class.
+    (i.e. call self.styler.formation().applyTo(self) )
+    
+    Essentially, a StylingActSetCollection, but that fact is hidden.
     '''
-    return self.styler.getSerializable()
+    return cPickle.dumps(self.styler, cPickle.HIGHEST_PROTOCOL)
 
   
-  
-  def resetStyleFromSerializable(self, serializableStyle):
+  @report
+  def resetStyleFromSerialized(self, serializedStyle):
     '''
-    Set style of DocumentElement from an object instance that was returned by getSerializableStyle
+    Set style of DocumentElement from serialization by serializedStyle()
     
-    !!! The instance will be copied so that user's subsequent style changes do NOT affect the passed instance.
+    serializedStyle is not changed.
+    Current style is changed (a new DocumentStyleSheet is ultimately created.)
     '''
-    self.styler.resetFromSerializable(serializableStyle)
+    self.styler = cPickle.loads(serializedStyle)
+    self.styler.resetAfterDeserialization()
     self.styler.formation().applyTo(self)
     
     
