@@ -47,8 +47,8 @@ Document elements should:
 
 Application should also:
 - persist the DocumentStyleSheet with the Document (getSerializable() method)
-Note that the ApplicationStyleSheet actually comes from the framework's defaults, not the application.
-The DocumentElement attributes that contain the style should also be persisted,
+Note that the AppStyleSheet actually comes from the framework's defaults, not the application.
+The DocumentElement attributes that contain the style should also be persisted.
 but DocumentStyle subsystem doesn't know those attributes except via a Styler.
 
 
@@ -59,8 +59,6 @@ Persist style of document elements with the document.
 Persist document stylesheet with the document.
 Persist user stylesheet as settings.
 Persist app stylesheet.
-
-Reset stylesheets TODO
 
 
 Styling subsystem requirements
@@ -94,10 +92,30 @@ This subsystem is not based on that object model (just uses them to style a few 
 Older Qt versions apparently had a QStyleSheet class for styling text documents, but this subsystem does not borrow that class.
 
 
+Persistence and Undo
+====================
+
+Persists using python pickle.
+
+StyleSheets pickle.  Since they use QSignal, they can't be pickled nievely;
+they implement a __reduce__ method to pickle the pertinent attributes.
+The pertinent attribute is the StylingActSetCollection (the in-line style); most style cascades.
+
+Except the AppStyleSheet does NOT pickle.  It is the root of cascading, and its style essentially comes from the framework.
+
+UserStyleSheet pickles and saves itself in QSetting (persists between app sessions, a preference of a user, not part of a document.)
+
+A Styler pickles to serialize style of a DocumentElement.
+Essentially that pickles the DocumentElementStyleSheet of a Styleable.
+Note that you must call Styler.resetAfterDeserialization() after deserializing a Styler.
+
+Pickled Styler is also useful to save the style of a DocumentElement for undo/redo.
+
+
 Status
 ======
 IN PROGRESS see the TODO list
 
-Also TODO: singleton Styler for each kind of DocumentElement.
-Factory for Styler.
+A button on StyleSheetDialogs to reset all values to cascaded values (erase in-lining.)
+
 

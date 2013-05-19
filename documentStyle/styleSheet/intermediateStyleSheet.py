@@ -94,6 +94,8 @@ class IntermediateStyleSheet(StyleSheet):
     - modify a SAS
     - delete a SAS
     - or append SAS
+    
+    Return bool whether canceled.
     '''
     # testing: canned SAS
     # self.testSAS()
@@ -108,8 +110,11 @@ class IntermediateStyleSheet(StyleSheet):
     if dialog.result() == QDialog.Accepted:
       self.reflectEditsToStylingActSetCollection(editedFormation)
     
-    # Since this is intermediate (user or doc) stylesheet, restyle all DocumentElements
-    self.styleSheetChanged.emit()
+      # Since this is intermediate (user or doc) stylesheet, restyle all DocumentElements
+      self.styleSheetChanged.emit()
+      return True
+    else:
+      return False
     
 
   def reflectEditsToStylingActSetCollection(self, editedFormation):

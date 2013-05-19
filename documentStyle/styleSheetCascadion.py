@@ -20,6 +20,7 @@ class StyleSheetCascadion(object):
     '''
     Create cascading sequence of stylesheets.
     Ordering is important.
+    !!! Getting userStyleSheet from setting is built-in, but some apps may not want this.
     '''
     # !!! styleSheet() also a method of Qt QGV
     
@@ -29,6 +30,7 @@ class StyleSheetCascadion(object):
     # Serialized to user preferences, identical between sessions with different docs
     savedUserStyleSheet = self._getUserStylesheetFromSettings()
     if savedUserStyleSheet is None:
+      # Default userStyleSheet (empty of styling acts.)
       self.userStyleSheet = IntermediateStyleSheet(name="User")
     else:
       self.userStyleSheet = savedUserStyleSheet
@@ -63,7 +65,13 @@ class StyleSheetCascadion(object):
   
   def saveUserStylesheetAsSettings(self):
     settings = QSettings()
+    '''
+    This does not work, yields "invalid load key" on unpickling:
     pickledUserStyleSheet = cPickle.dumps(self.userStyleSheet, cPickle.HIGHEST_PROTOCOL)
+    Attempting: settings.setIniCodec('UTF-8') does not help the problem.
+    So we use the default protocol.
+    '''
+    pickledUserStyleSheet = cPickle.dumps(self.userStyleSheet)
     settings.setValue("UserStyleSheet", pickledUserStyleSheet)
     
     
@@ -71,7 +79,9 @@ class StyleSheetCascadion(object):
     " Private, called at init. "
     print "UserStyleSheetFromSettings"
     settings = QSettings()
+    
     styleSheetPickledInSettings = settings.value("UserStyleSheet")
+    print "Type unpickled", type(styleSheetPickledInSettings)
     if styleSheetPickledInSettings is not None:
       # convert unicode to str
       print styleSheetPickledInSettings

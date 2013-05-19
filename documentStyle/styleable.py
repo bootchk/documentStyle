@@ -43,7 +43,7 @@ class Styleable(object):
   foo = editStyle(self)
   if foo is not None:
     applyStyle(foo)
-  serializedStyle() -> returns emptySerializeableStyle (if user canceled) or foo, and visual style equivalent to foo
+  serializedStyle() -> returns emptySerializeableStyle (if user canceled) or foo, and visual style is equivalent to foo
   
   
   5.  Common case, user edits stylesheet
@@ -73,13 +73,21 @@ class Styleable(object):
     applyStyle(foo)
   'user change style sheet'
   resetStyleFromSerialized(bar) -> visual style of document element restored to style prior to user edit of style AND stylesheet
+  
+  9. Pickling case where other ancestors are not pickleable
+  # Only pickle self.styler
+  # Typically in __reduce__(self): return (callable, argsToCallable, {'styler', self.styler})
+  serializedStyleable = cpickle.dumps(self.styler)
+  self.styler = cpickle.loads(serializedStyleable)
+  self.polishAfterDeserialization()  : visible style of element restored
+  
   '''
   
   def setStylingDocumentElementType(self, DEType):
     '''
     Initialize with a styler.
     Styler depends on document element type.
-    A DocumentElement has style (lower case, not Style) but no Styler UNTIL user acts to style it.
+    A DocumentElement has style (lower case, not Style) but no Style (to model, then from model to view.)r UNTIL user acts to style it.
     In other words, this can be done just before editStyle(), or earlier when DocumentElement is created.
     '''
     # Choose Dynamic or Template.  Defines the broad behaviour of app.  Need Factory?
@@ -157,14 +165,29 @@ class Styleable(object):
     Current style is changed (a new DocumentStyleSheet is ultimately created.)
     '''
     self.styler = cPickle.loads(serializedStyle)
-    self.styler.resetAfterDeserialization()
-    self.styler.formation().applyTo(self)
+    self.polishAfterDeserialization()
+    
+    
+  def polishAfterDeserialization(self):
+    '''
+    Hides self.styler from callers.
+    '''
+    self.styler.resetAfterDeserialization() # reestablish cascade
+    self.polish()
     
     
   def applyStyle(self, style):
-    " Apply given style (to model, then from model to view.)"
+    " Apply given style to self."
+    '''
+    From passed style to model.
+    Essentially, create StylingActs on self's StyleSheet.
+    '''
     self._setStyle(style)
-    self.styler.formation().applyTo(self)
+    '''
+    From model to view.
+    Essentially, cascade StyleSheets and apply resulting Formation to Drawable.
+    '''
+    self.styler.formation().applyTo(self) 
 
     
   
