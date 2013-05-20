@@ -31,8 +31,9 @@ class StyleSheet(QObject):  # QObject for signals
   The AppStyleSheet subclass does NOT persist.  
   Subclasses IntermediateStyleSheet and DocumentElementStyleSheet DO persist.
   
-  It is NOT a responsibility to emit signal when the cascade structure changes,
+  It is NOT a responsibility of StyleSheet to emit signal when cascade structure changes,
   i.e. when a StyleSheet in cascade is deserialized and inserted in the cascade.
+  (But StyleSheetCascadion has that responsibility.)
   
   This is ABC, defining methods that should be reimplemented.
   '''

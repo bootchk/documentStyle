@@ -24,6 +24,6 @@ class Styler(object):
   def setFormation(self, newFormation):
     raise NotImplementedError, "Deferred"
 
-  def resetAfterDeserialization(self):
+  def addToStyleCascade(self):
     raise NotImplementedError, "Deferred"
 

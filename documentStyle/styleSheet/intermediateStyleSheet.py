@@ -110,7 +110,13 @@ class IntermediateStyleSheet(StyleSheet):
     if dialog.result() == QDialog.Accepted:
       self.reflectEditsToStylingActSetCollection(editedFormation)
     
-      # Since this is intermediate (user or doc) stylesheet, restyle all DocumentElements
+      '''
+      Self is intermediate (user or doc or documentElement) stylesheet instance.
+      Signals are emitted from instances.
+      Handlers for user and doc stylesheets signal will probably polish all DocumentElements.
+      Handler for DocumentElementStyleSheet signal may be in a DocumentElement instance,
+      or the signal may be unhandled, i.e. DocumentElement being edited will polish itself.
+      '''
       self.styleSheetChanged.emit()
       return True
     else:

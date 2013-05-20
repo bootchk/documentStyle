@@ -2,10 +2,11 @@
 '''
 import cPickle
 
-from PySide.QtCore import QSettings
+from PySide.QtCore import QSettings, Qt
 
 from documentStyle.styleSheet.appStyleSheet import AppStyleSheet
 from documentStyle.styleSheet.intermediateStyleSheet import IntermediateStyleSheet
+from documentStyle.debugDecorator import report
 
 
 class StyleSheetCascadion(object):
@@ -14,6 +15,13 @@ class StyleSheetCascadion(object):
   Cascadion is noun, cascade is verb.
   
   Methods are exported to app (a document editing app.)
+  
+  Responsibilities:
+  - initialize a default cascade prefix: [app, user, doc] (less documentElementSS suffix)
+  - save and restore UserStyleSheet as settings
+  - serialize and deserialize DocumentStyleSheet
+  - insert new DocumentStyleSheet into cascade (and signal change)
+  - know what part of cascade may change (be able to connect signals)
   '''
 
   def __init__(self):
@@ -40,7 +48,7 @@ class StyleSheetCascadion(object):
     A DocStyleSheet is usually serialized, attached to document.
     Here, create cascade with default DocStyleSheet (with empty StylingActSetCollection)
     Don't assume that a document and its stylesheet exists when cascadion is created.
-    If it does exists, caller should call restoreDocStyleSheet
+    If not-trivial DocStyleSheet does exist, caller should call restoreDocStyleSheet
     '''
     self.docStyleSheet = IntermediateStyleSheet(name="Doc")
     self.docStyleSheet.setParent(self.userStyleSheet)
@@ -59,8 +67,11 @@ class StyleSheetCascadion(object):
     
     FUTURE: Optimize by choosing stylesheet to start cascade?
     '''
-    self.userStyleSheet.styleSheetChanged.connect(handler)
-    self.docStyleSheet.styleSheetChanged.connect(handler)
+    # !!! Queued so that they are handled in event loop AFTER any other changes to doc structure or style
+    self.userStyleSheet.styleSheetChanged.connect(handler, Qt.QueuedConnection)
+    self.docStyleSheet.styleSheetChanged.connect(handler, Qt.QueuedConnection)
+    # Remember my parent's handler
+    self.parentHandler = handler
     
   
   def saveUserStylesheetAsSettings(self):
@@ -96,13 +107,38 @@ class StyleSheetCascadion(object):
     
     
   def restoreDocStyleSheet(self, pickle):
-    self.docStyleSheet = cPickle.loads(pickle)
+    ''' set DocStyleSheet from a pickle. '''
+    newDocStyleSheet = cPickle.loads(pickle)
+    self.setDocStyleSheet(newDocStyleSheet)
     
-    # Restore cascade of styleSheets, i.e. insert into linked tree.
+    
+    
+  @report
+  def setDocStyleSheet(self, newDocStyleSheet):
+    '''
+    Insert newDocStyleSheet into cascade, i.e. insert into linked tree.
+    
+    Old DocStyleSheet usually garbage collected.
+    Callers should not save references to DocStyleSheet.
+    
+    This encapsulates that changing DocStyleSheet requires signal.
+    (No caller should directly write self.docStyleSheet.)
+
+    '''
+    self.docStyleSheet = newDocStyleSheet
     self.docStyleSheet.setParent(self.userStyleSheet)
     
-    # Assert caller will reparent documentElements and restyle (polish) document
-    # signal styleSheetChanged is NOT emitted on setParent()
+    # !!! Connect newDocStyleSheet signals (signals are from instances, old instance connections are lost.)
+    self.docStyleSheet.styleSheetChanged.connect(self.parentHandler, Qt.QueuedConnection)
+    
+    '''
+    signal styleSheetChanged is NOT emitted on setParent() (but maybe it should be, since cascade changes?)
+    Instead, emit signal now.
+    New stylesheet might not be substantively different from old, but assume it is.
+    '''
+    self.docStyleSheet.styleSheetChanged.emit()
+    # Assert caller will reparent documentElements  (before signal handled in event loop by polish() )
+    
 
   
     

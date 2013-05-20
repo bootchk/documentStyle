@@ -15,12 +15,13 @@ class DynamicStyler(Styler):
   User editing of DocumentStyleSheet changes set of DocumentElements that have not been individually styled.
   
   Note this is pickleable since attributes are pickleable.
-  !!! Assert a deserialized self does NOT have _styleSheet parented; must call resetAfterDeserialization()
+  !!! Assert a deserialized self does NOT have _styleSheet parented; must call addToStyleCascade()
   '''
   
   def __init__(self, selector):
     self._styleSheet = DocumentElementStyleSheet()
     self.selector = selector
+    # ensure self is in style cascade (DESS() ensures it.)
   
   
   def formation(self):
@@ -35,7 +36,7 @@ class DynamicStyler(Styler):
     newFormation.reflectToStylingActSet(target)
   
   
-  def resetAfterDeserialization(self):
+  def addToStyleCascade(self):
     '''
     Restore invariants.
     

@@ -167,12 +167,23 @@ class Styleable(object):
     self.styler = cPickle.loads(serializedStyle)
     self.polishAfterDeserialization()
     
+  
+  def addToStyleCascade(self):
+    '''
+    Ensure self is a leaf in style cascade.
+    
+    Deserialized Styleables are not in style cascade.
+    '''
+    self.styler.addToStyleCascade()
+    
     
   def polishAfterDeserialization(self):
     '''
+    Polish an individual styleable after it is deserialized.
+    E.G. called after an undo style change.
     Hides self.styler from callers.
     '''
-    self.styler.resetAfterDeserialization() # reestablish cascade
+    self.addToStyleCascade()
     self.polish()
     
     
