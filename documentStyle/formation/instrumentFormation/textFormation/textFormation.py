@@ -23,13 +23,13 @@ class TextFormation(InstrumentFormation):
     '''
     Redefined for text: apply to a cursor on morph.
     '''
-    cursor = self._getCursorSelectAll(morph)
-    self.applyToCursor(cursor)
+    if not morph.document().isEmpty():
+      cursor = self._getCursorSelectAll(morph)
+      self.applyToCursor(cursor)
     
     
   def applyToCursor(self, cursor):
-    ''' Deferred. '''
-    raise NotImplementedError
+    raise NotImplementedError # Deferred
   
   
   def _getCursorSelectAll(self, morph):
