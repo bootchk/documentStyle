@@ -34,13 +34,17 @@ class TextFormation(InstrumentFormation):
   
   def _getCursorSelectAll(self, morph):
     '''
-    Cursor with selection of entire document of morph.
+    Cursor on entire document (text) of a morph (DocumentElement) of type Text.
+    
+    morph may be empty of text.
+    !!! Cursor may not hasSelection() if morph is empty of text.
     '''
     cursor = QTextCursor(morph.document())
-    assert not morph.document().isEmpty()  #require: can't select empty document
     cursor.setPosition(0)
     cursor.clearSelection()
     # programmatic selection requires movePosition(), not setPosition()
     cursor.movePosition(QTextCursor.End, QTextCursor.KeepAnchor)
-    assert cursor.hasSelection()  #ensure
+    # In Qt, cursor is valid for further operations regardless of whether hasSelection()
+    # ensure document not empty => cursor.hasSelection
+    assert morph.document().isEmpty() or cursor.hasSelection()
     return cursor
