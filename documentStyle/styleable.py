@@ -231,7 +231,11 @@ class Styleable(object):
     '''
     # print "Polish ", self.selector
     ## self.getStyle().applyTo(self)
-    self.styler.formation().applyTo(self)
+    try:
+      self.styler.formation().applyTo(self)
+    except AttributeError:
+      print "If no styler attribute, programming error: must call setStylingDocumentElementType()"
+      raise
 
 
   

@@ -33,7 +33,7 @@ class StylingActSet(dict):
   #@report
   def applyToFormation(self, formation):
     for stylingAct in self.values():
-      print "From StylingActSet " + str(self)
+      #print "From StylingActSet " + str(self)
       stylingAct.applyToFormation(formation)
       
   def put(self, stylingAct):
