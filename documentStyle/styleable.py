@@ -5,13 +5,12 @@ This is free software, covered by the GNU General Public License.
 '''
 import cPickle
 
-from PySide.QtGui import QDialog
-
 from documentStyle.styler.dynamicStyler import DynamicStyler
 from documentStyle.selector import DETypeSelector
-from documentStyle.userInterface.styleDialog.styleDialog import EditableStyleSheetDialog
                                                   
 from documentStyle.debugDecorator import report
+
+
 
 class Styleable(object):
   '''
@@ -24,7 +23,7 @@ class Styleable(object):
   - polish: apply style
   
   
-  No __init__: since mixin, let init pass up MRO.
+  No __init__: since mixin, let init pass up MRsheetO.
   However, must initialize with a call to setStylingDocumentElementType()
   
   ADT algebra, i.e. API
@@ -207,19 +206,11 @@ class Styleable(object):
     Let user edit style of DocumentElement.
     Return Style, or None if canceled.
     !!! Does not apply Style to DocumentElement
+    
+    Implementation: delegate to styler.
     '''
-    editableCopyOfStyle = self.styler.formation()
-    '''
-    Parent to app's activeWindow.
-    FUTURE, if a document element is its own window, parent to it?
-    Or position the dialog closer to the document element.
-    '''
-    styleDialog = EditableStyleSheetDialog(formation=editableCopyOfStyle, title="Element Style")
-    styleDialog.exec_()
-    if styleDialog.result() == QDialog.Accepted:
-      return editableCopyOfStyle
-    else:
-      return None
+    return self.styler.getEditedStyle(dialogTitle="Element Style")
+    
 
 
   def polish(self):

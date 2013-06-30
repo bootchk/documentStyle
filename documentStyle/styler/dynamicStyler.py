@@ -4,9 +4,11 @@ Copyright 2013 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 from PySide.QtCore import QCoreApplication
+from PySide.QtGui import QDialog
 
 from .styler import Styler
 from ..styleSheet.documentElementStyleSheet import DocumentElementStyleSheet
+from documentStyle.userInterface.styleDialog.styleDialog import EditableStyleSheetDialog
 
 
 class DynamicStyler(Styler):
@@ -49,6 +51,26 @@ class DynamicStyler(Styler):
     self._styleSheet.setParent(QCoreApplication.instance().cascadion.docStyleSheet)
   
   
+  def getEditedStyle(self, dialogTitle):
+    ''' 
+    Let user edit style held by styler.
+    Return Style, or None if canceled.
+    !!! Does not apply Style to DocumentElement
+    '''
+    editableCopyOfStyle = self.formation()
+    '''
+    Parent to app's activeWindow.
+    FUTURE, if a document element is its own window, parent to it?
+    Or position the dialog closer to the document element.
+    '''
+    styleDialog = EditableStyleSheetDialog(formation=editableCopyOfStyle, title=dialogTitle)
+    styleDialog.exec_()
+    if styleDialog.result() == QDialog.Accepted:
+      return editableCopyOfStyle
+    else:
+      return None
+    
+    
   """
   OLD
   " Delegate serialization to my stylesheet"
