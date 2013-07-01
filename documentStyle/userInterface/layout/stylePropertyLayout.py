@@ -127,26 +127,34 @@ class StylePropertyLayout(QHBoxLayout):
 
 
 
+class NumericStylePropertyLayout(StylePropertyLayout):
+  
+  def initializeWidgetRanges(self, widget, parentStyleProperty):
+    assert parentStyleProperty.maximum >= parentStyleProperty.minimum
+    widget.setRange(parentStyleProperty.minimum, parentStyleProperty.maximum)
+    widget.setSingleStep(parentStyleProperty.singleStep)
+    widget.setValue(parentStyleProperty.minimum)
+    print "Widget max", widget.maximum()
+    assert widget.hasAcceptableInput()
+  
   
     
-class FloatStylePropertyLayout(StylePropertyLayout):
+class FloatStylePropertyLayout(NumericStylePropertyLayout):
   
   def createControlWidget(self, parentStyleProperty):
     widget = ResettableDoubleSpinBox(resettableValue = parentStyleProperty.resettableValue)
-    widget.setRange(parentStyleProperty.minimum, parentStyleProperty.maximum)
+    ## widget.setRange(parentStyleProperty.minimum, parentStyleProperty.maximum)
+    self.initializeWidgetRanges(widget, parentStyleProperty)
     return widget
 
 
 
-class IntStylePropertyLayout(StylePropertyLayout):
+class IntStylePropertyLayout(NumericStylePropertyLayout):
     
   def createControlWidget(self, parentStyleProperty):
     widget = ResettableSpinBox(resettableValue = parentStyleProperty.resettableValue)
-    assert parentStyleProperty.maximum > parentStyleProperty.minimum
-    widget.setRange(parentStyleProperty.minimum, parentStyleProperty.maximum)
-    widget.setValue(parentStyleProperty.minimum)
-    assert widget.hasAcceptableInput()
-    # TODO units suffix
+    self.initializeWidgetRanges(widget, parentStyleProperty)
+    # TODO units suffix ?
     return widget
 
 

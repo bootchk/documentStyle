@@ -35,10 +35,12 @@ class ToolStyler(DynamicStyler):
     newStyle = self.getEditedStyle(dialogTitle=self.toolName + "Tool Style")
     if newStyle is None:
       # canceled, self's styleSheet unchanged
-      return 
+      result = False
     else:
       # update self's styleSheet, but doesn't affect any document elements now
       self.setFormation(newStyle)
+      result = True
+    return result
     
     
 
@@ -55,7 +57,8 @@ class ToolStyler(DynamicStyler):
     
     # Change view i.e. visuals
     # Essentially documentElement.polish(), but more efficient (forego another cascade.)
-    style.applyTo(documentElement)
+    #style.applyTo(documentElement)
+    documentElement.polish()
     
     
     

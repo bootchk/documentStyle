@@ -16,9 +16,10 @@ class OpacityFormation(InstrumentFormation):
   def __init__(self, parentSelector):
     InstrumentFormation.__init__(self, name="Opacity", parentSelector=parentSelector)
     self.instrument = POpacityInstrument()
+    # !!! minimum is 0.1 otherwise it dissappears and user can't access
     self.styleProperties=[FloatStyleProperty("Opacity", 
                                              self.instrument.setOpacity, self.instrument.opacity, self.selector, 
-                                             0.0, 1.0), ]
+                                             0.1, 1.0), ]
   
   
   def applyTo(self, morph):

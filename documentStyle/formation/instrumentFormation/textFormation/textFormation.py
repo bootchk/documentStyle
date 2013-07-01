@@ -17,6 +17,9 @@ class TextFormation(InstrumentFormation):
   no styling can be done during iteration of blocks and fragments.
   Hence this Formation subclass differs from others in that it applies itself
   to a Cursor of a DocumentElement instead of a DocumentElement.
+  
+  !!! Note that if an app creates a new cursor, style must be applied to it also,
+  otherwise text in the cursor will not be styled.
   '''
   
   def applyTo(self, morph):

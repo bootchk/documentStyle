@@ -1,22 +1,10 @@
 '''
 '''
-from PySide.QtCore import Qt
 from PySide.QtGui import QBrush #, QTransform
+
+from ...userInterface.model.brush import BrushModel
 from instrumentFormation import InstrumentFormation
 from ..styleProperty import ColorStyleProperty, ComboBoxStyleProperty
-
-
-class AdaptedBrushModel(object):
-  '''
-  Mimics a PySide enum: has "values" attribute that is a dictionary
-  '''
-  def __init__(self):
-    self.values = {"None": Qt.BrushStyle.NoBrush,
-                   "Solid": Qt.BrushStyle.SolidPattern }
-    # TODO more
-  
-BrushModel = AdaptedBrushModel()
-
 
 
 class BrushFormation(InstrumentFormation):
@@ -28,7 +16,7 @@ class BrushFormation(InstrumentFormation):
     self.styleProperties=[ColorStyleProperty("Color", self.instrument.setColor, self.instrument.color, self.selector),
                           ComboBoxStyleProperty("Pattern", 
                                                 self.instrument.setStyle, self.instrument.style, self.selector,
-                                                model = BrushModel),] # model = Qt.BrushStyle),]
+                                                model = BrushModel),]
     '''
     sic, BrushPattern is called Style in Qt
     

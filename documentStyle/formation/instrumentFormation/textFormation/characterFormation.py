@@ -50,6 +50,10 @@ class CharacterFormation(TextFormation):
     #print "applyToCursor: brush again", brush
     """
     
+    '''
+    Alternatively, setCharFormat.
+    Merging leaves some style unchanged, e.g. block format if char format is being merged?
+    '''
     cursor.mergeCharFormat(self.instrument)
     
 '''

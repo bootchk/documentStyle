@@ -38,7 +38,7 @@ class BaseStyleProperty(object): # QObject if signals
 
   # stylePropertyValueChanged = Signal()
   
-  def __init__(self, name, setter, getter, parentSelector, minimum=0, maximum=0, model=None ):
+  def __init__(self, name, setter, getter, parentSelector, minimum=0, maximum=0, singleStep=0.1, model=None ):
     '''
     '''
     self.name = name
@@ -48,6 +48,7 @@ class BaseStyleProperty(object): # QObject if signals
     assert self.resettableValue.value() is not None
     self.minimum = minimum
     self.maximum = maximum
+    self.singleStep = singleStep
     self.model = model  # enum dictionary maps GUI strings to values
     # My selector describes parents and field of self e.g. Foo,Line,Pen,Color
     self.selector = fieldSelector(parentSelector, name)
