@@ -19,8 +19,19 @@ class Instrument(object):
   Instrument subclasses here are missing from Qt,
   and unlike Qt Instruments they cannot be set() on a Document Element
   (only their attribute is copied.)
-  
-  Abstract and not inherited: only documentation.
+
+  Responsibilities:
+   - maintain (get, set) a style value
+   - know a default style (value of a new instrument)
+   
+   A Formation applies an instrument to a document element.
+   The instruments provided by the framework can be applied to a document element
+   by passing the instrument to a method of a document element.
+   A formation applies the instruments in this directory to a document element
+   via adaption: the formation extracts instrument value and passes that to the document element.
+   (Probably document elements should be changed to accept even the instruments not provided by the framework.)
+   
+   Abstract and not inherited: only documentation.
   '''
   pass
 

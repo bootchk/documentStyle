@@ -91,7 +91,9 @@ class StyleComboBox(Resettable, QComboBox):
     i = 0
     foundKey = False
     for _, value in self.model.values.items():
-      if value is searchValue:  # !!! is, not ==, to match None
+      #print searchValue, value
+      # if searchValue is None and None is in dictionary, or searchValue == value
+      if value is searchValue or value == searchValue:  # !!! is, not ==, to match None
         foundKey = True
         break
       i += 1

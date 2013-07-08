@@ -134,7 +134,7 @@ class NumericStylePropertyLayout(StylePropertyLayout):
     widget.setRange(parentStyleProperty.minimum, parentStyleProperty.maximum)
     widget.setSingleStep(parentStyleProperty.singleStep)
     widget.setValue(parentStyleProperty.minimum)
-    print "Widget max", widget.maximum()
+    #print "Widget max", widget.maximum()
     assert widget.hasAcceptableInput()
   
   

@@ -6,6 +6,9 @@ from PySide.QtGui import QGraphicsBlurEffect, QGraphicsDropShadowEffect, QGraphi
 from documentStyle.instrument.graphicEffectInstrument import PGraphicEffectInstrument
 from documentStyle.formation.instrumentFormation.instrumentFormation import InstrumentFormation
 from documentStyle.formation.styleProperty import ComboBoxStyleProperty
+from documentStyle.formation.styleProperty import UnwrappedComboBoxStyleProperty
+from documentStyle.model.graphicEffect import graphicEffectModel
+
 
 
 '''
@@ -23,19 +26,6 @@ Hence, we create a new QGraphicsEffect whenever applied to a DocumentElement
 effects = []
 
 
-class Model(object):
-  '''
-  Mimics a PySide enum: has "values" attribute that is a dictionary
-  '''
-  def __init__(self):
-    self.values = {"None": 0,  # In Qt, does not exist NullGraphicsEffect
-                   "Blur": 1,
-                   "Drop Shadow": 2 }
-    # TODO other effects
-  
-graphicEffectModel = Model()
-
-
 
 class GraphicEffectFormation(InstrumentFormation):
   '''
@@ -47,8 +37,9 @@ class GraphicEffectFormation(InstrumentFormation):
   def __init__(self, parentSelector):
     InstrumentFormation.__init__(self, name="Graphic Effect", parentSelector=parentSelector)
     self.instrument = PGraphicEffectInstrument()
-    self.styleProperties=[ComboBoxStyleProperty("Graphic Effect", 
-                                                self.instrument.setGraphicEffect, self.instrument.graphicEffect, self.selector,
+    self.styleProperties=[UnwrappedComboBoxStyleProperty("Graphic Effect", 
+                                                self.instrument.setGraphicEffect, self.selector,
+                                                default=self.instrument.graphicEffect(),
                                                 model = graphicEffectModel)]  
   
   
@@ -60,7 +51,8 @@ class GraphicEffectFormation(InstrumentFormation):
     
     morph.setGraphicsEffect(effect)
     
-    
+  
+  # TODO this should be a StyleWrapper ?
   def adaptEncoding(self, codedValue):
     '''
     Adapt coded value to a QGraphicEffect value

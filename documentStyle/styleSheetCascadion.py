@@ -95,7 +95,7 @@ class StyleSheetCascadion(object):
     print "Type unpickled", type(styleSheetPickledInSettings)
     if styleSheetPickledInSettings is not None:
       # convert unicode to str
-      print styleSheetPickledInSettings
+      # print "Pickled stylesheet in settings: ", styleSheetPickledInSettings
       return cPickle.loads(str(styleSheetPickledInSettings))
     else:
       return None

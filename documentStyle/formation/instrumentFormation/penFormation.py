@@ -1,10 +1,13 @@
 '''
 
 '''
-from PySide.QtCore import Qt
+
 from PySide.QtGui import QPen
 from instrumentFormation import InstrumentFormation
 from ..styleProperty import ColorStyleProperty, IntStyleProperty, ComboBoxStyleProperty
+from ...model.pen import PenModel
+from documentStyle.styleWrapper.styleWrapper import PenStyleWrapper
+
 
 class PenFormation(InstrumentFormation):
   '''
@@ -21,12 +24,21 @@ class PenFormation(InstrumentFormation):
     '''
     InstrumentFormation.__init__(self, name="Pen", parentSelector=parentSelector)
     self.instrument = QPen()
-    self.styleProperties=[ColorStyleProperty("Color", self.instrument.setColor, self.instrument.color, self.selector), 
-                          IntStyleProperty("Width", self.instrument.setWidth, self.instrument.width, self.selector, 0, 10),
-                          ComboBoxStyleProperty("Style", self.instrument.setStyle, self.instrument.style, self.selector,
-                                                model = Qt.PenStyle)
+    self.styleProperties=[ColorStyleProperty("Color", self.instrument.setColor, self.selector,
+                                             default = self.instrument.color()), 
+                          IntStyleProperty("Width", self.instrument.setWidth, self.selector,
+                                           default=self.instrument.width(),
+                                          minimum=0, maximum=10, singleStep=1),
+                          ComboBoxStyleProperty("Style", self.instrument.setStyle, 
+                                                self.selector,
+                                                default=PenStyleWrapper(self.instrument.style()),
+                                                model = PenModel)
                           ]
-
+  '''
+  Old getters: self.instrument.color, ), 
+  self.instrument.width, 
+  self.instrument.style, 
+  '''
 
   def applyTo(self, morph):
     '''
@@ -58,7 +70,8 @@ class PenFormation(InstrumentFormation):
     
     # !!! Note float value and setWidthF is float setter
     self.instrument.setWidthF(scaledWidthF)
-    print "PenFormation.applyTo width: item scale, unscaled width, scaled width", itemScale, unscaledWidth, scaledWidthF, " on morph", morph
+    print "PenFormation.applyTo width: item scale, unscaled width, scaled width", itemScale, 
+    unscaledWidth, scaledWidthF, " on morph", morph
   """
     
     

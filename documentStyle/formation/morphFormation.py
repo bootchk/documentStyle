@@ -39,6 +39,9 @@ class LineFormation(MorphFormation):
     MorphFormation.__init__(self, "Line")
     self.append(PenFormation(parentSelector=self.selector))
     self.append(OpacityFormation(parentSelector=self.selector))
+    self.append(GraphicEffectFormation(parentSelector=self.selector))
+
+    
 
 
 
@@ -50,6 +53,7 @@ class ShapeFormation(MorphFormation):
     self.append(PenFormation(parentSelector=self.selector))
     self.append(BrushFormation(parentSelector=self.selector))
     self.append(OpacityFormation(parentSelector=self.selector))
+    self.append(GraphicEffectFormation(parentSelector=self.selector))
     
     
     
@@ -61,6 +65,7 @@ class TextFormation(MorphFormation):
     self.append(CharacterFormation(parentSelector=self.selector))
     self.append(BlockFormation(parentSelector=self.selector))
     self.append(OpacityFormation(parentSelector=self.selector))
+    self.append(GraphicEffectFormation(parentSelector=self.selector))
     
 
 

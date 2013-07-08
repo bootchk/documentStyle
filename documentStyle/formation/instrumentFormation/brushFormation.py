@@ -2,9 +2,12 @@
 '''
 from PySide.QtGui import QBrush #, QTransform
 
-from ...userInterface.model.brush import BrushModel
+
 from instrumentFormation import InstrumentFormation
 from ..styleProperty import ColorStyleProperty, ComboBoxStyleProperty
+from ...model.brush import BrushModel
+from ...styleWrapper.styleWrapper import BrushStyleWrapper
+
 
 
 class BrushFormation(InstrumentFormation):
@@ -13,10 +16,14 @@ class BrushFormation(InstrumentFormation):
   def __init__(self, parentSelector):
     InstrumentFormation.__init__(self, name="Brush", parentSelector=parentSelector)
     self.instrument = QBrush()
-    self.styleProperties=[ColorStyleProperty("Color", self.instrument.setColor, self.instrument.color, self.selector),
+    self.styleProperties=[ColorStyleProperty("Color", self.instrument.setColor, self.selector,
+                                             default=self.instrument.color()),
                           ComboBoxStyleProperty("Pattern", 
-                                                self.instrument.setStyle, self.instrument.style, self.selector,
+                                                self.instrument.setStyle, self.selector,
+                                                ## default=self.instrument.style(),
+                                                default=BrushStyleWrapper(self.instrument.style()),
                                                 model = BrushModel),]
+    
     '''
     sic, BrushPattern is called Style in Qt
     

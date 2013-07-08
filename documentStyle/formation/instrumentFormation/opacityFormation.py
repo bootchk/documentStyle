@@ -18,8 +18,9 @@ class OpacityFormation(InstrumentFormation):
     self.instrument = POpacityInstrument()
     # !!! minimum is 0.1 otherwise it dissappears and user can't access
     self.styleProperties=[FloatStyleProperty("Opacity", 
-                                             self.instrument.setOpacity, self.instrument.opacity, self.selector, 
-                                             0.1, 1.0), ]
+                                             self.instrument.setOpacity,  self.selector,
+                                             default=self.instrument.opacity(),
+                                             minimum=0.1, maximum=1.0), ]
   
   
   def applyTo(self, morph):

@@ -6,6 +6,8 @@ from PySide.QtGui import QTextCharFormat
 from textFormation import TextFormation
 from documentStyle.formation.instrumentFormation.instrumentFormation import InstrumentFormation
 from documentStyle.formation.styleProperty import ColorStyleProperty, FontStyleProperty
+from documentStyle.styleWrapper.fontStyleWrapper import FontStyleWrapper
+
 
 
 class CharacterFormation(TextFormation):
@@ -19,9 +21,13 @@ class CharacterFormation(TextFormation):
     InstrumentFormation.__init__(self, name="Character", parentSelector=parentSelector)
     self.instrument = QTextCharFormat()
     self.styleProperties=[ColorStyleProperty("Color", 
-                                             self.instrument.foreground().setColor, self.instrument.foreground().color, self.selector,
-                                             0, 0), 
-                      FontStyleProperty("Font", self.instrument.setFont, self.instrument.font, self.selector, 0, 0),]
+                                             self.instrument.foreground().setColor,  self.selector,
+                                             default=self.instrument.foreground().color(),
+                                             minimum=0, maximum=0), 
+                      FontStyleProperty("Font", self.instrument.setFont, self.selector,
+                                        default=FontStyleWrapper(self.instrument.font()),
+                                        minimum=0, maximum=0,)]
+                                        ## model = FontModel),]
   
   
   def applyToCursor(self, cursor):

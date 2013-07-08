@@ -97,7 +97,7 @@ class DiagramScene(QGraphicsScene):
   def __init__(self, *args):
     QGraphicsScene.__init__(self, *args)
     
-    self.addItem(TextItem("RMB styles item, a,u,d, keys edit stylesheets, s,r save/restore doc stylesheet"))
+    self.addItem(TextItem("RMB styles item.\n a,u,d, keys edit stylesheets, s,r save/restore doc stylesheet"))
     self.addItem(EllipseItem())
     # Two lines to show that both are styled by docStyleSheet change
     self.addItem(LineItem(80, 80, 80, 150))
