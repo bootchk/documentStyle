@@ -43,9 +43,11 @@ class ResettableValue(object):
     Restore current value to original value. 
     At behest of user.
     '''
-    assert not self.isReset()
+    if self.isReset():
+      print "Resetting twice?"
     self._value = self._originalValue
     self._wasReset = True
+    assert self.isReset()
     
     
   def isReset(self):
