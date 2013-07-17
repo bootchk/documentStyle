@@ -33,7 +33,7 @@ class ColorPicker(StylePicker):
     Set widget <style>: color
     AND set widget local attribute
     '''
-    # print "ColorPicker setValue()", newValue.name()
+    #print "ColorPicker setValue()", newValue.name()
     assert isinstance(newValue, QColor)
     # !!! This is QStyleSheet, for widgets, not our StyleSheet
     self.setStyleSheet( '* { background-color: '+ newValue.name() + ' }')

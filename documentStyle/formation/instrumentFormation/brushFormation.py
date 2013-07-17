@@ -57,5 +57,5 @@ class BrushFormation(InstrumentFormation):
     transform = QTransform()
     transform.scale(scaledWidthF, scaledWidthF)
     self.instrument.setTransform(transform)
-    print "BrushFormation.applyTo setPen.width ", unscaledWidth, scaledWidthF, " on morph", morph
+    #print "BrushFormation.applyTo setPen.width ", unscaledWidth, scaledWidthF, " on morph", morph
   """

@@ -51,7 +51,7 @@ class FontPicker(StylePicker):
     """
     Not relevant: whether exactMatch or not, sometimes italic-light does not display?
     if not newValue.exactMatch():
-      print "Not an exact match"
+      #print "Not an exact match"
     """
     # TODO if no real change in value?
     

@@ -70,7 +70,7 @@ class PenFormation(InstrumentFormation):
     
     # !!! Note float value and setWidthF is float setter
     self.instrument.setWidthF(scaledWidthF)
-    print "PenFormation.applyTo width: item scale, unscaled width, scaled width", itemScale, 
+    #print "PenFormation.applyTo width: item scale, unscaled width, scaled width", itemScale, 
     unscaledWidth, scaledWidthF, " on morph", morph
   """
     

@@ -107,13 +107,13 @@ class Styleable(object):
       if self.oldStyle is None:
         pass
     except AttributeError:
-      print ">>>capturing original Style"
+      #print ">>>capturing original Style"
       self.oldStyle = self.serializedStyle()
     
     newStyle = self.editStyle()
     if newStyle is None:
       # TEST undo
-      print ">>>Restoring oldStyle"
+      #print ">>>Restoring oldStyle"
       self.resetStyleFromSerialized(self.oldStyle)
       return # canceled
     else:
@@ -220,7 +220,7 @@ class Styleable(object):
     E.G. called on StyleSheet changed. 
     Renews style Formation via cascading and applies. 
     '''
-    # print "Polish ", self.selector
+    #print "Polish ", self.selector
     ## self.getStyle().applyTo(self)
     try:
       self.styler.formation().applyTo(self)

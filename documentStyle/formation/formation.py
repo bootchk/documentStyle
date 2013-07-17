@@ -74,7 +74,7 @@ class Formation(list):
     i.e. does not recurse
     '''
     # TODO need to return a copy of child formations???
-    # print "selectSubformation, selector is ", selector
+    #print "selectSubformation, selector is ", selector
     subFormation = Formation("subFormation", selector)
     for formation in self:
       if formation.name == selector.DEType or selector.DEType == "*":

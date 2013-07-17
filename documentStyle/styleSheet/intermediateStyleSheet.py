@@ -154,7 +154,7 @@ class IntermediateStyleSheet(StyleSheet):
     Because pickling the cascade would finally attempt to pickle the AppStyleSheet, 
     which by design should NOT be pickled.
     '''
-    print "pickling stylesheet"
+    #print "pickling stylesheet"
     return (IntermediateStyleSheet, (self.name, ), {'stylingActSetCollection': self.stylingActSetCollection})
   
   """

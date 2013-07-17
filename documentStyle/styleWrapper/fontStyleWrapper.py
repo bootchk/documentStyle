@@ -30,7 +30,7 @@ class FontStyleWrapper(object):
     '''
     Reduce to string (pickleable), not QFont value (unpickleable.)
     '''
-    print "FontStyleWrapper.reduce called"
+    #print "FontStyleWrapper.reduce called"
     # Arbitrary name for key.
     return (self.__class__, (), {'fontDescriptionString': self.wrapped.toString()})
 

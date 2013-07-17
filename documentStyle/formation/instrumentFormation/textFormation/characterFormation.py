@@ -48,11 +48,11 @@ class CharacterFormation(TextFormation):
     
     """
     # debugging why QBrush setter doesn't work.
-    print "applyToCursor: Property setter", self.styleProperties[0].setter
-    print "applyToCursor setter: ", brush.setColor
-    print "applyToCursor: color", brush.color()
-    print "applyToCursor: brushStyle", brush.style()
-    print "applyToCursor:  brush", brush
+    #print "applyToCursor: Property setter", self.styleProperties[0].setter
+    #print "applyToCursor setter: ", brush.setColor
+    #print "applyToCursor: color", brush.color()
+    #print "applyToCursor: brushStyle", brush.style()
+    #print "applyToCursor:  brush", brush
     #print "applyToCursor: brush again", brush
     """
     

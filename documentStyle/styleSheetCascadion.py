@@ -88,14 +88,14 @@ class StyleSheetCascadion(object):
     
   def _getUserStylesheetFromSettings(self):
     " Private, called at init. "
-    print "UserStyleSheetFromSettings"
+    #print "UserStyleSheetFromSettings"
     settings = QSettings()
     
     styleSheetPickledInSettings = settings.value("UserStyleSheet")
-    print "Type unpickled", type(styleSheetPickledInSettings)
+    #print "Type unpickled", type(styleSheetPickledInSettings)
     if styleSheetPickledInSettings is not None:
       # convert unicode to str
-      # print "Pickled stylesheet in settings: ", styleSheetPickledInSettings
+      #print "Pickled stylesheet in settings: ", styleSheetPickledInSettings
       return cPickle.loads(str(styleSheetPickledInSettings))
     else:
       return None

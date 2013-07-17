@@ -19,3 +19,5 @@ selectivity of selectors, and applying StylingActSets in order of selectivity
 QPattern combobox not correct
 
 isolate DEType i.e. constant for "Line", etc.
+
+BUG app stylesheet does not scroll

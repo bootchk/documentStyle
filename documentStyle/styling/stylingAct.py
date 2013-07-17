@@ -48,7 +48,7 @@ class StylingAct(object):
     if styleProperty is not None:
       self._overrideStyleProperty(styleProperty)
     else:
-      # print "StylingAct not match ???"
+      #print "StylingAct not match ???"
       ''' It is NOT an assertion that self matches formation. '''
       pass
 
@@ -65,7 +65,7 @@ class StylingAct(object):
     so user cannot delete self StylingAct when it is non-effective.)
     Is that a user interface problem?
     '''
-    # print "Overriding ", styleProperty, "with args", self.value
+    #print "Overriding ", styleProperty, "with args", self.value
     if styleProperty.get() != self.value:
       styleProperty.set(self.value)
     

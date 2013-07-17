@@ -8,12 +8,14 @@ from PySide.QtCore import Qt
 
 class StyleWrapper(object):
   '''
-  Wrap a Qt enum
+  Wrap a StyleProperty that is Qt enum.
   Pickleable (which Qt enums are not depending on your choice of binding and version.)
   Also isolates Qt.
   
   Instances are true instances, unlike Qt enum values, which are class attributes.
   (That's why they are not pickleable.)
+  
+  StyleProperty's that are not Qt enums (e.g. o ftype int) do not need wrapping.
   '''
   
   def __init__(self, wrapped=None):
@@ -39,7 +41,7 @@ class StyleWrapper(object):
     '''
     Reduce state to key (enum name) string, not the value (an unpickleable Qt enum.)
     '''
-    # print "reduce called"
+    #print "reduce called"
     # Result is (factory class, args to factory, and state dictionary)
     return (self.__class__, (), {'name': self.wrapped.name})
 
@@ -59,7 +61,9 @@ class StyleWrapper(object):
 '''
 Each subclass has-a wrapped class
 Wrapped instrument class knows dictionary of the wrapped domain.
-Used by __setstate__()
+Used by __setstate__().
+
+Note here "PenStyle" means "PenPattern", a particular StyleProperty.
 '''
 
 class PenStyleWrapper(StyleWrapper):

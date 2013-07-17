@@ -47,7 +47,7 @@ class StyleComboBox(Resettable, QComboBox):
   These are agnostic of type.
   '''
   def setValue(self, newValue):
-    # print "styleComboBoxWidget setValue", newValue
+    #print "styleComboBoxWidget setValue", newValue
     self.setCurrentIndex( self._indexOfValue(newValue) )
   
   
