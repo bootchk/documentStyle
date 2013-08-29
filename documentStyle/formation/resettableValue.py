@@ -44,7 +44,8 @@ class ResettableValue(object):
     At behest of user.
     '''
     if self.isReset():
-      print "Resetting twice?"
+      #print "Resetting twice?"
+      pass
     self._value = self._originalValue
     self._wasReset = True
     assert self.isReset()

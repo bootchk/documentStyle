@@ -5,7 +5,8 @@ This is free software, covered by the GNU General Public License.
 '''
 
 from PySide.QtCore import Slot
-from PySide.QtGui import QPushButton, QToolButton, QIcon
+from PySide.QtCore import QCoreApplication
+from PySide.QtGui import QPushButton, QToolButton, QStyle # QIcon
 
 class BuddyPushButton(QPushButton):
   '''
@@ -45,19 +46,23 @@ class BuddyIconButton(QToolButton):
   
   def __init__(self, name, initialState=False, buddyReset=None):
     super(BuddyIconButton, self).__init__()
-    
-    icon = QIcon.fromTheme("edit-undo", QIcon(":/undo.png"))
-    self.setIcon(icon)
-    # TODO on Mac and Windows, you will have to bundle a compliant theme in one of your themeSearchPaths() 
-    # and set the appropriate themeName().
-
-
-    
+    self._initIcon()
     self.setEnabled(initialState)
     self.clicked.connect(self.handleClicked)
     self.buddyReset = buddyReset  # buddy's reset method
     
-
+  def _initIcon(self):
+    
+    # Portable: get icon from app's style.  SP means standard pixmap
+    # Alternative is ArrowUp or ArrowBack
+    icon = QCoreApplication.instance().style().standardIcon(QStyle.SP_BrowserReload)
+    self.setIcon(icon)
+    
+    ##Not portable
+    ##icon = QIcon.fromTheme("edit-undo", QIcon(":/undo.png"))
+    ## TODO on Mac and Windows, you will have to bundle a compliant theme in one of your themeSearchPaths() 
+    ## and set the appropriate themeName().
+    
     
   # QPushButton.toggle() is for "checked", but this button is not checkable
   @Slot()
