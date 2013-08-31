@@ -4,7 +4,7 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PySide.QtCore import Slot
+from PySide.QtCore import Qt, Slot
 from PySide.QtCore import QCoreApplication
 from PySide.QtGui import QPushButton, QToolButton, QStyle # QIcon
 
@@ -56,7 +56,11 @@ class BuddyIconButton(QToolButton):
     # Portable: get icon from app's style.  SP means standard pixmap
     # Alternative is ArrowUp or ArrowBack
     icon = QCoreApplication.instance().style().standardIcon(QStyle.SP_BrowserReload)
-    self.setIcon(icon)
+    if not icon.isNull():
+      self.setIcon(icon)
+    else:
+      # !!! Fail (0n older platforms (Classic Ubuntu?).  Fallback is up arrow.
+      self.setArrowType(Qt.UpArrow)
     
     ##Not portable
     ##icon = QIcon.fromTheme("edit-undo", QIcon(":/undo.png"))
