@@ -5,7 +5,7 @@ This is free software, covered by the GNU General Public License.
 '''
 
 from PySide.QtGui import QPushButton
-from documentStyle.userInterface.resettable import Resettable
+from documentStyle.userInterface.resettableControls.resettable import Resettable
 
 '''
 Setting color via pallette is not reliable on all platforms, for some widgets.

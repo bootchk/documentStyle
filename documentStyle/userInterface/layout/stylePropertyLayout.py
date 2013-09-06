@@ -6,13 +6,13 @@ This is free software, covered by the GNU General Public License.
 
 from PySide.QtGui import QHBoxLayout, QLabel # QPushButton, QSlider, QColor, QFont, QBoxLayout, 
 
-from ..resettableDoubleSpinBox import ResettableDoubleSpinBox
-from ..resettableSpinBox import ResettableSpinBox
+from ..resettableControls.doubleSpinBox import ResettableDoubleSpinBox
+from ..resettableControls.spinBox import ResettableSpinBox
 
-from ..stylePickerWidget.colorPickerWidget import ColorPicker
-from ..stylePickerWidget.fontPickerWidget import FontPicker
-from ..styleComboBox import StyleComboBox
-from ..buddyButton import BuddyIconButton
+from ..resettableControls.stylePickerWidget.colorPickerWidget import ColorPicker
+from ..resettableControls.stylePickerWidget.fontPickerWidget import FontPicker
+from ..resettableControls.comboBox import StyleComboBox
+from ..resettableControls.buddyButton import BuddyIconButton
 
 from documentStyle.debugDecorator import reportReturn
 
