@@ -23,10 +23,21 @@ class ColorPicker(StylePicker):
     # text a blank char obviates problems with text disappearing in background
     super(ColorPicker, self).__init__(text=" ", 
                                       styleType=QColor, 
-                                      subDialogMethod = QColorDialog.getColor,  
+                                      subDialog = self._baseDialog,
                                       resettableValue = resettableValue)
   
 
+  def _baseDialog(self, parent):
+    '''
+    Adapter: !!! framework dialog returns a single value, which is not isValid() when user canceled.
+    Adapt to return a tuple telling whether user canceled.
+    '''
+    result = QColorDialog.getColor()
+    assert isinstance(result, QColor), str(type(result))
+    ok = result.isValid()
+    assert ok is True or ok is False
+    return ok, result
+    
     
   def setValue(self, newValue):
     '''

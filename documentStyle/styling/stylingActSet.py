@@ -3,7 +3,7 @@ Copyright 2012 Lloyd Konneker
 
 This is free software, covered by the GNU General Public License.
 '''
-#from documentStyle.debugDecorator import report
+from documentStyle.debugDecorator import reportReturn
 
 
 class StylingActSet(dict):
@@ -28,6 +28,7 @@ class StylingActSet(dict):
     self.selector = selector
   
   def __repr__(self):
+    ''' !!! Short: is missing dictionary values. '''
     return "StylingActSet(" + str(self.selector) + ")"
   
   #@report
@@ -36,8 +37,29 @@ class StylingActSet(dict):
       #print "From StylingActSet " + str(self)
       stylingAct.applyToFormation(formation)
       
+  @reportReturn
   def put(self, stylingAct):
     self[stylingAct.selector] = stylingAct
     
+    
   def delete(self, selector):
+    '''
+    Delete where precondition: selector exists.
+    Raise KeyError if not exist.
+    '''
     del self[selector]
+    
+    
+  @reportReturn
+  def deleteIfExists(self, selector):
+    '''
+    Same as above but does not raise KeyError.
+    '''
+    # For debugging purposes, return whether deleted.
+    try:
+      del self[selector]
+      return True
+    except KeyError:
+      # Doesn't exist
+      # print "No styling act deleted for selector", selector
+      return False

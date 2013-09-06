@@ -99,7 +99,7 @@ class Styleable(object):
   def contextMenuEvent(self, event):
     ''' 
     Proof-of-concept handler for Qt event.
-    A real app should implement context menu and undo/redo.
+    !!! A real app should implement context menu and undo/redo.
     
     Let user style with RMB (context button), but if cancels, revert document element to original.
     '''
@@ -107,16 +107,21 @@ class Styleable(object):
       if self.oldStyle is None:
         pass
     except AttributeError:
-      #print ">>>capturing original Style"
+      # Because this is a hack for testing, leave these prints here
+      print ">>>capturing original Style"
       self.oldStyle = self.serializedStyle()
     
     newStyle = self.editStyle()
     if newStyle is None:
-      # TEST undo
-      #print ">>>Restoring oldStyle"
+      # testing undo: be careful in testing, if you cancel a dialog it might have this unexpected result.
+      # Because this is a hack for testing, leave these prints here
+      print ">>>Restoring oldStyle"
       self.resetStyleFromSerialized(self.oldStyle)
       return # canceled
     else:
+      # A real app would call item.polish() after the dialog
+      # Because this is a hack for testing, leave these prints here
+      print ">>>applyingStyle to element after dialog"
       self.applyStyle(newStyle)
   
   
@@ -212,7 +217,7 @@ class Styleable(object):
     return self.styler.getEditedStyle(dialogTitle="Element Style")
     
 
-
+  @report
   def polish(self):
     '''
     Apply style to DocumentElement.

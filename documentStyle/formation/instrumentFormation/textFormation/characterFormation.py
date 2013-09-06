@@ -39,12 +39,16 @@ class CharacterFormation(TextFormation):
 
   
   def applyToCursor(self, cursor):
-    ''' Effect deferred method. '''
+    ''' 
+    Effect deferred method. 
+    
+    !!! Must be setCharFormat, not mergeCharFormat.
+    Merge seems to mean "only set properties that program touched in the Format.
+    We don't touch them all, so for a merge, Qt will not set them all.
+    Yet for a reset, we need the defaulted properties to be set on cursor.
     '''
-    Alternatively, setCharFormat.
-    Merging leaves some style unchanged, e.g. block format if char format is being merged?
-    '''
-    cursor.mergeCharFormat(self.instrument)
+    cursor.setCharFormat(self.instrument)
+
     
     
   def setForegroundColor(self, color):

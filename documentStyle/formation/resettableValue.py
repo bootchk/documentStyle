@@ -6,73 +6,79 @@ This is free software, covered by the GNU General Public License.
 
 # TODO get rid of all these getter,setters: use properties
 
-from documentStyle.debugDecorator import report
+from documentStyle.debugDecorator import reportReturn
 
 
 class ResettableValue(object):
   '''
-  A value whose current value can be reset to an original value,
-  and whose current value can be rolled into original value.
+  A value whose current value can be reset to an valueToResetTo,
+  and whose current value can be rolled into valueToResetTo.
   
   Responsibilities:
-  - know original value and current value
+  - know valueToResetTo and current value
   - knows reset state
+  
+  FUTURE:
+  - know 'isInlined' i.e. is overridden
+  This distinguishes values set by the program (for an existing in-line StylingAct)
+  from values set by the user editing (in creating a new in-line StylingAct.)
+  In other words, if the program sets a value for an in-line StylingAct, isReset becomes False,
+  which is distinct from a user editing the value, where also isReset becomes False.
+  An optimization for deleting existing StylingActs,
+  but not absolutely necessary.
   '''
   
-  def __init__(self, originalValue):
-    self._value = originalValue
-    self._originalValue = originalValue
-    self._wasReset = False
+  def __init__(self, valueToResetTo):
+    self._value = valueToResetTo
+    self._valueToResetTo = valueToResetTo
+    self._isReset = True
     
     
   def __str__(self):
-    return "ResettableValue(original=" + str(self._originalValue) + " value=" + str(self._value)
+    return "ResettableValue(original=" + str(self._valueToResetTo) + " value=" + str(self._value)
   
   
+  @reportReturn
   def setValue(self, newValue):
+    '''
+    Setting value always changes state to not isReset, even if value equals valueToResetTo.
+    IOW, setValue 'touches' and isReset() means 'not touched.'
+    If the GUI calls setValue() to what it thinks is valueToResetTo,
+    it should also call reset() to set the state.
+    '''
     self._value = newValue
+    self._isReset = False
     
     
   def value(self):
     return self._value
   
   
-  @report
+  @reportReturn
   def reset(self):
     ''' 
-    Restore current value to original value. 
+    Restore current value to valueToResetTo. 
     At behest of user.
     '''
-    if self.isReset():
+    if self._isReset:
       #print "Resetting twice?"
       pass
-    self._value = self._originalValue
-    self._wasReset = True
-    assert self.isReset()
+    self._value = self._valueToResetTo
+    self._isReset = True
+
     
-    
+  @reportReturn
   def isReset(self):
-    ''' 
-    is current value same as original? 
-    
-    Note not a state variable (computed), so there is no programming struggle to maintain.
-    '''
-    result = self._originalValue == self._value
-    #print "isReset", self._originalValue, self._value, result
-    return result
-    
-    
-  def wasReset(self):
-    ''' was reset() invoked by user? '''
-    return self._wasReset
+    ''' A getter for convenience of debugging. '''
+    return self._isReset
     
     
   def roll(self):
     '''
-    Current value becomes new original value. 
+    Current value becomes new valueToResetTo. 
     AND _wasReset becomes False.
     '''
-    self.__init__(originalValue = self._value)
+    self.__init__(valueToResetTo = self._value)
     
 
         

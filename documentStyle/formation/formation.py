@@ -136,6 +136,29 @@ class Formation(list):
 
     for item in self.generateStyleProperties():
       if not item.isReset():
+        ''' 
+        User edited (in-lined.)  Create or replace styling act.
+        '''
+        stylingAct = StylingAct(item.selector, item.get())
+        #print "New styling act"
+        derivingStylingActSet.put(stylingAct)
+      else:
+        '''
+        Reset to inherited value.  Delete any previous styling act.
+        
+        TODO optimization to avoid needless try delete:
+        If item.wasInitiallyReset: i.e. not in-lined
+          pass
+        else:
+          # assert StylingAct exists
+          derivingStylingActSet.delete(item.selector)
+        '''
+        derivingStylingActSet.deleteIfExists(item.selector)
+      
+      
+      """
+      OLD
+      if not item.isReset():
         '''
         property was inherited, but was overridden.  StylingAct will be new.
         OR property was not inherited, but might have been changed.  StylingAct will be updated.
@@ -146,6 +169,7 @@ class Formation(list):
         # property was not inherited (overridden), but was reinherited.  StylingAct revoked.
         derivingStylingActSet.delete(item.selector)
       # else item isReset, was inherited, and still inherited.  No StylingAct
+      """
         
   
   #@report

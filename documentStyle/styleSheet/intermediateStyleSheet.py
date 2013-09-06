@@ -15,7 +15,7 @@ from documentStyle.styling.stylingActSetCollection import StylingActSetCollectio
 from documentStyle.selector import newAllSelector
 from documentStyle.userInterface.styleDialog.styleDialog import EditableStyleSheetDialog
 
-from documentStyle.debugDecorator import report
+from documentStyle.debugDecorator import report, reportReturn
 
 
 class IntermediateStyleSheet(StyleSheet):
@@ -68,24 +68,31 @@ class IntermediateStyleSheet(StyleSheet):
     ''' Post-recursion processing. '''
     #print "Uncascaded stylesheet", selector, repr(formation)
     '''
-    StyleProperties show whether stylingAct overrides from previous cascade.  
+    StyleProperties show whether stylingAct applies (overrides) previous cascade.  
     Initialize all to show "not overridden" i.e. inherited.
     '''
     formation.rollStyleProperties()
-    self._overrideFormationBySelectedStylingActs(formation, selector)
+    '''
+    Now apply Styling Acts (override), changing state of StyleProperties from "not overridden" to "overridden".
+    '''
+    self._applySelectedStylingActs(formation, selector)
     #print "Cascaded stylesheet", repr(formation)
 
     return formation
 
-
-  def _overrideFormationBySelectedStylingActs(self, formation, selector):
+  @reportReturn
+  def _applySelectedStylingActs(self, formation, selector):
     '''
     Apply my StylingActSets to formation, selected by selector.
+    For debugging, return count.
     
     Selector delimits formation.  Select StylingActSets that apply to delimited formation.
     '''
+    count = 0
     for stylingActSet in self.stylingActSetCollection.generateMatchingStylingActSets(selector):
+      count += 1
       stylingActSet.applyToFormation(formation)
+    return count
       
   
   def edit(self):

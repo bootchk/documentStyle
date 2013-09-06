@@ -112,7 +112,7 @@ class DiagramScene(QGraphicsScene):
     '''
     Restyle on signal styleSheetchanged.
     '''
-    print "polishing"
+    print ">>>testStyling polishing document"
     for item in self.items():
       item.polish()
     

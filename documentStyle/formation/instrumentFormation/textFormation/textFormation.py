@@ -21,7 +21,9 @@ class TextFormation(InstrumentFormation):
   !!! Note that if an app creates a new cursor, style must be applied to it also,
   otherwise text in the cursor will not be styled.
   '''
+  from documentStyle.debugDecorator import report
   
+  @report
   def applyTo(self, morph):
     '''
     Redefined for text: apply to a cursor on morph.

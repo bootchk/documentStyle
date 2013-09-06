@@ -17,59 +17,56 @@ class FontPicker(StylePicker):
   '''
   Specializes StylePicker for <style>: QFont
   '''
-
+  valueChanged = Signal(QFont)
+  
+  
   def __init__(self, resettableValue):
     super(FontPicker, self).__init__(text="Font", 
                                      styleType=QFont, 
-                                     subDialogMethod = self._baseDialog,
+                                     subDialog = self._baseDialog,
                                      resettableValue = resettableValue)
-  
-  valueChanged = Signal(QFont)
 
   
   def _baseDialog(self, parent):
     '''
-    Adapter: !!! the value returned by QFontDialog.getFont() is a tuple
+    Adapter: !!! the value returned by QFontDialog.getFont() is a tuple.
+    Adapt (flip) to tuple required by Super
     '''
-    fontTuple = QFontDialog.getFont(parent)
-    result = fontTuple[0]
-    assert isinstance(result, QFont)
-    return result
+    result, ok = QFontDialog.getFont(parent)
+    assert isinstance(ok, bool), str(type(ok))
+    assert result is None or isinstance(result, QFont), str(type(result))
+    '''
+    Qt docs say: ok==False implies canceled and result is Qt's default font
+    But oesn't work??? assert isinstance(result, QFont)
+    '''
+    return ok, result
   
   
-  def _chooseNewValue(self):
-    '''
-    Reimplement to wrap.
+  """
+  Not relevant: whether exactMatch or not, sometimes italic-light does not display?
+  if not newValue.exactMatch():
+    #print "Not an exact match"
+  """
+  
+  
+  def setWrappedValue(self, value):
+    ''' Reimplement to wrap value so it is pickleable. '''
+    self.setValue(FontStyleWrapper(value))
     
-    Invoke subDialog for choosing <style>.  
-    Parent in self's StyleDialog.
-    '''
-    myDialog = self.parentWidget()
-    newValue = self.subDialogMethod(parent=myDialog)
-    assert isinstance(newValue, QFont)
-
-    """
-    Not relevant: whether exactMatch or not, sometimes italic-light does not display?
-    if not newValue.exactMatch():
-      #print "Not an exact match"
-    """
-    # TODO if no real change in value?
     
-    self.setValue(FontStyleWrapper(newValue)) # wrap
-  
-  
   def setValue(self, newValue):
     '''
     Set widget <style>: font
     AND set widget local attribute.
     
-    !!! Note use of wrapped versus unwrapped value.
+    !!! Takes a wrapped value.  Note use of wrapped versus unwrapped value.
     '''
     assert isinstance(newValue, FontStyleWrapper) # Not: QFont
     newQFont = newValue.getWrappedValue()
     self._feedbackFont(newQFont)
     self._value = newValue
     self.valueChanged.emit(newQFont)  # Propagate, e.g. to model
+  
   
   
   

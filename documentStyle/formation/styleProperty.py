@@ -12,7 +12,7 @@ from documentStyle.userInterface.layout.stylePropertyLayout import ColorStylePro
 from documentStyle.userInterface.layout.stylePropertyLayout import ComboBoxStylePropertyLayout
 from documentStyle.formation.resettableValue import ResettableValue
 
-#from documentStyle.debugDecorator import report
+from documentStyle.debugDecorator import report, reportReturn
 
 # Inherit QObject if signals
 # Signals are not needed unless we want live dialogs showing WYSIWYG style changes to document before OK button is pressed.
@@ -70,8 +70,8 @@ class BaseStyleProperty(object):
     raise NotImplementedError # deferred
   
   
-  #@report
-  def set(self, newValue):
+  @report
+  def setPropertyValue(self, newValue):
     '''
     Every set() may change state of resettableValue.
     This may be called programmatically, from StylingActs.
@@ -94,21 +94,22 @@ class BaseStyleProperty(object):
     self.propagateValueToInstrument()
   
   
+  @reportReturn
   def propagateValueToInstrument(self):
     '''
     Propagate my value thru facade to framework instrument.
     
     Default implementation.  Some subclasses reimplement to wrap values.
     '''
-    self.instrumentSetter(self.resettableValue.value())
+    value = self.resettableValue.value()
+    self.instrumentSetter(value)
+    # for debugging, return value
+    return value
+    
 
-  
   
   def isReset(self):
     return self.resettableValue.isReset()
-  
-  def wasReset(self):
-    return self.resettableValue.wasReset()
 
   def roll(self):
     self.resettableValue.roll()

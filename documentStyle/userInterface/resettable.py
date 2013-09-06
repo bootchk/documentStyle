@@ -17,7 +17,19 @@ class Resettable(object):
     self.resettableValue = resettableValue
     self.setValue(self.resettableValue.value())
       
-  def reset(self):
-    ''' Reset value of widget and its ResettableValue. '''
+      
+  def doUserReset(self):
+    ''' 
+    User has indicated (clicked BuddyButton) desire for reset.
+    Called by BuddyButton, but it also emits userReset.
+    This must get done first, since setValue will emit valueChanged,
+    whose handler will buddyButton.setEnabled() to a wrong state.
+    '''
+    # change model's value and state to reset value and state
     self.resettableValue.reset()
-    self.setValue(self.resettableValue.value())
+    # changing view emits viewChanged, which changes model value (again) and state to isReset==False
+    self.setValue(self.resettableValue.value()) # model->view
+    # !!! change model state back to isReset, since above setValue just changed it.
+    self.resettableValue.reset()
+    assert self.resettableValue.isReset() == True
+    

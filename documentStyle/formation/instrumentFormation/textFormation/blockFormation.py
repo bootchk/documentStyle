@@ -12,6 +12,8 @@ from documentStyle.model.textalignment import alignmentModel
 from documentStyle.model.lineSpacing import lineSpacingModel
 from documentStyle.styleWrapper.styleWrapper import AlignmentStyleWrapper
 
+from documentStyle.debugDecorator import report, reportReturn
+
 
 class BlockFormation(TextFormation):
   '''
@@ -34,15 +36,28 @@ class BlockFormation(TextFormation):
                                                 default=AlignmentStyleWrapper(self.instrument.alignment()),
                                                 model = alignmentModel),
                           UnwrappedComboBoxStyleProperty("Line spacing", self.adaptLineSpacing, self.selector,
-                                                default=100,  # single spacing is default
+                                                default=100,  # single spacing is 100% is default
                                                 model = lineSpacingModel),
                           ]
+    '''
+    !!! QTextBlockFormat.lineHeight() defaults to value 0 for 'single spacing.'  
+    Need the following to set the default according to lineHeightType=proportional
+    '''
+    self.adaptLineSpacing(100)
   
   
+  @report
   def applyToCursor(self, cursor):    
-    cursor.mergeBlockFormat(self.instrument)
-
+    cursor.setBlockFormat(self.instrument)
+    # Strong: all fields same
+    assert cursor.blockFormat() == self.instrument
+    ## Weak: only the fields we futz with are same
+    ##assert cursor.blockFormat().lineHeight() == self.instrument.lineHeight(), str(cursor.blockFormat().lineHeight()) +','+ str(self.instrument.lineHeight())
+    ##assert cursor.blockFormat().indent() == self.instrument.indent(), str(cursor.blockFormat().indent()) +','+ str(self.instrument.indent())
+    ##assert cursor.blockFormat().alignment() == self.instrument.alignment(), str(cursor.blockFormat().alignment()) +','+ str(self.instrument.alignment())
     
+  @reportReturn
   def adaptLineSpacing(self, value):
     # Always lineHeightType=proportional, values always percent
+    assert value > 0
     self.instrument.setLineHeight(value, QTextBlockFormat.ProportionalHeight)

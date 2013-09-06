@@ -4,7 +4,7 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PySide.QtGui import QPushButton, QDialog # QLabel
+from PySide.QtGui import QPushButton
 from documentStyle.userInterface.resettable import Resettable
 
 '''
@@ -29,8 +29,10 @@ class StylePicker(Resettable, QPushButton):
   Behaves like a button, without the visual cues that a GUI standard requires.
   '''
 
+  ''' Subclasses must implement, and emit valueChanged Signal,  deferred. '''
+  
 
-  def __init__(self, text, styleType, subDialogMethod, resettableValue ):
+  def __init__(self, text, styleType, subDialog, resettableValue ):
     '''
     Text may be blank char. 
     In subclasses: 
@@ -42,16 +44,28 @@ class StylePicker(Resettable, QPushButton):
     Resettable.__init__(self, resettableValue)
     
     self.styleType = styleType  # <style> being controlled e.g. QColor
-    self.subDialogMethod = subDialogMethod  # method of some framework dialog that returns a value of <style> e.g. QColorDialog
+    '''
+    subDialog is typically static method of some framework dialog class, e.g. QFontDialog
+    Or a method that adapts a framework dialog, e.g. QColorDialog, which returns a QColor that not isValid() if canceled.
+    It must return a tuple: (ok, value of <style>) 
+    '''
+    self.subDialog = subDialog  
     
-    #self.setValue(initialValue)
+    self._value = None  # !!! no default value.  !!! See below, this is the Widget's value
     
-    self.setAutoFillBackground(True)   # Needed to ensure background color change effective ??
+    self.setAutoFillBackground(True)   # Ensure widget background color change effective ??
     self.clicked.connect(self.handleClicked) # Any other handlers for Signal clicked will also be called.
   
   
   def handleClicked(self):
-    self._chooseNewValue()
+    ok, value = self._chooseNewValue()
+    if not ok:  # user canceled
+      return
+    '''
+    If user did not cancel, but chose same style as before, we still set value:
+    this is use case where user is in-lining to stabilize color to same as cascaded color.
+    '''
+    self.setWrappedValue(value)  # Setting widget value, which propagates to StyleProperty
     
     
   """
@@ -69,24 +83,34 @@ class StylePicker(Resettable, QPushButton):
     self._chooseNewValue()
   """
 
-  ''' Subclasses must implement valueChanged Signal,  deferred. '''
+  
   
   
   def _chooseNewValue(self):
     ''' 
     Invoke subDialog for choosing <style>.  
     Parent in self's StyleDialog.
+    parentWidget is not QDialog if self is nested inside a QScrollArea:
+    CANNOT assert isinstance(parentWidget, QDialog)
     '''
-    myDialog = self.parentWidget()
-    ## myDialog is not QDialog if self is nested inside a QScrollArea
-    ## assert isinstance(myDialog, QDialog)
-    newValue = self.subDialogMethod(parent=myDialog)
-    # TODO if no real change in value?
+    return self.subDialog(parent=self.parentWidget())
+
     
-    self.setValue(newValue)
+  
+  def setWrappedValue(self, value):
+    '''
+    Default: no actual wrapping.
+    Some subclasses reimplement.
+    '''
+    self.setValue(value)
     
     
-  def setValue(self):
+  '''
+  getter/setter of widget value.
+  !!! These are not for resettableValue, which has methods of same name
+  '''
+    
+  def setValue(self, value):
     '''
     Change appearance of widget to reflect value
     AND remember the value (for as long as widget exists.)

@@ -52,22 +52,28 @@ class StylingAct(object):
       ''' It is NOT an assertion that self matches formation. '''
       pass
 
-  #@report
+  @report
   def _overrideStyleProperty(self, styleProperty):
     '''
     StyleProperty has value from upstream (defaulted or already overridden.)
     Ensure it has my value (which is not necessarily different value.)
     
-    If my value is not a different value, then self is non-effective now,
+    If my value is not a different value, 
+    then self is non-effective now (doesn't change the displayed style)
     but self may become effective later if the cascade changes.
-    That is, self (StylingAct) exists even if non-effective at times.
-    (The "Inherit" button will not be enabled when self is non-effective,
-    so user cannot delete self StylingAct when it is non-effective.)
-    Is that a user interface problem?
+    That is, self (a StylingAct, or an in-line) exists even if non-effective at times.
+    
+    The "Reset" (also called 'Inherit') button WILL be enabled even when self is non-effective,
+    so user can delete self StylingAct regardless whether it is effective.
+    
+    A user can only know a StylingAct is currently non-effective by observing:
+    - the Reset button is enabled (the in-line exists)
+    - the value is the same as the value further up the cascade (e.g. in the DocStyleSheet.)
     '''
     #print "Overriding ", styleProperty, "with args", self.value
-    if styleProperty.get() != self.value:
-      styleProperty.set(self.value)
+    ##if styleProperty.get() != self.value:
+    ##  styleProperty.setPropertyValue(self.value)
+    styleProperty.setPropertyValue(self.value)
     
     
     
