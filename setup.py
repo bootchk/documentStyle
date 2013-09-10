@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 setup(name='documentStyle',
-      version='0.1',
+      version='0.1.1',
       description='Document Styling Classes',
       author='Lloyd Konneker',
       author_email='bootch@nc.rr.com',
@@ -22,6 +22,7 @@ setup(name='documentStyle',
                 'documentStyle.userInterface.layout',
                 'documentStyle.userInterface.listview',
                 'documentStyle.userInterface.styleDialog',
-                'documentStyle.userInterface.stylePickerWidget',
+                'documentStyle.userInterface.resettableControls',
+                'documentStyle.userInterface.resettableControls.stylePickerWidget',
                 ],
      )
