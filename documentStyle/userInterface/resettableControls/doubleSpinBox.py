@@ -4,8 +4,8 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PySide.QtCore import Qt
-from PySide.QtGui import QDoubleSpinBox
+from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QDoubleSpinBox
 from resettable import Resettable
 
 

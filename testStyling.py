@@ -9,8 +9,17 @@ This is free software, covered by the GNU General Public License.
 '''
 import sys
 
-from PySide.QtCore import *
-from PySide.QtGui import *
+# Set PyQt API version to 2
+import sip
+API_NAMES = ["QDate", "QDateTime", "QString", "QTextStream", "QTime", "QUrl", "QVariant"]
+API_VERSION = 2
+for name in API_NAMES:
+  sip.setapi(name, API_VERSION)
+  
+  
+from PyQt4.QtCore import *
+from PyQt4.QtCore import pyqtSlot as Slot
+from PyQt4.QtGui import *
 
 from documentStyle.styleSheetCascadion import StyleSheetCascadion
 from documentStyle.styleable import Styleable
@@ -123,7 +132,7 @@ class GraphicsView(QGraphicsView):
   def __init__(self, scene):
     super(GraphicsView, self).__init__(scene)
     
-    assert self.dragMode() is QGraphicsView.NoDrag
+    assert self.dragMode() == QGraphicsView.NoDrag
     
     self.setRenderHint(QPainter.Antialiasing)
     self.setRenderHint(QPainter.TextAntialiasing)

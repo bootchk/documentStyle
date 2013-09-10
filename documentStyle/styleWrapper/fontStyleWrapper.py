@@ -1,6 +1,6 @@
 '''
 '''
-from PySide.QtGui import QFont
+from PyQt4.QtGui import QFont
 
 
 class FontStyleWrapper(object):

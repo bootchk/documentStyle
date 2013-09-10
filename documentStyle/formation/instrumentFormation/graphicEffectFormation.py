@@ -1,7 +1,7 @@
 '''
 '''
 
-from PySide.QtGui import QGraphicsBlurEffect, QGraphicsDropShadowEffect, QGraphicsEffect
+from PyQt4.QtGui import QGraphicsBlurEffect, QGraphicsDropShadowEffect, QGraphicsEffect
 
 from documentStyle.instrument.graphicEffectInstrument import PGraphicEffectInstrument
 from documentStyle.formation.instrumentFormation.instrumentFormation import InstrumentFormation

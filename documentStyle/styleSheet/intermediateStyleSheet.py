@@ -4,7 +4,7 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PySide.QtGui import QDialog, QFont
+from PyQt4.QtGui import QDialog, QFont
 
 from styleSheet import StyleSheet
 

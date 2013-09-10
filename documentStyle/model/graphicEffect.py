@@ -3,7 +3,7 @@
 
 class Model(object):
   '''
-  Mimics a PySide enum: has "values" attribute that is a dictionary
+  Mimics a PyQt4 enum: has "values" attribute that is a dictionary
   
   There is no Qt enum for graphics effect.
   Thus values here are pickleable (not wrapped, like Qt enums.)

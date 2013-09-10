@@ -2,7 +2,7 @@
 '''
 import cPickle
 
-from PySide.QtCore import QSettings, Qt
+from PyQt4.QtCore import QSettings, Qt
 
 from documentStyle.styleSheet.appStyleSheet import AppStyleSheet
 from documentStyle.styleSheet.intermediateStyleSheet import IntermediateStyleSheet

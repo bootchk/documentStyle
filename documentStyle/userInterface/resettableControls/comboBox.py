@@ -4,8 +4,10 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PySide.QtCore import Signal, Slot, Qt
-from PySide.QtGui import QComboBox
+from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt4.QtCore import pyqtSlot as Slot
+from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QComboBox
 
 from resettable import Resettable
 

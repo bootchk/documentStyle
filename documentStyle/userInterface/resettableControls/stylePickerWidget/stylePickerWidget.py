@@ -4,7 +4,7 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PySide.QtGui import QPushButton
+from PyQt4.QtGui import QPushButton
 from documentStyle.userInterface.resettableControls.resettable import Resettable
 
 '''

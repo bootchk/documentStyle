@@ -2,7 +2,7 @@
 
 '''
 
-from PySide.QtGui import QPen
+from PyQt4.QtGui import QPen
 from instrumentFormation import InstrumentFormation
 from ..styleProperty import ColorStyleProperty, IntStyleProperty, ComboBoxStyleProperty
 from ...model.pen import PenModel

@@ -4,7 +4,7 @@ Copyright 2013 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PySide.QtCore import Qt
+from PyQt4.QtCore import Qt
 
 class StyleWrapper(object):
   '''

@@ -3,8 +3,8 @@ Copyright 2012 Lloyd Konneker
 
 This is free software, covered by the GNU General Public License.
 '''
-from PySide.QtCore import QCoreApplication, Qt
-from PySide.QtGui import QDialog, QDialogButtonBox, QVBoxLayout, QWidget, QScrollArea
+from PyQt4.QtCore import QCoreApplication, Qt
+from PyQt4.QtGui import QDialog, QDialogButtonBox, QVBoxLayout, QWidget, QScrollArea
 
 
 class StyleSheetDialog(QDialog):

@@ -1,6 +1,6 @@
 '''
 '''
-from PySide.QtGui import QBrush #, QTransform
+from PyQt4.QtGui import QBrush #, QTransform
 
 
 from instrumentFormation import InstrumentFormation

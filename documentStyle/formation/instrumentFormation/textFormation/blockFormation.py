@@ -1,7 +1,7 @@
 '''
 '''
 
-from PySide.QtGui import QTextBlockFormat
+from PyQt4.QtGui import QTextBlockFormat
 
 from textFormation import TextFormation
 from documentStyle.formation.instrumentFormation.instrumentFormation import InstrumentFormation

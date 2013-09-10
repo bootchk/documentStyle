@@ -1,22 +1,23 @@
 '''
 '''
 
-from PySide.QtCore import Qt
-from PySide.QtGui import QBrush
+from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QBrush
 
 from documentStyle.styleWrapper.styleWrapper import BrushStyleWrapper
 
 
 class AdaptedBrushModel(object):
   '''
-  Mimics a PySide enum: has "values" attribute that is a dictionary
+  Mimics a PyQt4 enum: has "values" attribute that is a dictionary
   '''
   def __init__(self):
-    self.values = {"None": BrushStyleWrapper(Qt.BrushStyle.NoBrush),
-                   "Solid": BrushStyleWrapper(Qt.BrushStyle.SolidPattern),
-                   "Half dense": BrushStyleWrapper(Qt.BrushStyle.Dense4Pattern),
-                   "Quadrule": BrushStyleWrapper(Qt.BrushStyle.CrossPattern),
-                   "Crosshatch": BrushStyleWrapper(Qt.BrushStyle.DiagCrossPattern),}
+    qtEnum = Qt # PySide qtEnum = Qt.BrushStyle
+    self.values = {"None": BrushStyleWrapper(qtEnum.NoBrush),
+                   "Solid": BrushStyleWrapper(qtEnum.SolidPattern),
+                   "Half dense": BrushStyleWrapper(qtEnum.Dense4Pattern),
+                   "Quadrule": BrushStyleWrapper(qtEnum.CrossPattern),
+                   "Crosshatch": BrushStyleWrapper(qtEnum.DiagCrossPattern),}
     # TODO more values
     """
     Qt.Dense1Pattern   2   Extremely dense brush pattern.

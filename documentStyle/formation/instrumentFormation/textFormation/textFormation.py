@@ -1,6 +1,6 @@
 '''
 '''
-from PySide.QtGui import QTextCursor
+from PyQt4.QtGui import QTextCursor
 from documentStyle.formation.instrumentFormation.instrumentFormation import InstrumentFormation
 
 class TextFormation(InstrumentFormation):

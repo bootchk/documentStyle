@@ -1,8 +1,8 @@
 '''
 '''
 
-from PySide.QtCore import Qt
-from PySide.QtGui import QTextCharFormat
+from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QTextCharFormat
 from textFormation import TextFormation
 from documentStyle.formation.instrumentFormation.instrumentFormation import InstrumentFormation
 from documentStyle.formation.styleProperty import ColorStyleProperty, FontStyleProperty

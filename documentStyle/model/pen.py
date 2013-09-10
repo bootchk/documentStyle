@@ -1,16 +1,16 @@
 '''
 '''
-from PySide.QtCore import Qt
-from PySide.QtGui import QPen
+from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QPen
 
 from documentStyle.styleWrapper.styleWrapper import PenStyleWrapper
 
 
 class AdaptedPenModel(object):
   '''
-  Mimics a PySide enum: "values" attribute is a dictionary.
+  Mimics a PyQt4 enum: "values" attribute is a dictionary.
   But uses a pickleable type 
-  (PySide Qt enum not pickleable since enum values are class attributes.)
+  (PyQt4 Qt enum not pickleable since enum values are class attributes.)
   
   Responsibility:
   - standard dictionary responsibilities
@@ -18,11 +18,12 @@ class AdaptedPenModel(object):
   '''
   
   def __init__(self):
-    self.values = {"None": PenStyleWrapper(Qt.PenStyle.NoPen),
-                   "Solid": PenStyleWrapper(Qt.PenStyle.SolidLine),
-                   "Dashed": PenStyleWrapper(Qt.PenStyle.DashLine),
-                   "Dotted": PenStyleWrapper(Qt.PenStyle.DotLine),
-                   "DashDot": PenStyleWrapper(Qt.PenStyle.DashDotLine),
+    qtEnum = Qt # PySide qtEnum = Qt.PenStyle
+    self.values = {"None": PenStyleWrapper(qtEnum.NoPen),
+                   "Solid": PenStyleWrapper(qtEnum.SolidLine),
+                   "Dashed": PenStyleWrapper(qtEnum.DashLine),
+                   "Dotted": PenStyleWrapper(qtEnum.DotLine),
+                   "DashDot": PenStyleWrapper(qtEnum.DashDotLine),
                    }
     
     # TODO more values Qt::DashDotDotLine  Qt::CustomDashLine

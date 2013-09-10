@@ -4,7 +4,7 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PySide.QtGui import QHBoxLayout, QLabel # QPushButton, QSlider, QColor, QFont, QBoxLayout, 
+from PyQt4.QtGui import QHBoxLayout, QLabel # QPushButton, QSlider, QColor, QFont, QBoxLayout, 
 
 from ..resettableControls.doubleSpinBox import ResettableDoubleSpinBox
 from ..resettableControls.spinBox import ResettableSpinBox
@@ -89,9 +89,9 @@ class StylePropertyLayout(QHBoxLayout):
     '''
     # connect valueChanged to self handler, not connect directly to buddyButton
     result = self.controlWidget.valueChanged.connect(self.onValueChanged)
-    assert result
+    # PySide assert result
     result = self.buddyButton.userReset.connect(self.onUserReset)
-    assert result
+    # PySide assert result
     
     
     
