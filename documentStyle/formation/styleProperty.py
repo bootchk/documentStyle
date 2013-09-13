@@ -149,22 +149,29 @@ class ComboBoxStyleProperty(BaseStyleProperty):
     return ComboBoxStylePropertyLayout(parentStyleProperty=self)
 
 
-class FontStyleProperty(BaseStyleProperty):
-  def layout(self):
-    return FontStylePropertyLayout(parentStyleProperty=self)
-  
-  
 '''
 These return pickleable values via wrapping or other adaption.
 Reimplement propagateValueToInstrument() to wrap instruments type with a pickleable type
 '''
   
-class PSComboBoxStyleProperty(ComboBoxStyleProperty):
+class Wrappable(object):
+  '''
+  Mixin class for StyleProperty classes that wrap.
+  '''
   def propagateValueToInstrument(self):
+    ''' Apply unwrapped value to instrument. '''
     self.instrumentSetter(self.resettableValue.value().getWrappedValue())
+  
+  
+class FontStyleProperty(Wrappable, BaseStyleProperty):
+  ''' Needed for both PySide and PyQt. '''
+  def layout(self):
+    return FontStylePropertyLayout(parentStyleProperty=self)
+  
+  
+class PSComboBoxStyleProperty(Wrappable, ComboBoxStyleProperty):
+  ''' Needed for PySide, but not for PyQt. '''
+  pass
 
-class PSFontStyleProperty(FontStyleProperty):
-  def propagateValueToInstrument(self):
-    self.instrumentSetter(self.resettableValue.value().getWrappedValue())
   
   

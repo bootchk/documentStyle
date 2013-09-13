@@ -15,6 +15,7 @@ from documentStyle.model.lineSpacing import lineSpacingModel
 from documentStyle.debugDecorator import report, reportReturn
 
 
+
 class BlockFormation(TextFormation):
   '''
   Styling attributes of blocks of text.

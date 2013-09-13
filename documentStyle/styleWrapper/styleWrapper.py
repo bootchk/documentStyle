@@ -8,14 +8,16 @@ from PyQt4.QtCore import Qt
 
 class StyleWrapper(object):
   '''
-  Wrap a StyleProperty that is Qt enum.
-  Pickleable (which Qt enums are not depending on your choice of binding and version.)
+  Wrap a StyleProperty that is Qt enum so that it is Pickleable.
+  
+  Only needed for PySide.  Qt enums are already pickleable in PyQt, but not in PySide.
+  
   Also isolates Qt.
   
-  Instances are true instances, unlike Qt enum values, which are class attributes.
+  Instances are true instances, unlike PySide Qt enum values, which are class attributes.
   (That's why they are not pickleable.)
   
-  StyleProperty's that are not Qt enums (e.g. o ftype int) do not need wrapping.
+  StyleProperty's that are not Qt enums (e.g. of type int) do not need wrapping.
   '''
   
   def __init__(self, wrapped=None):

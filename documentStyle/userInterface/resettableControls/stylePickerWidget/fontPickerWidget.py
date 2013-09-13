@@ -63,6 +63,7 @@ class FontPicker(StylePicker):
     '''
     assert isinstance(newValue, FontStyleWrapper) # Not: QFont
     newQFont = newValue.getWrappedValue()
+    
     self._feedbackFont(newQFont)
     self._value = newValue
     self.valueChanged.emit(newQFont)  # Propagate, e.g. to model

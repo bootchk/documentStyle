@@ -6,7 +6,7 @@ from PyQt4.QtGui import QPen
 from instrumentFormation import InstrumentFormation
 from ..styleProperty import ColorStyleProperty, IntStyleProperty, ComboBoxStyleProperty
 from ...model.pen import PenModel
-from documentStyle.styleWrapper.styleWrapper import PenStyleWrapper
+#from documentStyle.styleWrapper.styleWrapper import PenStyleWrapper
 
 
 class PenFormation(InstrumentFormation):

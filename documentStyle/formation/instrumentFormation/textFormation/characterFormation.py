@@ -33,6 +33,7 @@ class CharacterFormation(TextFormation):
                                              default=self.instrument.foreground().color(),
                                              minimum=0, maximum=0), 
                       FontStyleProperty("Font", self.instrument.setFont, self.selector,
+                                        # !!! Must be wrapped for PySide and PyQt
                                         default=FontStyleWrapper(self.instrument.font()),
                                         minimum=0, maximum=0,)]
                                         ## model = FontModel),]

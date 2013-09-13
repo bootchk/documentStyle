@@ -5,9 +5,12 @@ from PyQt4.QtGui import QFont
 
 class FontStyleWrapper(object):
   '''
-  Wrap a QFont.
-  Pickleable as string rep.
+  Wrap a QFont so it is Pickleable as string rep.
+  
+  Needed for both PySide and PyQt (neither pickles QFont.)
+  
   A QFont is composite of many values (fontfamily, fontstyle, fontsize)
+  (Most other StyleProperty values are simple types such as int or Qt enum.)
   '''
   
   def __init__(self, wrapped=None):
