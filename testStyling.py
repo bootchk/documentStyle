@@ -125,6 +125,11 @@ class DiagramScene(QGraphicsScene):
     for item in self.items():
       item.polish()
     
+    
+  def restoreItemsToStyleCascade(self):
+    ''' reparent item's to new DSS in cascade. '''
+    for item in self.items():
+      item.addToStyleCascade()
   
     
    
@@ -154,7 +159,10 @@ class GraphicsView(QGraphicsView):
     elif key == Qt.Key_R:
       print "Restored doc stylesheet"
       QCoreApplication.instance().cascadion.restoreDocStyleSheet(self.pickledDSS)
-      # This is just a test. A real app might tell document to reparent documentElements (if they already exist) and polish
+      # !!! So far we have only tested unpickling.) 
+      # To complete test, tell document to reparent documentElements (if they already exist)
+      self.scene.restoreItemsToStyleCascade()
+      # Now must polish (via events or otherwise.)
 
        
 class MainWindow(QMainWindow):
