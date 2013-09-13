@@ -51,8 +51,17 @@ class Formation(list):
   
   
   def __repr__(self):
-    return self.name +"[" +  ",".join( map( str, self) ) + "]"
-                     
+    ''' Self is List. list.repr() is verbose. '''
+    return self.name  # short
+    
+    
+  def _longRepr(self): 
+    '''
+    list.repr() would be on one line.  Reformat to indented multi-line, for debugging.
+    '''
+    return self.name +"[" +  ",\n       ".join( map( str, self) ) + "]\n"
+          
+            
                       
   @report
   def applyTo(self, morph):
@@ -125,6 +134,7 @@ class Formation(list):
     return len(self) < 2
   
   
+  @report
   def reflectToStylingActSet(self, derivingStylingActSet):
     '''
     Reflect user's changes into a derivingStylingActSet.
@@ -172,7 +182,7 @@ class Formation(list):
       """
         
   
-  #@report
+  @report
   def rollStyleProperties(self):
     '''
     Roll forward all styleProperty, meaning: not overridden by subsequent (in cascade) inline StylingAct.

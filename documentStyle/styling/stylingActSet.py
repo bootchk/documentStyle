@@ -39,6 +39,7 @@ class StylingActSet(dict):
       
   @reportReturn
   def put(self, stylingAct):
+    ''' Add a styling act, or replace an existing one !!! '''
     self[stylingAct.selector] = stylingAct
     
     

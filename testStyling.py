@@ -157,12 +157,15 @@ class GraphicsView(QGraphicsView):
       print "Saved doc stylesheet"
       self.pickledDSS = QCoreApplication.instance().cascadion.pickleDocStyleSheet()
     elif key == Qt.Key_R:
-      print "Restored doc stylesheet"
-      QCoreApplication.instance().cascadion.restoreDocStyleSheet(self.pickledDSS)
-      # !!! So far we have only tested unpickling.) 
-      # To complete test, tell document to reparent documentElements (if they already exist)
-      self.scene.restoreItemsToStyleCascade()
-      # Now must polish (via events or otherwise.)
+      if self.pickledDSS is not None:
+        print "Restored doc stylesheet"
+        QCoreApplication.instance().cascadion.restoreDocStyleSheet(self.pickledDSS)
+        # !!! So far we have only tested unpickling.) 
+        # To complete test, tell document to reparent documentElements (if they already exist)
+        self.scene.restoreItemsToStyleCascade()
+        # Now must polish (via events or otherwise.)
+      else:
+        print "You must save doc style sheet before you can restore it."
 
        
 class MainWindow(QMainWindow):

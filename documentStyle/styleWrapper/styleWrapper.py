@@ -20,23 +20,33 @@ class StyleWrapper(object):
   StyleProperty's that are not Qt enums (e.g. of type int) do not need wrapping.
   '''
   
-  def __init__(self, wrapped=None):
-    '''
-    Wrapped object is optional: unpickling sets via setstate.
-    '''
-    self.wrapped = wrapped
+  def __init__(self, raw):
+    assert raw is not None
+    # ??? How to make this work: raw value is not an instance, but an attribute of the wrappedEnum
+    # assert isinstance(raw, self.wrappedEnum)
+    self.raw = raw
+  
+  
+  
+  def __repr__(self):
+    ''' '''
+    # Don't know why this fails, it works below in reduce() ???
+    # return self.raw.name
+  
+    return str(self.wrappedEnum) + "as int:" + str(int(self.raw))
   
     
-  def getWrappedValue(self):
-    ''' A Qt enum value. '''
-    return self.wrapped
+    
+  def rawValue(self):
+    ''' Raw (unwrapped) Qt enum value. '''
+    return self.raw
   
   
   " No setter currently required. "
   
   
   def __eq__(self, other):
-    return self.wrapped == other.wrapped
+    return self.raw == other.raw
 
   
   def __reduce__(self):
@@ -45,18 +55,19 @@ class StyleWrapper(object):
     '''
     #print "reduce called"
     # Result is (factory class, args to factory, and state dictionary)
-    return (self.__class__, (), {'name': self.wrapped.name})
+    return (self.__class__, (), {'name': self.raw.name})
 
   
   def __setstate__(self, state):
     
-    # Should be only one key
-    for key in state.keys():
+    keys = state.keys()
+    assert len(keys) == 1
+    for key in keys:
       #print "key:", key, "value:", state[key]
-      result = self.__class__.wrappedInstrument.values[state[key]]
+      result = self.__class__.wrappedEnum.values[state[key]]
       #print "result:", result
-      self.wrapped = result
-    assert isinstance(self.wrapped, self.__class__.wrappedInstrument)
+      self.raw = result
+    assert isinstance(self.raw, self.__class__.wrappedEnum)
       
       
       
@@ -69,15 +80,15 @@ Note here "PenStyle" means "PenPattern", a particular StyleProperty.
 '''
 
 class PenStyleWrapper(StyleWrapper):
-  wrappedInstrument = Qt.PenStyle
+  wrappedEnum = Qt.PenStyle
   
   
 class BrushStyleWrapper(StyleWrapper):
-  wrappedInstrument = Qt.BrushStyle
+  wrappedEnum = Qt.BrushStyle
   
   
 class AlignmentStyleWrapper(StyleWrapper):
-  wrappedInstrument = Qt.AlignmentFlag
+  wrappedEnum = Qt.AlignmentFlag
   
   
   

@@ -160,7 +160,7 @@ class Wrappable(object):
   '''
   def propagateValueToInstrument(self):
     ''' Apply unwrapped value to instrument. '''
-    self.instrumentSetter(self.resettableValue.value().getWrappedValue())
+    self.instrumentSetter(self.resettableValue.value().rawValue())
   
   
 class FontStyleProperty(Wrappable, BaseStyleProperty):

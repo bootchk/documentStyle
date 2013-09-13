@@ -62,7 +62,7 @@ class FontPicker(StylePicker):
     !!! Takes a wrapped value.  Note use of wrapped versus unwrapped value.
     '''
     assert isinstance(newValue, FontStyleWrapper) # Not: QFont
-    newQFont = newValue.getWrappedValue()
+    newQFont = newValue.rawValue()
     
     self._feedbackFont(newQFont)
     self._value = newValue

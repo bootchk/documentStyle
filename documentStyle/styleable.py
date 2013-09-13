@@ -190,7 +190,7 @@ class Styleable(object):
     self.addToStyleCascade()
     self.polish()
     
-    
+  @report
   def applyStyle(self, style):
     " Apply given style to self."
     '''

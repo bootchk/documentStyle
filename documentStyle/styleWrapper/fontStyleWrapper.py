@@ -17,7 +17,7 @@ class FontStyleWrapper(object):
     self.wrapped = wrapped
   
     
-  def getWrappedValue(self):
+  def rawValue(self):
     ''' Get wrapped value, of type QFont. '''
     return self.wrapped
   
