@@ -123,9 +123,6 @@ And some subclasses use wrapped style values.
 TODO refactor using Pluggable Behavior??
 '''
 
-'''
-These return pickleable values, without wrapping or adaption.
-'''
 class FloatStyleProperty(BaseStyleProperty):
   def layout(self):
     return FloatStylePropertyLayout(parentStyleProperty=self)
@@ -146,25 +143,28 @@ class UnwrappedComboBoxStyleProperty(BaseStyleProperty):
   def layout(self):
     return ComboBoxStylePropertyLayout(parentStyleProperty=self)
 
-
-'''
-These return pickleable values via wrapping or other adaption.
-Reimplement propagateValueToInstrument() to wrap instruments type with a pickleable type
-'''
   
 class ComboBoxStyleProperty(BaseStyleProperty):
   def layout(self):
     return ComboBoxStylePropertyLayout(parentStyleProperty=self)
-    
-  def propagateValueToInstrument(self):
-    self.instrumentSetter(self.resettableValue.value().getWrappedValue())
 
 
 class FontStyleProperty(BaseStyleProperty):
   def layout(self):
     return FontStylePropertyLayout(parentStyleProperty=self)
   
+  
+'''
+These return pickleable values via wrapping or other adaption.
+Reimplement propagateValueToInstrument() to wrap instruments type with a pickleable type
+'''
+  
+class PSComboBoxStyleProperty(ComboBoxStyleProperty):
   def propagateValueToInstrument(self):
-    self.instrumentSetter(self.resettableValue.value().getWrappedValue()) 
+    self.instrumentSetter(self.resettableValue.value().getWrappedValue())
+
+class PSFontStyleProperty(FontStyleProperty):
+  def propagateValueToInstrument(self):
+    self.instrumentSetter(self.resettableValue.value().getWrappedValue())
   
   

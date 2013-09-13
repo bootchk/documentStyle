@@ -6,7 +6,7 @@ from PyQt4.QtGui import QBrush #, QTransform
 from instrumentFormation import InstrumentFormation
 from ..styleProperty import ColorStyleProperty, ComboBoxStyleProperty
 from ...model.brush import BrushModel
-from ...styleWrapper.styleWrapper import BrushStyleWrapper
+# from ...styleWrapper.styleWrapper import BrushStyleWrapper
 
 
 
@@ -20,8 +20,8 @@ class BrushFormation(InstrumentFormation):
                                              default=self.instrument.color()),
                           ComboBoxStyleProperty("Pattern", 
                                                 self.instrument.setStyle, self.selector,
-                                                ## default=self.instrument.style(),
-                                                default=BrushStyleWrapper(self.instrument.style()),
+                                                default=self.instrument.style(),
+                                                # PySide default=BrushStyleWrapper(self.instrument.style()),
                                                 model = BrushModel),]
     
     '''

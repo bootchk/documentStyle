@@ -4,7 +4,7 @@
 from PyQt4.QtCore import Qt
 from PyQt4.QtGui import QBrush
 
-from documentStyle.styleWrapper.styleWrapper import BrushStyleWrapper
+#from documentStyle.styleWrapper.styleWrapper import BrushStyleWrapper
 
 
 class AdaptedBrushModel(object):
@@ -13,11 +13,19 @@ class AdaptedBrushModel(object):
   '''
   def __init__(self):
     qtEnum = Qt # PySide qtEnum = Qt.BrushStyle
+    """
+    PySide
     self.values = {"None": BrushStyleWrapper(qtEnum.NoBrush),
                    "Solid": BrushStyleWrapper(qtEnum.SolidPattern),
                    "Half dense": BrushStyleWrapper(qtEnum.Dense4Pattern),
                    "Quadrule": BrushStyleWrapper(qtEnum.CrossPattern),
                    "Crosshatch": BrushStyleWrapper(qtEnum.DiagCrossPattern),}
+    """
+    self.values = {"None": qtEnum.NoBrush,
+                   "Solid": qtEnum.SolidPattern,
+                   "Half dense": qtEnum.Dense4Pattern,
+                   "Quadrule": qtEnum.CrossPattern,
+                   "Crosshatch": qtEnum.DiagCrossPattern,}
     # TODO more values
     """
     Qt.Dense1Pattern   2   Extremely dense brush pattern.
@@ -43,6 +51,7 @@ Qt.TexturePattern
     '''
     A new brush has default style.
     '''
-    return BrushStyleWrapper(QBrush().style())
-
+    # PySide return BrushStyleWrapper(QBrush().style())
+    return QBrush().style()
+  
 BrushModel = AdaptedBrushModel()

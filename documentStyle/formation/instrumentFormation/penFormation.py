@@ -31,7 +31,7 @@ class PenFormation(InstrumentFormation):
                                           minimum=0, maximum=10, singleStep=1),
                           ComboBoxStyleProperty("Style", self.instrument.setStyle, 
                                                 self.selector,
-                                                default=PenStyleWrapper(self.instrument.style()),
+                                                default=self.instrument.style(), # PySide PenStyleWrapper(self.instrument.style()),
                                                 model = PenModel)
                           ]
   '''

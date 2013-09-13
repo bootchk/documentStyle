@@ -10,7 +10,7 @@ from documentStyle.formation.styleProperty import ComboBoxStyleProperty
 from documentStyle.formation.styleProperty import UnwrappedComboBoxStyleProperty
 from documentStyle.model.textalignment import alignmentModel
 from documentStyle.model.lineSpacing import lineSpacingModel
-from documentStyle.styleWrapper.styleWrapper import AlignmentStyleWrapper
+#from documentStyle.styleWrapper.styleWrapper import AlignmentStyleWrapper
 
 from documentStyle.debugDecorator import report, reportReturn
 
@@ -33,7 +33,8 @@ class BlockFormation(TextFormation):
                                            default=self.instrument.indent(), 
                                            minimum=0, maximum=10, singleStep=1),
                           ComboBoxStyleProperty("Alignment", self.instrument.setAlignment, self.selector,
-                                                default=AlignmentStyleWrapper(self.instrument.alignment()),
+                                                # PySide default=AlignmentStyleWrapper(self.instrument.alignment()),
+                                                default=self.instrument.alignment(),
                                                 model = alignmentModel),
                           UnwrappedComboBoxStyleProperty("Line spacing", self.adaptLineSpacing, self.selector,
                                                 default=100,  # single spacing is 100% is default
