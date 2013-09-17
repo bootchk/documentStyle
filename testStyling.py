@@ -49,7 +49,38 @@ Restore
 DocumentElements (aka Morph, QGraphicItem, or other custom classes)
 '''
 
-class LineItem(Styleable, QGraphicsLineItem):
+class ContextMenuStyleable(object):
+  
+  def contextMenuEvent(self, event):
+    ''' 
+    Proof-of-concept handler for Qt event.
+    !!! A real app should implement context menu and undo/redo.
+    
+    Let user style with RMB (context button), but if cancels, revert document element to original.
+    '''
+    try:
+      if self.oldStyle is None:
+        pass
+    except AttributeError:
+      # Because this is a hack for testing, leave these prints here
+      print ">>>capturing original Style"
+      self.oldStyle = self.serializedStyle()
+    
+    newStyle = self.editStyle()
+    if newStyle is None:
+      # testing undo: be careful in testing, if you cancel a dialog it might have this unexpected result.
+      # Because this is a hack for testing, leave these prints here
+      print ">>>Restoring oldStyle"
+      self.resetStyleFromSerialized(self.oldStyle)
+      return # canceled
+    else:
+      # A real app would call item.polish() after the dialog
+      # Because this is a hack for testing, leave these prints here
+      print ">>>applyingStyle to element after dialog"
+      self.applyStyle(newStyle)
+      
+      
+class LineItem(ContextMenuStyleable, Styleable, QGraphicsLineItem):
   def __init__(self, x1, y1, x2, y2):
     QGraphicsLineItem.__init__(self, x1, y1, x2, y2)
     self.setStylingDocumentElementType("Line")
@@ -63,14 +94,14 @@ class LineItem(Styleable, QGraphicsLineItem):
     pen.setWidthF(scaledWidthF)
     
 
-class TextItem(Styleable, QGraphicsTextItem):
+class TextItem(ContextMenuStyleable, Styleable, QGraphicsTextItem):
   def __init__(self, text):
     QGraphicsTextItem.__init__(self, text)
     self.setStylingDocumentElementType("Text")
     
   
   
-class EllipseItem(Styleable, QGraphicsEllipseItem):
+class EllipseItem(ContextMenuStyleable, Styleable, QGraphicsEllipseItem):
   def __init__(self):
     QGraphicsEllipseItem.__init__(self)
     self.setRect(30, 30, 40, 40)
@@ -90,7 +121,7 @@ class EllipseItem(Styleable, QGraphicsEllipseItem):
 
   
   
-class PixmapItem(Styleable, QGraphicsPixmapItem ):
+class PixmapItem(ContextMenuStyleable, Styleable, QGraphicsPixmapItem ):
   def __init__(self, filename):
     pic = QPixmap(filename)
     assert not pic.isNull()  # file or encoding exceptions

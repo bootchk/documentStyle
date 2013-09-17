@@ -92,37 +92,13 @@ class Styleable(object):
     # Choose Dynamic or Template.  Defines the broad behaviour of app.  Need Factory?
     self.styler = DynamicStyler(DETypeSelector(DEType))
     #self.styler = TemplateStyler(self.selector)
+    self.documentElementStyleType = DEType
   
-
   
-  
-  def contextMenuEvent(self, event):
-    ''' 
-    Proof-of-concept handler for Qt event.
-    !!! A real app should implement context menu and undo/redo.
-    
-    Let user style with RMB (context button), but if cancels, revert document element to original.
-    '''
-    try:
-      if self.oldStyle is None:
-        pass
-    except AttributeError:
-      # Because this is a hack for testing, leave these prints here
-      print ">>>capturing original Style"
-      self.oldStyle = self.serializedStyle()
-    
-    newStyle = self.editStyle()
-    if newStyle is None:
-      # testing undo: be careful in testing, if you cancel a dialog it might have this unexpected result.
-      # Because this is a hack for testing, leave these prints here
-      print ">>>Restoring oldStyle"
-      self.resetStyleFromSerialized(self.oldStyle)
-      return # canceled
-    else:
-      # A real app would call item.polish() after the dialog
-      # Because this is a hack for testing, leave these prints here
-      print ">>>applyingStyle to element after dialog"
-      self.applyStyle(newStyle)
+  def getStylingDocumentElementType(self):
+    result = self.documentElementStyleType
+    assert isinstance(result,str) # See above: is a str to create a selector
+    return result
   
   
   def _setStyle(self, style):
@@ -214,7 +190,13 @@ class Styleable(object):
     
     Implementation: delegate to styler.
     '''
-    return self.styler.getEditedStyle(dialogTitle="Element Style")
+    '''
+    assert getStylingDocumentElementType() is a string that describes document element type
+    We say "Element" to distinguish that this is a leaf(terminal) style sheet for a single element.
+    Style type may be general, e.g. it may be "Shape" whereas element is specifically a "Rect" subclass of Shape.
+    '''
+    dialogTitle = self.getStylingDocumentElementType() + " Element Style"
+    return self.styler.getEditedStyle(dialogTitle=dialogTitle)
     
 
   @report
