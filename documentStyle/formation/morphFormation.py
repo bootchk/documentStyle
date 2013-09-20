@@ -71,8 +71,8 @@ class TextFormation(MorphFormation):
     MorphFormation.__init__(self, "Text")
     self.append(CharacterFormation(parentSelector=self.selector))
     self.append(BlockFormation(parentSelector=self.selector))
-    self.append(PenFormation(parentSelector=self.selector))
-    self.append(BrushFormation(parentSelector=self.selector))
+    self.append(PenFormation(parentSelector=self.selector, role = "Frame "))  # i.e. Frame Pen
+    self.append(BrushFormation(parentSelector=self.selector, role = "Ground ")) # i.e. Ground Brush
     self.append(OpacityFormation(parentSelector=self.selector))
     self.append(GraphicEffectFormation(parentSelector=self.selector))
     

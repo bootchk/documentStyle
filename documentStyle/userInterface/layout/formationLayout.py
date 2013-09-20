@@ -35,7 +35,7 @@ class FormationLayout(QVBoxLayout):
   
     if not top:
       # display formation name in the layout
-      label = QLabel(formation.name)
+      label = QLabel(formation.role + formation.name)
       self.addWidget(label)
     # else display name in window title
       

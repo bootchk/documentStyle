@@ -41,13 +41,22 @@ class Formation(list):
   - persist (as attached to styled morphs of a document)
   
   '''
-  def __init__(self, name, selector):
+  def __init__(self, name, selector, role=""):
     '''
     Responsibility: know name
     '''
     assert name is not None
     self.name = name
     self.selector = selector # immutable
+    '''
+    role this formation plays in styling an element.
+    The same formation type can play many roles in styling a composite document element.
+    E.G. a PenFormation can play role "Frame " styler and also "Interior" styler.
+    Or it may not be obvious to user what role a Formation (usually InstrumentFormation) plays,
+    e.g. what role does a Pen play on Text: style the chars or style the frame?
+    Usually role is obvious, i.e. role of a Pen on a Line is to style the line.
+    '''
+    self.role = role  
   
   
   def __repr__(self):

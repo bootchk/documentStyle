@@ -19,10 +19,10 @@ class PenFormation(InstrumentFormation):
   
   # TODO: a QPen has a QBrush also, and it needs to be scaled also
   
-  def __init__(self, parentSelector):
+  def __init__(self, parentSelector, role=""):
     '''
     '''
-    InstrumentFormation.__init__(self, name="Pen", parentSelector=parentSelector)
+    InstrumentFormation.__init__(self, name="Pen", parentSelector=parentSelector, role=role)
     self.instrument = QPen()
     self.styleProperties=[ColorStyleProperty("Color", self.instrument.setColor, self.selector,
                                              default = self.instrument.color()), 

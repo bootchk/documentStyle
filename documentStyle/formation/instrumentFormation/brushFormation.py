@@ -13,8 +13,8 @@ from ...model.brush import BrushModel
 class BrushFormation(InstrumentFormation):
   ''' Specialize to Qt <QBrush> '''
   
-  def __init__(self, parentSelector):
-    InstrumentFormation.__init__(self, name="Brush", parentSelector=parentSelector)
+  def __init__(self, parentSelector, role=""):
+    InstrumentFormation.__init__(self, name="Brush", parentSelector=parentSelector, role=role)
     self.instrument = QBrush()
     self.styleProperties=[ColorStyleProperty("Color", self.instrument.setColor, self.selector,
                                              default=self.instrument.color()),

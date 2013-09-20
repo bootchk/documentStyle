@@ -41,8 +41,8 @@ class InstrumentFormation(Formation):
   (the latter have subheadings e.g. "Line".)
   '''
   
-  def __init__(self, name, parentSelector):
-    Formation.__init__(self, name, selector=instrumentSelector(parentSelector, name))
+  def __init__(self, name, parentSelector, role=""):
+    Formation.__init__(self, name, selector=instrumentSelector(parentSelector, name), role=role)
   
   
   def __repr__(self):
