@@ -42,11 +42,12 @@ class PenFormation(InstrumentFormation):
 
   def applyTo(self, morph):
     '''
-    Apply my instrument to DocumentElement
-    
-    Assert this formation's values are applied to instrument via editing (which calls Instrument.setters())
+    Assert this formation's values have already been applied to instrument via editing (which calls Instrument.setters())
+    What remains is to set the instrument to the morph.
+    Also, scale instrument correlated with scale of morph.
     '''
-    morph.scalePen(self.instrument, self.styleProperties[1].resettableValue.value())
+    # Callback morph API: only morph knows its scale, and how to inversely scale drawing instrument
+    morph.scaleInstrument(self.instrument, baseValue=self.styleProperties[1].resettableValue.value())
     morph.setPen(self.instrument)
     
   """

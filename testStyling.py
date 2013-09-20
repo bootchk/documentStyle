@@ -85,20 +85,36 @@ class LineItem(ContextMenuStyleable, Styleable, QGraphicsLineItem):
     QGraphicsLineItem.__init__(self, x1, y1, x2, y2)
     self.setStylingDocumentElementType("Line")
   
-  def scalePen(self, pen, value):
-    unscaledWidth = value
+  def scaleInstrument(self, instrument, baseValue=1):
+    if isinstance(instrument, QBrush):
+      return
+    unscaledWidth = baseValue
     itemScale = self.scale()  # !!! scale is used for 1D sizing
     scaledWidthF = 1.0/itemScale * unscaledWidth
     
-    # !!! Note float value and setWidthF is float setter
-    pen.setWidthF(scaledWidthF)
+    # !!! Note float and setWidthF is float setter
+    instrument.setWidthF(scaledWidthF)
     
 
 class TextItem(ContextMenuStyleable, Styleable, QGraphicsTextItem):
+  '''
+  This is NOT ballooned text, so stub out calls that style balloon (frame.)
+  '''
   def __init__(self, text):
     QGraphicsTextItem.__init__(self, text)
     self.setStylingDocumentElementType("Text")
     
+  def scaleInstrument(self, instrument, baseValue=1):
+    ''' Stub. '''
+    pass
+  
+  def setPen(self, instrument):
+    ''' Stub. '''
+    pass
+  
+  def setBrush(self, instrument):
+    ''' Stub. '''
+    pass
   
   
 class EllipseItem(ContextMenuStyleable, Styleable, QGraphicsEllipseItem):
@@ -107,17 +123,20 @@ class EllipseItem(ContextMenuStyleable, Styleable, QGraphicsEllipseItem):
     self.setRect(30, 30, 40, 40)
     self.setStylingDocumentElementType("Shape")
   
-  def scalePen(self, pen, value):
-    unscaledWidth = value
+  def scaleInstrument(self, instrument, baseValue=1):
+    if isinstance(instrument, QBrush):
+      return
+    
+    unscaledWidth = baseValue
     '''
     !!! transform is used for 2D sizing.
-    Scale pen to min of x,y dimension.
+    Scale instrument to min of x,y dimension.
     '''
     itemScale = min(self.transform().m11(), self.transform().m22())
     scaledWidthF = 1.0/itemScale * unscaledWidth
     
-    # !!! Note float value and setWidthF is float setter
-    pen.setWidthF(scaledWidthF)
+    # !!! Note float and setWidthF is float setter
+    instrument.setWidthF(scaledWidthF)
 
   
   

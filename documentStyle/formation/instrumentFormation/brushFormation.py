@@ -38,7 +38,7 @@ class BrushFormation(InstrumentFormation):
   
   def applyTo(self, morph):
     #print "setBrush on morph", self.instrument.color()
-    ##self.scaledPropagateToInstrument(morph)
+    morph.scaleInstrument(self.instrument)  # No baseValue, defaults to 1
     morph.setBrush(self.instrument) 
   
   

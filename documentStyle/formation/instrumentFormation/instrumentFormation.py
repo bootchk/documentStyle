@@ -103,7 +103,8 @@ class InstrumentFormation(Formation):
     
     
   def applyTo(self):
-    raise "NotImplementedError" # deferred
+    ''' Apply my instrument to DocumentElement. '''
+    raise "NotImplementedError", 'Deferred'
   
 
 
