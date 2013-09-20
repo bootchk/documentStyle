@@ -22,7 +22,7 @@ class MorphFormation(Formation):
   Configurer: of the set of InstrumentFormation appropriate for a DocumentElement (Morph).
   
   Declares the "tools" e.g. brush, that a user thinks of (models) as drawing a DocumentElement.
-  The framework supports the same model, and this has little fix for any mismatch of the models.
+  The framework supports the same model, and this fixes few mismatches of the models.
   
   Abstract.
   '''
@@ -58,12 +58,21 @@ class ShapeFormation(MorphFormation):
     
     
 class TextFormation(MorphFormation):
-  ''' <Text> style configuration '''
+  '''
+  <Text> style configuration 
+  
+  This is for ballooned text: having a styled balloon, i.e. background.
+  Here, Pen and Brush style the ballon outline and fill, respectively.
+  
+  TODO different formation for text without background.
+  '''
   
   def __init__(self):
     MorphFormation.__init__(self, "Text")
     self.append(CharacterFormation(parentSelector=self.selector))
     self.append(BlockFormation(parentSelector=self.selector))
+    self.append(PenFormation(parentSelector=self.selector))
+    self.append(BrushFormation(parentSelector=self.selector))
     self.append(OpacityFormation(parentSelector=self.selector))
     self.append(GraphicEffectFormation(parentSelector=self.selector))
     
