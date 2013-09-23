@@ -8,10 +8,6 @@ This is free software, covered by the GNU General Public License.
 
 from documentStyle.selector import fieldSelector
 
-from documentStyle.userInterface.form.formRow import FloatStylePropertyFormRow, IntStylePropertyFormRow
-from documentStyle.userInterface.form.formRow import ColorStylePropertyFormRow, FontStylePropertyFormRow
-from documentStyle.userInterface.form.formRow import ComboBoxStylePropertyFormRow
-
 from documentStyle.userInterface.layout.stylePropertyLayout import FloatStylePropertyLayout, IntStylePropertyLayout
 from documentStyle.userInterface.layout.stylePropertyLayout import ColorStylePropertyLayout, FontStylePropertyLayout
 from documentStyle.userInterface.layout.stylePropertyLayout import ComboBoxStylePropertyLayout
@@ -74,11 +70,6 @@ class BaseStyleProperty(object):
     ''' Layout widget that displays this StyleProperty'''
     raise NotImplementedError # deferred
   
-  """
-  def getFormRow(self):
-    ''' Label and widget for use in QFormLayout row. '''
-    raise NotImplementedError # deferred
-  """
   
   @report
   def setPropertyValue(self, newValue):

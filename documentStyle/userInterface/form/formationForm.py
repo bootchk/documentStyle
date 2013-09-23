@@ -73,11 +73,11 @@ class FormationForm(QFormLayout):
       """
       if formation.isSingleValued():
         # Only a single property, label with selector
-        label = labelPrefix + ":" + formRow.getLabel()
-        self.addRow(label, formRow.getWidget())
+        label = labelPrefix + ":" + layout.getLabel()
+        self.addRow(label, layout.getWidget())
       else:
         # more than one, label each with just label of style property
-        self.addRow(formRow.getLabel(), formRow.getWidget())
+        self.addRow(layout.getLabel(), layout.getWidget())
       """
       # Indent all style properties
       label = "   " + layout.getLabel()
