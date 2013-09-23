@@ -7,6 +7,11 @@ This is free software, covered by the GNU General Public License.
 #from PyQt4.QtCore import QObject
 
 from documentStyle.selector import fieldSelector
+
+from documentStyle.userInterface.form.formRow import FloatStylePropertyFormRow, IntStylePropertyFormRow
+from documentStyle.userInterface.form.formRow import ColorStylePropertyFormRow, FontStylePropertyFormRow
+from documentStyle.userInterface.form.formRow import ComboBoxStylePropertyFormRow
+
 from documentStyle.userInterface.layout.stylePropertyLayout import FloatStylePropertyLayout, IntStylePropertyLayout
 from documentStyle.userInterface.layout.stylePropertyLayout import ColorStylePropertyLayout, FontStylePropertyLayout
 from documentStyle.userInterface.layout.stylePropertyLayout import ComboBoxStylePropertyLayout
@@ -65,10 +70,15 @@ class BaseStyleProperty(object):
     return self.name + ":" + str(self.selector) + ":" + str(self.resettableValue)
   
   
-  def layout(self):
+  def getLayout(self, isLabeled=False):
     ''' Layout widget that displays this StyleProperty'''
     raise NotImplementedError # deferred
   
+  """
+  def getFormRow(self):
+    ''' Label and widget for use in QFormLayout row. '''
+    raise NotImplementedError # deferred
+  """
   
   @report
   def setPropertyValue(self, newValue):
@@ -124,30 +134,28 @@ TODO refactor using Pluggable Behavior??
 '''
 
 class FloatStyleProperty(BaseStyleProperty):
-  def layout(self):
-    return FloatStylePropertyLayout(parentStyleProperty=self)
-  
+  def getLayout(self, isLabeled=False):
+    return FloatStylePropertyLayout(parentStyleProperty=self, isLabeled=isLabeled)
+
   
 class IntStyleProperty(BaseStyleProperty):
-  def layout(self):
-    return IntStylePropertyLayout(parentStyleProperty=self)
-
+  def getLayout(self, isLabeled=False):
+    return IntStylePropertyLayout(parentStyleProperty=self, isLabeled=isLabeled)
 
 class ColorStyleProperty(BaseStyleProperty):
-  def layout(self):
-    return ColorStylePropertyLayout(parentStyleProperty=self)
-
-
+  def getLayout(self, isLabeled=False):
+    return ColorStylePropertyLayout(parentStyleProperty=self, isLabeled=isLabeled)
+  
 class UnwrappedComboBoxStyleProperty(BaseStyleProperty):
   " Combobox for style objects that don't need wrapping (pickle.) "
-  def layout(self):
-    return ComboBoxStylePropertyLayout(parentStyleProperty=self)
-
+  def getLayout(self, isLabeled=False):
+    return ComboBoxStylePropertyLayout(parentStyleProperty=self, isLabeled=isLabeled)
+  
   
 class ComboBoxStyleProperty(BaseStyleProperty):
-  def layout(self):
-    return ComboBoxStylePropertyLayout(parentStyleProperty=self)
-
+  def getLayout(self, isLabeled=False):
+    return ComboBoxStylePropertyLayout(parentStyleProperty=self, isLabeled=isLabeled)
+  
 
 '''
 These return pickleable values via wrapping or other adaption.
@@ -165,8 +173,8 @@ class Wrappable(object):
   
 class FontStyleProperty(Wrappable, BaseStyleProperty):
   ''' Needed for both PySide and PyQt. '''
-  def layout(self):
-    return FontStylePropertyLayout(parentStyleProperty=self)
+  def getLayout(self, isLabeled=False):
+    return FontStylePropertyLayout(parentStyleProperty=self, isLabeled=isLabeled)
   
   
 class PSComboBoxStyleProperty(Wrappable, ComboBoxStyleProperty):

@@ -12,7 +12,7 @@ class Model(object):
   def __init__(self):
     self.values = {"None": 0,  # In Qt, does not exist NullGraphicsEffect
                    "Blur": 1,
-                   "Drop Shadow": 2 }
+                   "Shadow": 2 }   # Drop Shadow too long
     # TODO other effects
   
 graphicEffectModel = Model()

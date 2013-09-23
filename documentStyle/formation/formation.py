@@ -4,10 +4,14 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
+from PyQt4.QtGui import QLabel
+
+from documentStyle.userInterface.form.formationForm import FormationForm
 from documentStyle.userInterface.layout.formationLayout import FormationLayout
 from documentStyle.styling.stylingAct import StylingAct
 
 from documentStyle.debugDecorator import report
+
 
 class Formation(list):
   '''
@@ -85,19 +89,28 @@ class Formation(list):
   
   def selectSubformation(self, selector):
     '''
-    Select (by selector) a sub formation.
-    Returns Formation comprising all child Formations that match selector.
+    Formation comprising all child Formations that match selector,
+    or a single child Formation.
+    Ensure that result root does not have a single child (not single trunked tree.)
     
-    This only works for DEType, and won't work for (..., DEType, instrument, ...)
-    i.e. does not recurse
+    This only works for DEType, and won't work for (..., DEType, instrument, ...) i.e. does not recurse.
+    This is not general, but specific to DEType.
     '''
     # TODO need to return a copy of child formations???
     #print "selectSubformation, selector is ", selector
-    subFormation = Formation("subFormation", selector)
-    for formation in self:
-      if formation.name == selector.DEType or selector.DEType == "*":
-        subFormation.append(formation)
-    return subFormation
+    
+    if selector.isDETypeSelector():
+      for formation in self:
+        if formation.name == selector.DEType:
+          result = formation
+          break
+    else:
+      assert selector.DEType == "*"
+      # All children match, return composite
+      result = Formation("subFormation", selector)
+      for formation in self:
+        result.append(formation)
+    return result
     
   
   def selectStyleProperty(self, selector):
@@ -115,17 +128,27 @@ class Formation(list):
     return None
     
 
+  '''
+  Display (GUI editing.)
+  '''
   
   def display(self, top=False):
     '''
     Responsibility: Display for editing in list like form (indented tree)
+    See also: StyleProperty.display()
     
-    Returns QLayout
+    Returns QWidget (QLayout or QFormLayout)
     '''
-    return FormationLayout(formation=self, top=top)
+    # This ALTERNATIVE creates a QFormLayout
+    return FormationForm(formation=self, top=top)
+    # This ALTERNATIVE creates a QGridLayout
+    #return FormationLayout(formation=self, top=top)
     
-  
+    
 
+  '''
+  Layout editing.
+  '''
   def displayContentsInLayout(self, layout):
     '''
     Tree structured layout into given layout.
@@ -141,6 +164,8 @@ class Formation(list):
     Single valued Formation displays in a row instead of a table.
     '''
     return len(self) < 2
+  
+  
   
   
   @report

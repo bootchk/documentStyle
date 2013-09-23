@@ -72,14 +72,14 @@ class InstrumentFormation(Formation):
     return result
 
 
-  def displayContentsInLayout(self, layout):
+  def displayContentsInLayout(self, parentLayout):
     '''
-    Redefines.
+    Reimplements.
     For this terminal Formation (without child Formations), 
     display StyleProperty layout/widgets, not layouts of child Formations.
     '''
     for p in self.styleProperties:
-      layout.addLayout(p.layout())
+      parentLayout.addLayout(p.getLayout(isLabeled=True))
 
 
   def generateStyleProperties(self):

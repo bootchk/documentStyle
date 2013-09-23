@@ -41,11 +41,18 @@ class StyleSheetDialog(QDialog):
     self.setDisabled(not self.isEditable())
     self.setSizeGripEnabled(True)
     
-    ## This does not make the dialog have not horizontal scroll bar
-    ## self.adjustSize()
+    '''
+    Assert contents of dialog is set, and dialog sizepolicy defaults to expanding?
+    For user friendliness, horizontal scroll bar not visible,
+    and vertical scroll bar not visible unless necessary.
     
-    # TODO for user friendliness, size should be set so that horizontal scroll bar not visible,
-    # and vertical scroll bar not visible unless necessary.
+    The contents is scrolling and determines the final dialog size.
+    The contents (QScrollArea) must be statically sized to fit the screen,
+    or dynamically sized.
+    These are not sufficient:
+    ## self.adjustSize()
+    ## self.setMinimumSize( 320, 400 )
+    '''
     
   """
   def apply(self):
@@ -67,15 +74,26 @@ class StyleSheetDialog(QDialog):
     viewport = QWidget()
     viewport.setLayout(formationLayout)
     
-    # A hack so scroll bars not obscure buttons.
-    # TODO Size dialog so horiz scroll bar not necessary, and not obscure
+    # A hack so scroll bars not obscure buttons?
     # !!! left, top, right, bottom (not top, left... as usual.)
-    viewport.setContentsMargins(10, 10, 20, 10)
+    viewport.setContentsMargins(10, 10, 10, 10)
     
     scrollArea = QScrollArea()
     scrollArea.setWidget(viewport)
-    ## This does not work: it obscures contents
-    ## scrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+    
+    '''
+    Assert width of contents is less than screen width (even mobile screens.)
+    Can't assert height of contents less than screen height,
+    e.g. a stylesheet has large height that must be vertically scrolled.
+    Note this is statically determined, at design time,
+    by ensuring that all rows are narrow.
+    TODO dynamically enable horizontal and vertical scroll bar policy
+    by calculations based on screen size and size of dialog needs?
+    
+    At one time, this not work: it obscured contents.
+    Before I shortened many labels and model names???
+    '''
+    scrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
     return scrollArea
     
   

@@ -52,7 +52,7 @@ class StylePropertyLayout(QHBoxLayout):
   A better name is: LabeledResettableControlWidget
   
   Layout includes:
-  - name: label
+  - name: label (optional)
   - value: controlWidget that gets/sets parent StyleProperty on valueChange
   - buddyButton that undoes changes (reverts to original, inherited value)
   
@@ -66,7 +66,7 @@ class StylePropertyLayout(QHBoxLayout):
   '''
 
 
-  def __init__(self, parentStyleProperty):
+  def __init__(self, parentStyleProperty, isLabeled=False):
     '''
     
     '''
@@ -76,7 +76,7 @@ class StylePropertyLayout(QHBoxLayout):
     
     self.model = parentStyleProperty
     
-    self._layoutChildWidgets(self.model)
+    self._layoutChildWidgets(self.model, isLabeled)
     
     self.controlWidget.setValue(self.model.get()) # initial value
     
@@ -88,14 +88,14 @@ class StylePropertyLayout(QHBoxLayout):
     and then emits userReset (which setEnabled(False) the BuddyButton).
     '''
     # connect valueChanged to self handler, not connect directly to buddyButton
-    result = self.controlWidget.valueChanged.connect(self.onValueChanged)
+    self.controlWidget.valueChanged.connect(self.onValueChanged)
     # PySide assert result
-    result = self.buddyButton.userReset.connect(self.onUserReset)
+    self.buddyButton.userReset.connect(self.onUserReset)
     # PySide assert result
     
     
     
-  def _layoutChildWidgets(self, model):
+  def _layoutChildWidgets(self, model, isLabeled):
     '''
     Create and layout child widgets.
     
@@ -108,8 +108,9 @@ class StylePropertyLayout(QHBoxLayout):
     
     TODO maybe the controls should be left aligned to the labels?
     '''
-    # Child: label
-    self.addWidget(QLabel(self.model.name))
+    # Child: optional label
+    if isLabeled:
+      self.addWidget(QLabel(self.model.name))
     
     # Child: Control
     # Some widgets don't use model
@@ -122,16 +123,20 @@ class StylePropertyLayout(QHBoxLayout):
                                 buddiedControl = self.controlWidget)
     self.addWidget(self.buddyButton)
    
-   
-   
-    '''
-    Each model must implement:
-    @Slot(<type>)
-    def set(self, value):
-      assert isinstance(value, <type>)
-      ...
-      assert self.get() == value
-    '''
+  
+  def getLabel(self):
+    ''' Label for the layout (even if not in the layout, i.e. the model label. '''
+    return self.model.name
+  
+  
+  '''
+  Each model must implement:
+  @Slot(<type>)
+  def set(self, value):
+    assert isinstance(value, <type>)
+    ...
+    assert self.get() == value
+  '''
     
   @reportReturn
   def onUserReset(self):
@@ -170,8 +175,8 @@ class StylePropertyLayout(QHBoxLayout):
   def createControlWidget(self, model):
     raise NotImplementedError # deferred
   
-  
 
+  
 
 
 class NumericStylePropertyLayout(StylePropertyLayout):

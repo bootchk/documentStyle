@@ -33,11 +33,13 @@ class BlockFormation(TextFormation):
     self.styleProperties=[IntStyleProperty("Indent", self.instrument.setIndent, self.selector,
                                            default=self.instrument.indent(), 
                                            minimum=0, maximum=10, singleStep=1),
-                          ComboBoxStyleProperty("Alignment", self.instrument.setAlignment, self.selector,
+                          # WAS "Alignment"
+                          ComboBoxStyleProperty("Aligned", self.instrument.setAlignment, self.selector,
                                                 # PySide default=AlignmentStyleWrapper(self.instrument.alignment()),
                                                 default=self.instrument.alignment(),
                                                 model = alignmentModel),
-                          UnwrappedComboBoxStyleProperty("Line spacing", self.adaptLineSpacing, self.selector,
+                          # WAS "Line spacing", too long
+                          UnwrappedComboBoxStyleProperty("Spacing", self.adaptLineSpacing, self.selector,
                                                 default=100,  # single spacing is 100% is default
                                                 model = lineSpacingModel),
                           ]

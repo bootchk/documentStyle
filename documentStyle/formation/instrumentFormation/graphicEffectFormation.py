@@ -35,9 +35,10 @@ class GraphicEffectFormation(InstrumentFormation):
   '''
   
   def __init__(self, parentSelector):
-    InstrumentFormation.__init__(self, name="Graphic Effect", parentSelector=parentSelector)
+    # WAS "Graphic Effect"
+    InstrumentFormation.__init__(self, name="Effect", parentSelector=parentSelector)
     self.instrument = PGraphicEffectInstrument()
-    self.styleProperties=[UnwrappedComboBoxStyleProperty("Graphic Effect", 
+    self.styleProperties=[UnwrappedComboBoxStyleProperty("Effect", 
                                                 self.instrument.setGraphicEffect, self.selector,
                                                 default=self.instrument.graphicEffect(),
                                                 model = graphicEffectModel)]  

@@ -33,7 +33,23 @@ class Selector(namedtuple('Selector', 'name DEType instrument field')):
       and  ( self.instrument == other.instrument or other.instrument == "*" or self.instrument == "*" ) \
       and  ( self.field == other.field or other.field == "*" or self.field == "*")
 
-
+  def isAnyDETypeAndInstrumentSelector(self):
+    ''' Selects a particular instrument for any DEType. '''
+    return self.DEType == '*' and self.instrument != '*' and self.field == '*'
+  
+  def isDETypeSelector(self):
+    ''' Selects all instruments for a DEType. '''
+    return self.DEType != '*' and self.instrument == '*'
+  
+  def isDETypeAndInstrumentSelector(self):
+    ''' Selects particular instrument for particular DEType. '''
+    return self.DEType != '*' and self.instrument != '*'
+    
+    
+'''
+Constructors of subtypes (by data, not by subclass)
+'''
+    
 def newAllSelector():
   ''' New copy of universal selector. '''
   return Selector("*", "*", "*", "*")
@@ -48,3 +64,4 @@ def instrumentSelector(source, instrumentName):
 def fieldSelector(source, fieldName):
   ''' Derive from source, substitute fieldName for 'field' field. '''
   return Selector(source.name, source.DEType, source.instrument, fieldName)
+
