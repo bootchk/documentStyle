@@ -44,6 +44,10 @@ class IntermediateStyleSheet(StyleSheet):
     print "Displaying intermediate style sheet's stylingActSetCollection"  # name from formation?
     print self.stylingActSetCollection
     
+  def clear(self):
+    ''' Reset by erasing styling acts. '''
+    self.stylingActSetCollection = StylingActSetCollection()
+    
   @report
   def getFormation(self, selector):
     '''
