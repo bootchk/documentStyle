@@ -3,8 +3,10 @@ Copyright 2012 Lloyd Konneker
 
 This is free software, covered by the GNU General Public License.
 '''
+import sys
+
 from PyQt4.QtCore import QCoreApplication, Qt
-from PyQt4.QtGui import QDialog, QDialogButtonBox, QVBoxLayout, QWidget, QScrollArea
+from PyQt4.QtGui import QDialog, QDialogButtonBox, QVBoxLayout, QWidget, QScrollArea, QLabel
 
 
 class StyleSheetDialog(QDialog):
@@ -25,18 +27,23 @@ class StyleSheetDialog(QDialog):
     
     # TODO, parentWindow should be the document, which may not be the activeWindow?
     parentWindow = QCoreApplication.instance().activeWindow()
+    print flags
     super(StyleSheetDialog, self).__init__(parent=parentWindow, flags=flags)
     
     # Layout components
     dialogLayout = QVBoxLayout()
     
+    if sys.platform.startswith('darwin'):
+      # GUI sheet has no title bar
+      dialogLayout.addWidget(QLabel(title))
+    else:
+      self.setWindowTitle(title)
+      
     dialogLayout.addWidget(self.createDialogCenterWidget(formation))
     
     if self.hasButtons():
       dialogLayout.addWidget(self.buttonBox())
     self.setLayout(dialogLayout)
-    
-    self.setWindowTitle(title)  # formation.name + " Style")
     
     self.setDisabled(not self.isEditable())
     self.setSizeGripEnabled(True)
