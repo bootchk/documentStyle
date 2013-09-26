@@ -4,7 +4,8 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PyQt4.QtGui import QDialog, QFont
+from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QFont, QDialog
 
 from styleSheet import StyleSheet
 
@@ -33,6 +34,7 @@ class IntermediateStyleSheet(StyleSheet):
     StyleSheet.__init__(self, name)
     # Collection may include many NamedStylingActSets
     self.stylingActSetCollection = StylingActSetCollection()
+    self.editFormation = None # temporary storage of formation copy
     
   def __repr__(self):
     return "IntermediateStyleSheet:" + self.name
@@ -102,21 +104,25 @@ class IntermediateStyleSheet(StyleSheet):
     - delete a SAS
     - or append SAS
     
-    Return bool whether canceled.
+    No result returned.
     '''
     # testing: canned SAS
     # self.testSAS()
   
-    editedFormation = self.getFormation(newAllSelector())
-    assert editedFormation is not None
+    self.editedFormation = self.getFormation(newAllSelector())  # Temporary: previous is garbage collected.
+    assert self.editedFormation is not None
     # dialog = NoneditableStyleDialog(parentWindow=None, formation=formation)
     
     # parentWindow is document so dialog centers in document.  If parentWindow were mainWindow (toplevel), Qt not center dialog
-    dialog = EditableStyleSheetDialog(formation=editedFormation, title = self.name + " StyleSheet")
-    dialog.exec_()
-    if dialog.result() == QDialog.Accepted:
-      self.reflectEditsToStylingActSetCollection(editedFormation)
+    dialog = EditableStyleSheetDialog(formation=self.editedFormation, title = self.name + " StyleSheet", flags=Qt.Sheet)
+    dialog.finished.connect(self.finishEdit)
+    dialog.open() # window modal
     
+    
+  def finishEdit(self, result):
+    ''' Slot for signal finished of dialog. '''
+    if result == QDialog.Accepted :
+      self.reflectEditsToStylingActSetCollection(self.editedFormation)
       '''
       Self is intermediate (user or doc or documentElement) stylesheet instance.
       Signals are emitted from instances.
@@ -125,9 +131,6 @@ class IntermediateStyleSheet(StyleSheet):
       or the signal may be unhandled, i.e. DocumentElement being edited will polish itself.
       '''
       self.styleSheetChanged.emit()
-      return True
-    else:
-      return False
     
 
   def reflectEditsToStylingActSetCollection(self, editedFormation):
