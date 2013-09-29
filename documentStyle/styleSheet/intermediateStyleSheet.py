@@ -130,11 +130,13 @@ class IntermediateStyleSheet(StyleSheet):
       '''
       Self is intermediate (user or doc or documentElement) stylesheet instance.
       Signals are emitted from instances.
-      Handlers for user and doc stylesheets signal will probably polish all DocumentElements.
-      Handler for DocumentElementStyleSheet signal may be in a DocumentElement instance,
+      Slot for user and doc stylesheets signal will probably polish all DocumentElements.
+      Slot for DocumentElementStyleSheet signal may be in a DocumentElement instance,
       or the signal may be unhandled, i.e. DocumentElement being edited will polish itself.
       '''
       self.styleSheetChanged.emit()
+    else:
+      self.styleSheetEditCanceled.emit()  # Apps may want to know so they can exit a mode of editing.
     
 
   def reflectEditsToStylingActSetCollection(self, editedFormation):

@@ -39,8 +39,8 @@ class StyleSheet(QObject):  # QObject for signals
   This is ABC, defining methods that should be reimplemented.
   '''
 
-  styleSheetChanged = Signal()
-
+  styleSheetChanged = Signal()  # User accepted edit dialog
+  styleSheetEditCanceled = Signal() # User canceled edit dialog
 
   def __init__(self, name=None):
     super(StyleSheet, self).__init__()
