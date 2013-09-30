@@ -5,7 +5,7 @@ This is free software, covered by the GNU General Public License.
 '''
 
 from PyQt4.QtCore import Qt
-from PyQt4.QtGui import QFont, QDialog
+from PyQt4.QtGui import QFont
 
 from styleSheet import StyleSheet
 
@@ -119,24 +119,31 @@ class IntermediateStyleSheet(StyleSheet):
     
     # parentWindow is document so dialog centers in document.  If parentWindow were mainWindow (toplevel), Qt not center dialog
     dialog = EditableStyleSheetDialog(formation=self.editedFormation, title = self.name + " StyleSheet", flags=Qt.Sheet)
-    dialog.finished.connect(self.finishEdit)
+    dialog.accepted.connect(self.acceptEdit)
+    dialog.rejected.connect(self.cancelEdit)
     dialog.open() # window modal
     
+  
+  '''
+  Note dialog is created anew, and its signals are connected to these relay methods.
+  However, one test app required reconnect to styleSheetEditCanceled before each call to edit().
+  Could not reproduce in a test harness, but be aware.
+  '''
+  def acceptEdit(self):
+    ''' Slot for signal accepted of dialog. Relay to caller as signal styleSheetChanged. '''
+    self.reflectEditsToStylingActSetCollection(self.editedFormation)
+    '''
+    Self is intermediate (user or doc or documentElement) stylesheet instance.
+    Signals are emitted from instances.
+    Slot for user and doc stylesheets signal will probably polish all DocumentElements.
+    Slot for DocumentElementStyleSheet signal may be in a DocumentElement instance,
+    or the signal may be unhandled, i.e. DocumentElement being edited will polish itself.
+    '''
+    self.styleSheetChanged.emit()
     
-  def finishEdit(self, result):
-    ''' Slot for signal finished of dialog. '''
-    if result == QDialog.Accepted :
-      self.reflectEditsToStylingActSetCollection(self.editedFormation)
-      '''
-      Self is intermediate (user or doc or documentElement) stylesheet instance.
-      Signals are emitted from instances.
-      Slot for user and doc stylesheets signal will probably polish all DocumentElements.
-      Slot for DocumentElementStyleSheet signal may be in a DocumentElement instance,
-      or the signal may be unhandled, i.e. DocumentElement being edited will polish itself.
-      '''
-      self.styleSheetChanged.emit()
-    else:
-      self.styleSheetEditCanceled.emit()  # Apps may want to know so they can exit a mode of editing.
+  def cancelEdit(self):
+    ''' Slot for signal canceled from dialog.  Relay, because pps may want so they can exit a mode of editing. '''
+    self.styleSheetEditCanceled.emit()
     
 
   def reflectEditsToStylingActSetCollection(self, editedFormation):
