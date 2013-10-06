@@ -1,16 +1,16 @@
 '''
 '''
-from PyQt4.QtCore import Qt
-from PyQt4.QtGui import QPen
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QPen
 
 #from documentStyle.styleWrapper.styleWrapper import PenStyleWrapper
 
 
 class AdaptedPenModel(object):
   '''
-  Mimics a PyQt4 enum: "values" attribute is a dictionary.
+  Mimics a PyQt5 enum: "values" attribute is a dictionary.
   But uses a pickleable type 
-  (PyQt4 Qt enum not pickleable since enum values are class attributes.)
+  (PyQt5 Qt enum not pickleable since enum values are class attributes.)
   
   Responsibility:
   - standard dictionary responsibilities

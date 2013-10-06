@@ -3,8 +3,8 @@ Copyright 2013 Lloyd Konneker
 
 This is free software, covered by the GNU General Public License.
 '''
-from PyQt4.QtCore import QCoreApplication
-from PyQt4.QtGui import QDialog
+from PyQt5.QtCore import QCoreApplication
+from PyQt5.QtWidgets import QDialog
 
 from .styler import Styler
 from ..styleSheet.documentElementStyleSheet import DocumentElementStyleSheet

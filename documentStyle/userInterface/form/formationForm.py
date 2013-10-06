@@ -2,8 +2,8 @@
 
 '''
 
-from PyQt4.QtCore import Qt
-from PyQt4.QtGui import QLabel, QFormLayout
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QLabel, QFormLayout
 
 # circular from documentStyle.formation.instrumentFormation.instrumentFormation import InstrumentFormation
 

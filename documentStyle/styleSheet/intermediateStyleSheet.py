@@ -4,10 +4,10 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PyQt4.QtCore import Qt
-from PyQt4.QtGui import QFont
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QFont
 
-from styleSheet import StyleSheet
+from .styleSheet import StyleSheet
 
 from documentStyle.styling.stylingAct import StylingAct
 from documentStyle.styling.stylingActSet import StylingActSet
@@ -41,8 +41,8 @@ class IntermediateStyleSheet(StyleSheet):
   
   
   def _dump(self):
-    print "Displaying intermediate style sheet's stylingActSetCollection"  # name from formation?
-    print self.stylingActSetCollection
+    print("Displaying intermediate style sheet's stylingActSetCollection")  # name from formation?
+    print(self.stylingActSetCollection)
     
   def clear(self):
     ''' Reset by erasing styling acts. '''

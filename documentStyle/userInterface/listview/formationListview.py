@@ -5,7 +5,7 @@ This is free software, covered by the GNU General Public License.
 '''
 
 
-from PyQt4.QtGui import QListView, QLabel, QVBoxLayout, QHBoxLayout
+from PyQt5.QtWidgets import QListView, QLabel, QVBoxLayout, QHBoxLayout
 
 from formationListModel import FormationListModel
 

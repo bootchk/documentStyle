@@ -4,10 +4,10 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PyQt4.QtCore import pyqtSlot as Slot
-from PyQt4.QtCore import pyqtSignal as Signal
-from PyQt4.QtCore import QCoreApplication, Qt
-from PyQt4.QtGui import QPushButton, QToolButton, QStyle # QIcon
+from PyQt5.QtCore import pyqtSlot as Slot
+from PyQt5.QtCore import pyqtSignal as Signal
+from PyQt5.QtCore import QCoreApplication, Qt
+from PyQt5.QtWidgets import QPushButton, QToolButton, QStyle # QIcon
 
 class BuddyPushButton(QPushButton):
   '''

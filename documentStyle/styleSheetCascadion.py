@@ -1,8 +1,12 @@
 '''
 '''
-import cPickle
+try:
+  import cPickle as pickle
+except ImportError:
+  import pickle # Python3
+  
 
-from PyQt4.QtCore import QSettings, Qt
+from PyQt5.QtCore import QSettings, Qt
 
 from documentStyle.styleSheet.appStyleSheet import AppStyleSheet
 from documentStyle.styleSheet.intermediateStyleSheet import IntermediateStyleSheet
@@ -78,11 +82,11 @@ class StyleSheetCascadion(object):
     settings = QSettings()
     '''
     This does not work, yields "invalid load key" on unpickling:
-    pickledUserStyleSheet = cPickle.dumps(self.userStyleSheet, cPickle.HIGHEST_PROTOCOL)
+    pickledUserStyleSheet = piclle.dumps(self.userStyleSheet, pickle.HIGHEST_PROTOCOL)
     Attempting: settings.setIniCodec('UTF-8') does not help the problem.
     So we use the default protocol.
     '''
-    pickledUserStyleSheet = cPickle.dumps(self.userStyleSheet)
+    pickledUserStyleSheet = pickle.dumps(self.userStyleSheet)
     settings.setValue("UserStyleSheet", pickledUserStyleSheet)
     
     
@@ -92,23 +96,25 @@ class StyleSheetCascadion(object):
     settings = QSettings()
     
     styleSheetPickledInSettings = settings.value("UserStyleSheet")
-    #print "Type unpickled", type(styleSheetPickledInSettings)
+    #print("Type unpickled", type(styleSheetPickledInSettings))
     if styleSheetPickledInSettings is not None:
       # convert unicode to str
       #print "Pickled stylesheet in settings: ", styleSheetPickledInSettings
-      return cPickle.loads(str(styleSheetPickledInSettings))
+      #return pickle.loads(str(styleSheetPickledInSettings))
+      # return pickle.loads(bytes(styleSheetPickledInSettings, 'UTF-8'))
+      return pickle.loads(styleSheetPickledInSettings)
     else:
       return None
     # Assert caller will link stylesheet into cascade and restyle document
       
 
   def pickleDocStyleSheet(self):
-    return cPickle.dumps(self.docStyleSheet, cPickle.HIGHEST_PROTOCOL)
+    return pickle.dumps(self.docStyleSheet, pickle.HIGHEST_PROTOCOL)
     
     
-  def restoreDocStyleSheet(self, pickle):
-    ''' set DocStyleSheet from a pickle. '''
-    newDocStyleSheet = cPickle.loads(pickle)
+  def restoreDocStyleSheet(self, pickledStylesheet):
+    ''' set DocStyleSheet from a pickledStylesheet. '''
+    newDocStyleSheet = pickle.loads(pickledStylesheet)
     self.setDocStyleSheet(newDocStyleSheet)
     
     

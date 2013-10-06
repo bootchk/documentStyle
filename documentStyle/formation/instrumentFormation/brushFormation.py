@@ -1,9 +1,9 @@
 '''
 '''
-from PyQt4.QtGui import QBrush #, QTransform
+from PyQt5.QtGui import QBrush
 
 
-from instrumentFormation import InstrumentFormation
+from .instrumentFormation import InstrumentFormation
 from ..styleProperty import ColorStyleProperty, ComboBoxStyleProperty
 from ...model.brush import BrushModel
 # from ...styleWrapper.styleWrapper import BrushStyleWrapper

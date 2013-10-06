@@ -3,7 +3,11 @@ Copyright 2012 Lloyd Konneker
 
 This is free software, covered by the GNU General Public License.
 '''
-import cPickle
+try:
+  import pickle as pickle
+except ImportError:
+  import pickle
+
 
 from documentStyle.styler.dynamicStyler import DynamicStyler
 from documentStyle.selector import DETypeSelector
@@ -133,7 +137,7 @@ class Styleable(object):
     
     Essentially, a StylingActSetCollection, but that fact is hidden.
     '''
-    return cPickle.dumps(self.styler, cPickle.HIGHEST_PROTOCOL)
+    return pickle.dumps(self.styler, pickle.HIGHEST_PROTOCOL)
 
   
   @report
@@ -144,7 +148,7 @@ class Styleable(object):
     serializedStyle is not changed.
     Current style is changed (a new DocumentStyleSheet is ultimately created.)
     '''
-    self.styler = cPickle.loads(serializedStyle)
+    self.styler = pickle.loads(serializedStyle)
     self.polishAfterDeserialization()
     
   
@@ -212,7 +216,7 @@ class Styleable(object):
     try:
       self.styler.formation().applyTo(self)
     except AttributeError:
-      print "If no styler attribute, programming error: must call setStylingDocumentElementType()"
+      print("If no styler attribute, programming error: must call setStylingDocumentElementType()")
       raise
 
 

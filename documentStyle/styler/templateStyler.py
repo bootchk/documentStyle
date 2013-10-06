@@ -5,7 +5,7 @@ This is free software, covered by the GNU General Public License.
 '''
 import copy
 
-from PyQt4.QtCore import QCoreApplication
+from PyQt5.QtCore import QCoreApplication
 
 from .styler import Styler
 

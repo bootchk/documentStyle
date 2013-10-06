@@ -4,7 +4,7 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PyQt4.QtGui import QLabel, QVBoxLayout, QHBoxLayout
+from PyQt5.QtWidgets import QLabel, QVBoxLayout, QHBoxLayout
 
 
 class FormationLayout(QVBoxLayout):

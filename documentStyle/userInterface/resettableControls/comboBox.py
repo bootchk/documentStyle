@@ -4,12 +4,12 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PyQt4.QtCore import pyqtSignal as Signal
-from PyQt4.QtCore import pyqtSlot as Slot
-from PyQt4.QtCore import Qt
-from PyQt4.QtGui import QComboBox
+from PyQt5.QtCore import pyqtSignal as Signal
+from PyQt5.QtCore import pyqtSlot as Slot
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QComboBox
 
-from resettable import Resettable
+from .resettable import Resettable
 
 
 class StyleComboBox(Resettable, QComboBox):
@@ -31,7 +31,7 @@ class StyleComboBox(Resettable, QComboBox):
   
     QComboBox.__init__(self)
     self.model = model
-    self.addItems(model.values.keys())
+    self.addItems(list(model.values.keys()))
     
     Resettable.__init__(self, resettableValue)  # MUST follow QComboBox init and create model
     

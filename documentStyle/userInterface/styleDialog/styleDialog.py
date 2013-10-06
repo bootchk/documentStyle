@@ -5,8 +5,8 @@ This is free software, covered by the GNU General Public License.
 '''
 import sys
 
-from PyQt4.QtCore import QCoreApplication, Qt
-from PyQt4.QtGui import QDialog, QDialogButtonBox, QVBoxLayout, QWidget, QScrollArea, QLabel
+from PyQt5.QtCore import QCoreApplication, Qt
+from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QVBoxLayout, QWidget, QScrollArea, QLabel
 
 
 class StyleSheetDialog(QDialog):

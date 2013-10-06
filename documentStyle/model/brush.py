@@ -1,15 +1,15 @@
 '''
 '''
 
-from PyQt4.QtCore import Qt
-from PyQt4.QtGui import QBrush
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QBrush
 
 #from documentStyle.styleWrapper.styleWrapper import BrushStyleWrapper
 
 
 class AdaptedBrushModel(object):
   '''
-  Mimics a PyQt4 enum: has "values" attribute that is a dictionary
+  Mimics a PyQt5 enum: has "values" attribute that is a dictionary
   '''
   def __init__(self):
     qtEnum = Qt # PySide qtEnum = Qt.BrushStyle

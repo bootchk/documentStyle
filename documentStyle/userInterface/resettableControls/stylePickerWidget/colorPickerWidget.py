@@ -4,10 +4,11 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PyQt4.QtCore import pyqtSignal as Signal
-from PyQt4.QtGui import QColorDialog, QColor
+from PyQt5.QtCore import pyqtSignal as Signal
+from PyQt5.QtWidgets import QColorDialog
+from PyQt5.QtGui import QColor
 
-from stylePickerWidget import StylePicker
+from .stylePickerWidget import StylePicker
 
 
 class ColorPicker(StylePicker):

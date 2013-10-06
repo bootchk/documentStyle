@@ -19,13 +19,13 @@ class Styler(object):
   Abstract.
   '''
   def formation(self):
-    raise NotImplementedError, "Deferred"
+    raise NotImplementedError("Deferred")
     
   def setFormation(self, newFormation):
-    raise NotImplementedError, "Deferred"
+    raise NotImplementedError("Deferred")
 
   def addToStyleCascade(self):
-    raise NotImplementedError, "Deferred"
+    raise NotImplementedError("Deferred")
 
   def getEditedStyle(self, dialogTitle):
-    raise NotImplementedError, "Deferred"
+    raise NotImplementedError("Deferred")

@@ -4,9 +4,9 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PyQt4.QtCore import Qt
-from PyQt4.QtGui import QSpinBox
-from resettable import Resettable
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QSpinBox
+from .resettable import Resettable
 
 
 class ResettableSpinBox(Resettable, QSpinBox):

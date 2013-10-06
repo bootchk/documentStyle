@@ -4,10 +4,11 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PyQt4.QtCore import pyqtSignal as Signal
-from PyQt4.QtGui import QFontDialog, QFont
+from PyQt5.QtCore import pyqtSignal as Signal
+from PyQt5.QtWidgets import QFontDialog
+from PyQt5.QtGui import QFont
 
-from stylePickerWidget import StylePicker
+from .stylePickerWidget import StylePicker
 
 from documentStyle.styleWrapper.fontStyleWrapper import FontStyleWrapper
 

@@ -36,11 +36,11 @@ if DOC_STYLE_DEBUG:
               ["%s = %s" % (a, repr(b)) for a,b in kwargs.items()]
           ))
   
-          print "%s%s called [#%s]" % (indent, fc, call)
+          print("%s%s called [#%s]" % (indent, fc, call))
           __indentCount[0] += 1
           ret = fn(*params,**kwargs)
           __indentCount[0] -= 1
-          print "%s%s returned %s [#%s]" % (indent, fc, repr(ret), call)
+          print("%s%s returned %s [#%s]" % (indent, fc, repr(ret), call))
   
           return ret
       wrap.callcount = 0
@@ -63,7 +63,7 @@ if DOC_STYLE_DEBUG:
               ["%s = %s" % (a, repr(b)) for a,b in kwargs.items()]
           )
           ret = fn(*params,**kwargs)
-          print "%s %s call returns %s [#%s] for args %s " % (indent, fname, repr(ret), call, args)
+          print("%s %s call returns %s [#%s] for args %s " % (indent, fname, repr(ret), call, args))
   
           return ret
       wrap.callcount = 0

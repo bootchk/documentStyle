@@ -4,7 +4,7 @@ Created on May 10, 2013
 @author: bootch
 '''
 
-from PyQt4.QtCore import QAbstractListModel, Qt
+from PyQt5.QtCore import QAbstractListModel, Qt
 
 class FormationListModel(QAbstractListModel):
   '''

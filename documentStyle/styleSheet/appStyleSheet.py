@@ -4,7 +4,7 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from styleSheet import StyleSheet
+from .styleSheet import StyleSheet
 from documentStyle.selector import newAllSelector
 
 from documentStyle.formation.formation import Formation

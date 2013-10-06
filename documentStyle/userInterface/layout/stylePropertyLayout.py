@@ -4,7 +4,7 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PyQt4.QtGui import QHBoxLayout, QLabel # QPushButton, QSlider, QColor, QFont, QBoxLayout, 
+from PyQt5.QtWidgets import QHBoxLayout, QLabel # QPushButton, QSlider, QColor, QFont, QBoxLayout, 
 
 from ..resettableControls.doubleSpinBox import ResettableDoubleSpinBox
 from ..resettableControls.spinBox import ResettableSpinBox

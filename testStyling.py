@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 '''
 A Qt app that demonstrates DocumentElement (QGraphicItem) styling.
@@ -16,10 +16,10 @@ API_VERSION = 2
 for name in API_NAMES:
   sip.setapi(name, API_VERSION)
   
-  
-from PyQt4.QtCore import *
-from PyQt4.QtCore import pyqtSlot as Slot
-from PyQt4.QtGui import *
+
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
 
 from documentStyle.styleSheetCascadion import StyleSheetCascadion
 from documentStyle.styleable import Styleable
@@ -62,23 +62,21 @@ class ContextMenuStyleable(object):
       if self.oldStyle is None:
         pass
     except AttributeError:
-      # Because this is a hack for testing, leave these prints here
-      print ">>>capturing original Style"
+      print(">>>capturing original Style")
       self.oldStyle = self.serializedStyle()
     
     newStyle = self.editStyle()
     if newStyle is None:
       # testing undo: be careful in testing, if you cancel a dialog it might have this unexpected result.
-      # Because this is a hack for testing, leave these prints here
-      print ">>>Restoring oldStyle"
+      print(">>>Restoring oldStyle")
       self.resetStyleFromSerialized(self.oldStyle)
       return # canceled
     else:
       # A real app would call item.polish() after the dialog
-      # Because this is a hack for testing, leave these prints here
-      print ">>>applyingStyle to element after dialog"
+      print(">>>applyingStyle to element after dialog")
       self.applyStyle(newStyle)
       
+    
       
 class LineItem(ContextMenuStyleable, Styleable, QGraphicsLineItem):
   def __init__(self, x1, y1, x2, y2):
@@ -166,12 +164,12 @@ class DiagramScene(QGraphicsScene):
     self.addItem(PixmapItem("data/smalldonkey.png"))
 
   
-  @Slot()
+
   def polish(self):
     '''
     Restyle on signal styleSheetchanged.
     '''
-    print ">>>testStyling polishing document"
+    print(">>>testStyling polishing document")
     for item in self.items():
       item.polish()
     
@@ -204,18 +202,18 @@ class GraphicsView(QGraphicsView):
     elif key == Qt.Key_U:
       QCoreApplication.instance().cascadion.userStyleSheet.edit()
     elif key == Qt.Key_S:
-      print "Saved doc stylesheet"
+      print(">>>Saved doc stylesheet")
       self.pickledDSS = QCoreApplication.instance().cascadion.pickleDocStyleSheet()
     elif key == Qt.Key_R:
       if self.pickledDSS is not None:
-        print "Restored doc stylesheet"
+        print(">>>Restored doc stylesheet")
         QCoreApplication.instance().cascadion.restoreDocStyleSheet(self.pickledDSS)
         # !!! So far we have only tested unpickling.) 
         # To complete test, tell document to reparent documentElements (if they already exist)
         self.scene.restoreItemsToStyleCascade()
         # Now must polish (via events or otherwise.)
       else:
-        print "You must save doc style sheet before you can restore it."
+        print("You must save doc style sheet before you can restore it.")
 
        
 class MainWindow(QMainWindow):
@@ -230,7 +228,7 @@ class MainWindow(QMainWindow):
     return self.view
     
   def closeEvent(self, event):
-    print "App closed"
+    print(">>>App closed")
     QCoreApplication.instance().cascadion.saveUserStylesheetAsSettings()
     event.accept()
   

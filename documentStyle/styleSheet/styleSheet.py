@@ -4,10 +4,11 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PyQt4.QtCore import QObject
-from PyQt4.QtCore import pyqtSignal as Signal
+from PyQt5.QtCore import QObject
+from PyQt5.QtCore import pyqtSignal as Signal
 
 from documentStyle.debugDecorator import report
+
 
 class StyleSheet(QObject):  # QObject for signals
   '''
@@ -60,9 +61,9 @@ class StyleSheet(QObject):  # QObject for signals
   
   
   def getFormation(self, selector):
-    raise NotImplementedError, 'Deferred'
+    raise NotImplementedError('Deferred')
 
   
   def edit(self):
-    raise NotImplementedError, 'Deferred'
+    raise NotImplementedError('Deferred')
   

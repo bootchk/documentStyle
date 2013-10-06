@@ -1,9 +1,9 @@
 '''
 '''
 
-from PyQt4.QtGui import QTextBlockFormat
+from PyQt5.QtGui import QTextBlockFormat
 
-from textFormation import TextFormation
+from .textFormation import TextFormation
 from documentStyle.formation.instrumentFormation.instrumentFormation import InstrumentFormation
 from documentStyle.formation.styleProperty import IntStyleProperty
 from documentStyle.formation.styleProperty import ComboBoxStyleProperty
