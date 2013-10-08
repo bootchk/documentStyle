@@ -23,6 +23,7 @@ from PyQt5.QtGui import *
 
 from documentStyle.styleSheetCascadion import StyleSheetCascadion
 from documentStyle.styleable import Styleable
+from documentStyle.styler.toolStyler import ToolStyler
 
 
 '''
@@ -255,6 +256,9 @@ class App(QApplication):
     
     # Arrange that changes to styleSheets will polish doc
     self.cascadion.connectSignals(mainWindow.scene.polish)
+    
+    # Not used, but test code imports
+    toolStyler = ToolStyler('Line', 'drawing')
     
     # Initial polishing (using Styleable)
     mainWindow.scene.polish()

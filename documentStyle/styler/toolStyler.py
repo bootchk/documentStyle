@@ -4,7 +4,7 @@ Copyright 2013 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from dynamicStyler import DynamicStyler
+from .dynamicStyler import DynamicStyler
 from documentStyle.selector import DETypeSelector
 
 
