@@ -258,7 +258,9 @@ class App(QApplication):
     self.cascadion.connectSignals(mainWindow.scene.polish)
     
     # Not used, but test code imports
-    toolStyler = ToolStyler('Line', 'drawing')
+    toolStyler = ToolStyler('Line', 'Freehand')
+    toolStyler.saveAsSetting()
+    unpickled = ToolStyler.getToolStylerFromSettings('Freehand')
     
     # Initial polishing (using Styleable)
     mainWindow.scene.polish()

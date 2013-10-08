@@ -79,6 +79,9 @@ class StyleSheetCascadion(object):
     
   
   def saveUserStylesheetAsSettings(self):
+    '''
+    User stylesheet is a setting (doc stylesheet is not.)
+    '''
     settings = QSettings()
     '''
     This does not work, yields "invalid load key" on unpickling:
@@ -96,12 +99,9 @@ class StyleSheetCascadion(object):
     settings = QSettings()
     
     styleSheetPickledInSettings = settings.value("UserStyleSheet")
-    #print("Type unpickled", type(styleSheetPickledInSettings))
+    assert styleSheetPickledInSettings is None or isinstance(styleSheetPickledInSettings, bytes)
     if styleSheetPickledInSettings is not None:
-      # convert unicode to str
-      #print "Pickled stylesheet in settings: ", styleSheetPickledInSettings
-      #return pickle.loads(str(styleSheetPickledInSettings))
-      # return pickle.loads(bytes(styleSheetPickledInSettings, 'UTF-8'))
+      # Python3 loads wants bytes, not a str
       return pickle.loads(styleSheetPickledInSettings)
     else:
       return None

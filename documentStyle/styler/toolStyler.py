@@ -4,6 +4,10 @@ Copyright 2013 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
+import pickle
+
+from PyQt5.QtCore import QSettings
+
 from .dynamicStyler import DynamicStyler
 from documentStyle.selector import DETypeSelector
 
@@ -60,5 +64,34 @@ class ToolStyler(DynamicStyler):
     #style.applyTo(documentElement)
     documentElement.polish()
     
+  
+  def saveAsSetting(self):
+    settings = QSettings()
+    '''
+    This does not work, yields "invalid load key" on unpickling:
+    pickledUserStyleSheet = pickle.dumps(self.userStyleSheet, pickle.HIGHEST_PROTOCOL)
+    Attempting: settings.setIniCodec('UTF-8') does not help the problem.
+    So we use the default protocol.
+    '''
+    pickledToolStyler = pickle.dumps(self)
+    settings.setValue(ToolStyler._settingsNameForTool(self.toolName), pickledToolStyler)
+
+  @classmethod
+  def _settingsNameForTool(cls, toolName):
+    assert isinstance(toolName, str)
+    return toolName + "ToolStyle"
+  
+  
+  @classmethod
+  def getToolStylerFromSettings(cls, toolName):
+    " Private, called at init. "
+    toolStylerPickledInSettings = QSettings().value(cls._settingsNameForTool(toolName))
+    assert toolStylerPickledInSettings is None or isinstance(toolStylerPickledInSettings, bytes)
+    if toolStylerPickledInSettings is not None:
+      result = pickle.loads(toolStylerPickledInSettings)
+      result.addToStyleCascade()
+    else:
+      result = None
+    return result
     
-    
+  
