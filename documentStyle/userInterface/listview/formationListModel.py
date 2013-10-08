@@ -22,8 +22,8 @@ class FormationListModel(QAbstractListModel):
       if index.row() == 0:
         return "foo"
       else:
-        print "Index", index
+        print("Index", index)
     else:
-      print "Role", role
+      print("Role", role)
       
     #setIndexWidget ( const QModelIndex & index, QWidget * widget )
