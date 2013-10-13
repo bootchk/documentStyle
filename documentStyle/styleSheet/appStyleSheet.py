@@ -44,6 +44,7 @@ class AppStyleSheet(StyleSheet):
   def _allSharedInstrumentFormationClasses(self):
     '''
     List of all classes of InstrumentFormation that are shared between morph formations.
+    This is configuration: change this list to change contents of root stylesheet.
     
     Note missing since not shared :
     - CharFormation only of Text morph.
@@ -55,6 +56,7 @@ class AppStyleSheet(StyleSheet):
   def _allDocumentElementTypeFormationClasses(self):
     '''
     List of all classes of MorphFormation (for each document element type.)
+    This is configuration: change this list to change contents of root stylesheet.
     '''
     return [LineFormation, ShapeFormation, TextFormation, PixmapFormation]
     

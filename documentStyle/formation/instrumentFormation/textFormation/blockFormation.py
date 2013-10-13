@@ -30,10 +30,7 @@ class BlockFormation(TextFormation):
     Note in Qt a doc has a global indentWidth having default of 40 pixels.
     This is the count of indents, more or less tabs.
     '''
-    self.styleProperties=[IntStyleProperty("Indent", self.instrument.setIndent, self.selector,
-                                           default=self.instrument.indent(), 
-                                           minimum=0, maximum=10, singleStep=1),
-                          # WAS "Alignment"
+    self.styleProperties=[# WAS "Alignment"
                           ComboBoxStyleProperty("Aligned", self.instrument.setAlignment, self.selector,
                                                 # PySide default=AlignmentStyleWrapper(self.instrument.alignment()),
                                                 default=self.instrument.alignment(),
@@ -43,6 +40,13 @@ class BlockFormation(TextFormation):
                                                 default=100,  # single spacing is 100% is default
                                                 model = lineSpacingModel),
                           ]
+    """
+    #Eliminated this because it is buggy: it doesn't seem to get properly layout by document.
+    
+    IntStyleProperty("Indent", self.instrument.setIndent, self.selector,
+                                           default=self.instrument.indent(), 
+                                           minimum=0, maximum=10, singleStep=1),
+    """
     '''
     !!! QTextBlockFormat.lineHeight() defaults to value 0 for 'single spacing.'  
     Need the following to set the default according to lineHeightType=proportional

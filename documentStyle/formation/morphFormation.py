@@ -11,7 +11,9 @@ from documentStyle.formation.instrumentFormation.brushFormation import BrushForm
 from documentStyle.formation.instrumentFormation.textFormation.characterFormation import CharacterFormation
 from documentStyle.formation.instrumentFormation.textFormation.blockFormation import BlockFormation
 from documentStyle.formation.instrumentFormation.opacityFormation import OpacityFormation
-from documentStyle.formation.instrumentFormation.graphicEffectFormation import GraphicEffectFormation
+
+## Eliminated graphic effect because it was buggy on some platforms (OSX?) and is not a high priority
+##from documentStyle.formation.instrumentFormation.graphicEffectFormation import GraphicEffectFormation
 
 
 
@@ -19,7 +21,7 @@ class MorphFormation(Formation):
   '''
   Composite of InstrumentFormation.
   
-  Configurer: of the set of InstrumentFormation appropriate for a DocumentElement (Morph).
+  Configuration: of the set of InstrumentFormation appropriate for a DocumentElement (Morph).
   
   Declares the "tools" e.g. brush, that a user thinks of (models) as drawing a DocumentElement.
   The framework supports the same model, and this fixes few mismatches of the models.
@@ -39,7 +41,7 @@ class LineFormation(MorphFormation):
     MorphFormation.__init__(self, "Line")
     self.append(PenFormation(parentSelector=self.selector))
     self.append(OpacityFormation(parentSelector=self.selector))
-    self.append(GraphicEffectFormation(parentSelector=self.selector))
+    ##self.append(GraphicEffectFormation(parentSelector=self.selector))
 
     
 
@@ -53,7 +55,7 @@ class ShapeFormation(MorphFormation):
     self.append(PenFormation(parentSelector=self.selector))
     self.append(BrushFormation(parentSelector=self.selector))
     self.append(OpacityFormation(parentSelector=self.selector))
-    self.append(GraphicEffectFormation(parentSelector=self.selector))
+    ##self.append(GraphicEffectFormation(parentSelector=self.selector))
     
     
     
@@ -74,7 +76,7 @@ class TextFormation(MorphFormation):
     self.append(PenFormation(parentSelector=self.selector, role = "Frame "))  # i.e. Frame Pen
     self.append(BrushFormation(parentSelector=self.selector, role = "Ground ")) # i.e. Ground Brush
     self.append(OpacityFormation(parentSelector=self.selector))
-    self.append(GraphicEffectFormation(parentSelector=self.selector))
+    ##self.append(GraphicEffectFormation(parentSelector=self.selector))
     
 
 
@@ -88,7 +90,7 @@ class PixmapFormation(MorphFormation):
   def __init__(self):
     MorphFormation.__init__(self, "Pixmap")
     self.append(OpacityFormation(parentSelector=self.selector))
-    self.append(GraphicEffectFormation(parentSelector=self.selector))
+    ##self.append(GraphicEffectFormation(parentSelector=self.selector))
 
 
     

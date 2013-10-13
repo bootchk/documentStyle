@@ -112,6 +112,17 @@ Note that you must call Styler.resetAfterDeserialization() after deserializing a
 Pickled Styler is also useful to save the style of a DocumentElement for undo/redo.
 
 
+Configuration of style
+======================
+
+To change what a user can style...
+Search the code for "configuration".
+To change set of instruments for the app, change AppStyleSheet.
+To change set of instruments for a morph, change MorphFormation.
+To change set of properties for an instrument, change a subclass of InstrumentFormation.
+
+E.G. to eliminate the "Indent" style property for a Text morph, edit BlockFormation.__init__().
+
 Status
 ======
 IN PROGRESS see the TODO list
