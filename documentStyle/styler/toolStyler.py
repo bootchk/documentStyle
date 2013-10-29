@@ -86,7 +86,8 @@ class ToolStyler(DynamicStyler):
   def getToolStylerFromSettings(cls, toolName):
     " Private, called at init. "
     toolStylerPickledInSettings = QSettings().value(cls._settingsNameForTool(toolName))
-    assert toolStylerPickledInSettings is None or isinstance(toolStylerPickledInSettings, bytes)
+    ## P2 type is unicode, P3 type is bytes.  Don't know a clean way to handle both
+    ## assert toolStylerPickledInSettings is None or isinstance(toolStylerPickledInSettings, bytes), str(type(toolStylerPickledInSettings))
     if toolStylerPickledInSettings is not None:
       result = pickle.loads(toolStylerPickledInSettings)
       result.addToStyleCascade()
