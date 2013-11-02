@@ -12,6 +12,7 @@ from documentStyle.styleSheet.appStyleSheet import AppStyleSheet
 from documentStyle.styleSheet.intermediateStyleSheet import IntermediateStyleSheet
 from documentStyle.debugDecorator import report
 
+from . import compat
 
 class StyleSheetCascadion(object):
   '''
@@ -99,10 +100,14 @@ class StyleSheetCascadion(object):
     settings = QSettings()
     
     styleSheetPickledInSettings = settings.value("UserStyleSheet")
-    assert styleSheetPickledInSettings is None or isinstance(styleSheetPickledInSettings, bytes)
+    
     if styleSheetPickledInSettings is not None:
-      # Python3 loads wants bytes, not a str
-      return pickle.loads(styleSheetPickledInSettings)
+      if compat.PY2:
+        assert styleSheetPickledInSettings is None or isinstance(styleSheetPickledInSettings, unicode)
+        return pickle.loads(str(styleSheetPickledInSettings))
+      else:
+        assert styleSheetPickledInSettings is None or isinstance(styleSheetPickledInSettings, bytes)
+        return pickle.loads(styleSheetPickledInSettings)
     else:
       return None
     # Assert caller will link stylesheet into cascade and restyle document
