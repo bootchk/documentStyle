@@ -47,6 +47,7 @@ class BaseStyleProperty(object):
     '''
     '''
     self.name = name
+    self.touched = False  # whether user touched (edited value or pressed Reset)
     self.instrumentSetter = instrumentSetter
     # TODO: simplify by asking model for default (requires model not optional.)
     self.resettableValue = ResettableValue(default) # Initialize local cache with default from instrument
@@ -107,7 +108,22 @@ class BaseStyleProperty(object):
     # for debugging, return value
     return value
     
-
+    
+    
+  '''
+  Did user touch by changing the value or by resetting the value?
+  This does NOT assert that final value is different from initial value before editing,
+  since user may have changed it many times, ending in the same value as initial.
+  
+  Note this is called from StylePropertyLayout.onValueChanged()
+  '''
+  def touch(self):
+    self.touched = True
+    
+  def isTouched(self):
+    return self.touched
+  
+  
   
   def isReset(self):
     return self.resettableValue.isReset()

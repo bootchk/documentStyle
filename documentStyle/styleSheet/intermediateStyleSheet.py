@@ -94,6 +94,7 @@ class IntermediateStyleSheet(StyleSheet):
     
     Selector delimits formation.  Select StylingActSets that apply to delimited formation.
     '''
+    assert selector == formation.selector # i.e., parameter selector is really superfluous
     count = 0
     for stylingActSet in self.stylingActSetCollection.generateMatchingStylingActSets(selector):
       count += 1
@@ -145,7 +146,7 @@ class IntermediateStyleSheet(StyleSheet):
     ''' Slot for signal canceled from dialog.  Relay, because pps may want so they can exit a mode of editing. '''
     self.styleSheetEditCanceled.emit()
     
-
+  @report
   def reflectEditsToStylingActSetCollection(self, editedFormation):
     '''
     Iterate over top level formations of editedFormation
@@ -154,12 +155,13 @@ class IntermediateStyleSheet(StyleSheet):
     '''
     for topLevelFormation in editedFormation:
       '''
-      TODO optimization: only if subformation edited.
+      Optimization: only if subformation edited.
       Otherwise, SASCollection has many empty SAS?
       '''
-      # when formation was derived through None stylingActSet, create a new one.
-      target = self.stylingActSetCollection.getOrNew(topLevelFormation.selector)
-      editedFormation.reflectToStylingActSet(derivingStylingActSet=target)
+      if topLevelFormation.isTouched(): # WAS isEdited():
+        # when formation was derived through None stylingActSet, create a new one.
+        target = self.stylingActSetCollection.getOrNew(topLevelFormation.selector)
+        editedFormation.reflectToStylingActSet(derivingStylingActSet=target)
     
     
   '''

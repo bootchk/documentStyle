@@ -196,12 +196,15 @@ class GraphicsView(QGraphicsView):
   def keyPressEvent(self, event):
     # Let user edit a StyleSheet
     key = event.key()
+    # Note editing is window modal: execution returns immediately
     if key == Qt.Key_A:
       QCoreApplication.instance().cascadion.appStyleSheet.edit()
     elif key == Qt.Key_D:
       QCoreApplication.instance().cascadion.docStyleSheet.edit()
     elif key == Qt.Key_U:
       QCoreApplication.instance().cascadion.userStyleSheet.edit()
+    elif key == Qt.Key_Z:
+      QCoreApplication.instance().cascadion.docStyleSheet._dump()
     elif key == Qt.Key_S:
       print(">>>Saved doc stylesheet")
       self.pickledDSS = QCoreApplication.instance().cascadion.pickleDocStyleSheet()

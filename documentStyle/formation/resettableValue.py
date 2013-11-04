@@ -6,7 +6,7 @@ This is free software, covered by the GNU General Public License.
 
 # TODO get rid of all these getter,setters: use properties
 
-from documentStyle.debugDecorator import reportReturn
+from documentStyle.debugDecorator import reportReturn, reportFalseReturn
 
 
 class ResettableValue(object):
@@ -67,7 +67,7 @@ class ResettableValue(object):
     self._isReset = True
 
     
-  @reportReturn
+  @reportFalseReturn
   def isReset(self):
     ''' A getter for convenience of debugging. '''
     return self._isReset

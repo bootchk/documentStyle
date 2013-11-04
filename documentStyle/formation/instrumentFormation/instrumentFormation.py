@@ -4,6 +4,7 @@
 from documentStyle.selector import instrumentSelector
 from documentStyle.formation.formation import Formation
 
+from documentStyle.debugDecorator import reportNotNoneReturn
 
 
 
@@ -53,22 +54,31 @@ class InstrumentFormation(Formation):
     ''' Effect a deferred method. '''
     return len(self.styleProperties) < 2
   
-  
-  def selectStyleProperty(self, selector):
+  @reportNotNoneReturn
+  def selectStyleProperty(self, selectorOfStylingAct):
     '''
-    Return styleProperty selected by selector or None.
+    See formation.selectStyleProperty() which is recursive to here.
     
     Redefines the composite recursive method, to be terminal.
     '''
-    '''
-    Could use: if selector.matches(self.selector)
-    As an optimization, assert prefix of selector matches, and only check the suffix.
-    '''
     result = None
     for styleProperty in self.styleProperties:
-      if styleProperty.name == selector.field or selector.field == "*":
+      '''
+      assert prefix of selectorOfStylingAct matches this instrumentFormation, and only check the suffix.
+      '''
+      ## Name not implemented: assert styleProperty.selector.name == selectorOfStylingAct.name
+      assert styleProperty.selector.DEType == selectorOfStylingAct.DEType or selectorOfStylingAct.DEType == '*'
+      assert selectorOfStylingAct.field != "*"
+      if styleProperty.name == selectorOfStylingAct.field:
         result = styleProperty
-    #print "selectStyleProperty returns", self.name, result
+      """
+      Alternative 2
+      
+      if selectorOfStylingAct.noncommutativeMatches(styleProperty.selector):
+        print(">>>>> matching styleProperty selector", styleProperty.selector)
+        result = styleProperty
+      """
+    #print("instrumentFormation.selectStyleProperty returns", self.name, result)
     return result
 
 

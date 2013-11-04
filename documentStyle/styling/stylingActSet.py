@@ -3,7 +3,7 @@ Copyright 2012 Lloyd Konneker
 
 This is free software, covered by the GNU General Public License.
 '''
-from documentStyle.debugDecorator import reportReturn
+from documentStyle.debugDecorator import report, reportReturn, reportTrueReturn
 
 
 class StylingActSet(dict):
@@ -27,9 +27,11 @@ class StylingActSet(dict):
   def __init__(self, selector):
     self.selector = selector
   
+  """
   def __repr__(self):
     ''' !!! Short: is missing dictionary values. '''
     return "StylingActSet(" + str(self.selector) + ")"
+  """
   
   #@report
   def applyToFormation(self, formation):
@@ -42,7 +44,7 @@ class StylingActSet(dict):
     ''' Add a styling act, or replace an existing one !!! '''
     self[stylingAct.selector] = stylingAct
     
-    
+  @report
   def delete(self, selector):
     '''
     Delete where precondition: selector exists.
@@ -51,7 +53,7 @@ class StylingActSet(dict):
     del self[selector]
     
     
-  @reportReturn
+  @reportTrueReturn
   def deleteIfExists(self, selector):
     '''
     Same as above but does not raise KeyError.

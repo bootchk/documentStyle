@@ -146,6 +146,7 @@ class StylePropertyLayout(QHBoxLayout):
     when buddyButton resets value, signal valueChanged enables buddyButton to wrong state.
     '''
     self.buddyButton.setEnabled(False)
+    # Note we don't need model.touch() since that was done when value was reset.
     
   
   # Can't use @report here, called with varying args?
@@ -165,6 +166,9 @@ class StylePropertyLayout(QHBoxLayout):
     buddyButton also emits userReset signal, which onUserReset() then setEnabled(False).
     '''
     self.buddyButton.setEnabled(True)
+    
+    ''' User touched. '''
+    self.model.touch()  
     
     
   def propagateValueFromWidgetToModel(self):

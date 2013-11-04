@@ -1,0 +1,90 @@
+To test:
+
+>cd documentStyle
+>python
+
+import doctest
+doctest.testfile("testSelector.txt")
+
+You might need to reload after a fix.
+
+
+
+ >>> from documentStyle.selector import *
+ 
+ 
+ >>> all = newAllSelector()
+ >>> all
+ Selector(*,*,*,*)
+ 
+ >>> DE = DETypeSelector('Line')
+ >>> DE
+ Selector(*,Line,*,*)
+ 
+ 
+ The 'noncommuativeMatches' relation is not commutative: 'all' matches 'specific'.
+ 
+ >>> all.noncommutativeMatches(DE)
+ True
+ 
+ but 'specific' matches 'all' raises exception
+ 
+ >>> DE.noncommutativeMatches(all)
+ Traceback (most recent call last):
+ ...
+ AssertionError: Selector(*,Line,*,*)Selector(*,*,*,*)
+
+
+ 
+ The 'commutativeMatches relation is commutative, regardless of specificity of self and other.
+ >>> all.commutativeMatches(DE)
+ True
+ 
+ >>> DE.commutativeMatches(all)
+ True
+ 
+ 
+ The all selector is more selective than any other selector other than itself.
+ >>> all.selectivityCount()
+ 4
+ 
+ >>> DE.selectivityCount()
+ 1
+ 
+ >>> DE.isAtLeastSelectiveAs(all)
+ True
+ 
+ >>> DE.isAtLeastSelectiveAs(DE)
+ True
+ 
+ 
+ 
+ 
+ >>> Selector('*', 'Text', 'Pen', 'Color').matchesToInstrument(Selector('*', '*', 'Pen', '*'))
+ False
+ 
+ >>> Selector('*', 'Text', 'Pen', 'Color').matchesToInstrument(Selector('*', 'Text', '*', '*'))
+ True
+ 
+ >>> Selector('*', 'Text', 'Pen', 'Color').matchesToInstrument(Selector('*', 'Text', 'Pen', '*'))
+ True
+ 
+ >>> Selector('*', '*', 'Pen', 'Color').matchesToInstrument(Selector('*', '*', 'Pen', '*'))
+ True
+ 
+ 
+ Any pen matches text pen but not vice versa.
+ 
+ >>> Selector('*', '*', 'Pen', 'Color').matchesToInstrument(Selector('*', 'Text', 'Pen', '*'))
+ True
+ >>> Selector('*', 'Text', 'Pen', '*').matchesToInstrument(Selector('*', '*', 'Pen', 'Color'))
+ False
+ 
+ Any pen matches text but not vice versa.
+ 
+ >>> Selector('*', '*', 'Pen', 'Color').matchesToInstrument(Selector('*', 'Text', '*', '*'))
+ True
+ >>> Selector('*', 'Text', '*', '*').matchesToInstrument(Selector('*', '*', 'Pen', 'Color'))
+ False
+ 
+ 

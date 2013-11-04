@@ -10,7 +10,7 @@ from documentStyle.userInterface.form.formationForm import FormationForm
 from documentStyle.userInterface.layout.formationLayout import FormationLayout
 from documentStyle.styling.stylingAct import StylingAct
 
-from documentStyle.debugDecorator import report
+from documentStyle.debugDecorator import report, reportTrueReturn
 
 
 class Formation(list):
@@ -65,7 +65,7 @@ class Formation(list):
   
   def __repr__(self):
     ''' Self is List. list.repr() is verbose. '''
-    return self.name  # short
+    return self.name + ':' + str(self.selector)  # short
     
     
   def _longRepr(self): 
@@ -113,16 +113,21 @@ class Formation(list):
     return result
     
   
-  def selectStyleProperty(self, selector):
+  def selectStyleProperty(self, selectorOfStylingAct):
     '''
-    Select (by selector) a styleProperty.
-    
-    May return None.
+    First styleProperty selected by selectorOfStylingAct, or None.
+    Depends on styleProperties in order of selectivity (more selective, i.e. specific, last.)
     '''
-    for formation in self:
-      # Recurse into child Formations
-      if selector.matches(formation.selector):
-        styleProperty = formation.selectStyleProperty(selector)
+    for childFormation in self:
+      '''
+      childFormation.selector is NOT necessarily more selective than selectorOfStylingAct
+      E.G. childFormation (*,Line,*,*) is not more selective than selectorOfStylingAct(*,*,Pen,Color) 
+      '''
+      ##ORG if childFormation.selector.matches(selectorOfStylingAct):
+      ## if selectorOfStylingAct.matches(childFormation.selector):
+      ## if selectorOfStylingAct.commutativeMatches(childFormation.selector):
+      if selectorOfStylingAct.matchesToInstrument(childFormation.selector):
+        styleProperty = childFormation.selectStyleProperty(selectorOfStylingAct) # recursion
         if styleProperty is not None:
           return styleProperty
     return None
@@ -179,25 +184,27 @@ class Formation(list):
     #print "reflectToStylingActSet", derivingStylingActSet
 
     for item in self.generateStyleProperties():
-      if not item.isReset():
-        ''' 
-        User edited (in-lined.)  Create or replace styling act.
-        '''
-        stylingAct = StylingAct(item.selector, item.get())
-        #print "New styling act"
-        derivingStylingActSet.put(stylingAct)
-      else:
-        '''
-        Reset to inherited value.  Delete any previous styling act.
-        
-        TODO optimization to avoid needless try delete:
-        If item.wasInitiallyReset: i.e. not in-lined
-          pass
-        else:
-          # assert StylingAct exists
-          derivingStylingActSet.delete(item.selector)
-        '''
-        derivingStylingActSet.deleteIfExists(item.selector)
+      if item.isTouched():  # WAS not item.isReset():
+        self.reflectItemToStylingAct(item, derivingStylingActSet)
+      
+      
+  def reflectItemToStylingAct(self, item, derivingStylingActSet):
+    '''
+    Item was touched by user.  Create, update, or delete styling act.
+    '''
+    if item.isReset():
+      '''
+      User touched (one or more changes) but last act was to Reset to inherited value.
+      Delete any previous styling act. (If initially reset, then user touched, then reset, no styling act exists.)
+      '''
+      derivingStylingActSet.deleteIfExists(item.selector)
+    else:
+      ''' 
+      User edited (in-lined.)  Create or replace styling act.
+      '''
+      stylingAct = StylingAct(item.selector, item.get())
+      #print("New styling act", stylingAct)
+      derivingStylingActSet.put(stylingAct)
       
       
       """
@@ -236,5 +243,28 @@ class Formation(list):
     for formation in self:
       for styleProperty in formation.generateStyleProperties():
         yield styleProperty
+  
+  """
+  @reportTrueReturn
+  def isEdited(self):
+    '''
+    Are any of my properties not reset?
+    I.E. are any of my properties edited (at some time in the past.)
+    '''
+    result = False
+    for item in self.generateStyleProperties():
+      print("isEdited", item)
+      if not item.isReset():
+        result = True
+    return result
+  """
     
+  @reportTrueReturn
+  def isTouched(self):
+    ''' Composite: Are any of my properties touched? Since formation was created for editing. '''
+    result = False
+    for item in self.generateStyleProperties():
+      if item.isTouched():
+        result = True
+    return result
     

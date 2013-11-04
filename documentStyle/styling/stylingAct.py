@@ -6,7 +6,7 @@ This is free software, covered by the GNU General Public License.
 
 from documentStyle.selector import Selector
 
-from documentStyle.debugDecorator import report
+from documentStyle.debugDecorator import report, reportTrueReturn
 
 class StylingAct(object):
   '''
@@ -31,10 +31,12 @@ class StylingAct(object):
     return "StylingAct(" + str(self.selector) + "," + str(self.value) + ")"
   
   
-  #@report
+  @reportTrueReturn
   def applyToFormation(self, formation):
     '''
-    Copy self.value to formation's StyleProperty selected by my selector.
+    Copy self.value to any formation's StyleProperty selected by my selector.
+    IOW if self matches any property in formation, apply self to said property.
+    Return whether applys.
     
     This StylingAct need not be different than (changing) the Formation's value.
     In other words, superfluous.
@@ -47,10 +49,16 @@ class StylingAct(object):
     styleProperty = formation.selectStyleProperty(self.selector)
     if styleProperty is not None:
       self._overrideStyleProperty(styleProperty)
+      result = True
     else:
-      #print "StylingAct not match ???"
-      ''' It is NOT an assertion that self matches formation. '''
-      pass
+      #print("StylingAct not match ???", self, formation)
+      ''' 
+      It is NOT an assertion that self matches formation. 
+      E.G. StylingAct(*,*,Pen,Color) does not match Formation(*,Pixmap,*,*),
+      since a Pixmap DEType need not have a Pen.
+      '''
+      result = False
+    return result
 
   @report
   def _overrideStyleProperty(self, styleProperty):
