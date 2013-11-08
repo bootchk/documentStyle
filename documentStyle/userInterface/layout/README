@@ -1,0 +1,10 @@
+FormationLayout is alternative to FormationForm.
+IOW optional, might not be in use.
+
+Layout is more or less right edge aligned.
+Form is more or less aligned along a vertical center line of the dialog.
+Form is 'better' GUI.
+Form is Apple HIG way.
+
+StylePropertyLayout is for a terminal Formation (a StyleProperty.)
+It is in use.

@@ -171,7 +171,7 @@ class IntermediateStyleSheet(StyleSheet):
   def __reduce__(self):
     '''
     Implement pickling protocol 2 using reduce.
-    Needed since unadorned StyleSheet is not pickleable (problems with signals.)
+    Needed since unadorned StyleSheet is not pickleable (can't pickle QObject since signals.)
     
     Return tuple: (class factory, args to class factory, state dictionary)
     
@@ -180,7 +180,10 @@ class IntermediateStyleSheet(StyleSheet):
     which by design should NOT be pickled.
     '''
     #print "pickling stylesheet"
-    return (IntermediateStyleSheet, (self.name, ), {'stylingActSetCollection': self.stylingActSetCollection})
+    ##WAS return (IntermediateStyleSheet, (self.name, ), {'stylingActSetCollection': self.stylingActSetCollection})
+    ''' Since this method is inherited by DocumentElementStyleSheet, don't hardcode the class as IntermediateStyleSheet. '''
+    return (self.__class__, (self.name, ), {'stylingActSetCollection': self.stylingActSetCollection})
+
   
   """
   OLD

@@ -18,10 +18,11 @@ class DocumentElementStyleSheet(IntermediateStyleSheet):
   - ALWAYS parented to docStyleSheet
   - name is generic (not a user-given name to instance)
   '''
-  def __init__(self):
-    IntermediateStyleSheet.__init__(self, name="DocElement")
+  def __init__(self, name):
+    IntermediateStyleSheet.__init__(self, name)
     '''
-    Always parented to docStyleSheet.
+    Reimplement: Always parented to docStyleSheet.
+    
     assert app has docStyleSheet attribute, i.e. parent style sheet exists.
     Note that when unpickling a document, its docStyleSheet must be unpickled first.
     '''

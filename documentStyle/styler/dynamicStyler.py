@@ -9,7 +9,8 @@ from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import QDialog
 
 from .styler import Styler
-from ..styleSheet.documentElementStyleSheet import DocumentElementStyleSheet
+from documentStyle.styleSheet.intermediateStyleSheet import IntermediateStyleSheet
+from documentStyle.styleSheet.documentElementStyleSheet import DocumentElementStyleSheet
 from documentStyle.formation.formation import Formation
 from documentStyle.userInterface.styleDialog.styleDialog import EditableStyleSheetDialog
 
@@ -19,14 +20,14 @@ from documentStyle.debugDecorator import report
 class DynamicStyler(Styler):
   '''
   Dynamic: cascades.
-  User editing of DocumentStyleSheet changes set of DocumentElements that have not been individually styled.
+  User editing of DocumentStyleSheet changes set of DocumentElements that have not been individually styled (in-lined.)
   
   Note this is pickleable since attributes are pickleable.
   !!! Assert a deserialized self does NOT have _styleSheet parented; must call addToStyleCascade()
   '''
   
   def __init__(self, selector):
-    self._styleSheet = DocumentElementStyleSheet()
+    self._styleSheet = DocumentElementStyleSheet(name="DocElement")
     self.selector = selector
     # ensure self is in style cascade (DESS() ensures it.)
   
@@ -46,7 +47,13 @@ class DynamicStyler(Styler):
     See docstring at super.
     '''
     assert isinstance(styling, Formation)
-    assert styling.isTouched()  # was edited
+    
+    # For now, user might not have touched a styling (since OK button on dialog is never disabled.)
+    # If not touched, just return.
+    # TODO assert styling.isTouched() and fix dialog so it cannot be OK'd if not touched.
+    if not styling.isTouched():
+      return
+    
     targetStylingActSet = self._styleSheet.stylingActSetCollection.getMatchingOrNewStylingActSet(styling.selector)
     # targetStylingActSet refers to styling acts on the owning DocumentElement of this Styler
     #print("targetSASC", targetStylingActSet)
@@ -57,7 +64,7 @@ class DynamicStyler(Styler):
     '''
     Copy styling acts from stylesheet to self's stylesheet.
     '''
-    assert isinstance(sourceStylesheet, DocumentElementStyleSheet)
+    assert isinstance(sourceStylesheet, DocumentElementStyleSheet), str(type(sourceStylesheet))
     # For now, SAS doesn't know its selector, so pass self.selector
     targetStylingActSet = self._styleSheet.stylingActSet(self.selector)
     # targetStylingActSet refers to styling acts on the owning DocumentElement of this Styler
@@ -69,15 +76,16 @@ class DynamicStyler(Styler):
   
   def addToStyleCascade(self):
     '''
-    Restore invariants.
-    
-    A quirk is that serializing starts at IntermediateStyleSheet.
-    On deserializing, DocumentElementStyleSheet.__init__ is not called, and thus setParent() is not called.
-    Call setParent() now.
-    
-    TODO a better way?
+    Restore deserialized self to cascade, and check invariants.
+    When deserializing (in general, using pickle) unpickling does not call __init__.
+    Specifically, DocumentElementStyleSheet.__init__ is not called, and thus setParent() is not called.
     '''
     self._styleSheet.setParent(QCoreApplication.instance().cascadion.docStyleSheet)
+    assert isinstance(self._styleSheet, DocumentElementStyleSheet), 'self is correct class for terminal stylesheet'
+    # TODO rename parent->parentStyleSheet since parent and parent() are commonly used.
+    assert self._styleSheet.parent is not None, 'self is parented'
+    # TODO, 'Doc' is hardcoded elsewhere, this should be a weaker assertion that parent is subclass IntermediateStyleSheet
+    assert self._styleSheet.parent.name == 'Doc', 'parent is a DocumentStyleSheet'
   
   
   def getEditedStyle(self, dialogTitle):
