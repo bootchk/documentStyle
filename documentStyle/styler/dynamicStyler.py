@@ -3,12 +3,17 @@ Copyright 2013 Lloyd Konneker
 
 This is free software, covered by the GNU General Public License.
 '''
+from copy import deepcopy
+
 from PyQt5.QtCore import QCoreApplication
 from PyQt5.QtWidgets import QDialog
 
 from .styler import Styler
 from ..styleSheet.documentElementStyleSheet import DocumentElementStyleSheet
+from documentStyle.formation.formation import Formation
 from documentStyle.userInterface.styleDialog.styleDialog import EditableStyleSheetDialog
+
+from documentStyle.debugDecorator import report
 
 
 class DynamicStyler(Styler):
@@ -27,15 +32,39 @@ class DynamicStyler(Styler):
   
   
   def formation(self):
+    ''' Do cascade yielding a Formation. '''
     return self._styleSheet.getFormation(self.selector)
   
+  def styleSheet(self):
+    ''' Don't cascade. '''
+    return self._styleSheet
     
-  def setFormation(self, newFormation):
+    
+  @report
+  def styleDocElementFromStyling(self, styling):
     '''
-    Reflect newFormation into new SAS
+    See docstring at super.
     '''
-    target = self._styleSheet.stylingActSetCollection.getOrNew(newFormation.selector)
-    newFormation.reflectToStylingActSet(target)
+    assert isinstance(styling, Formation)
+    assert styling.isTouched()  # was edited
+    targetStylingActSet = self._styleSheet.stylingActSetCollection.getMatchingOrNewStylingActSet(styling.selector)
+    # targetStylingActSet refers to styling acts on the owning DocumentElement of this Styler
+    #print("targetSASC", targetStylingActSet)
+    styling.reflectToStylingActSet(targetStylingActSet)
+  
+  @report
+  def styleDocElementFromStyleSheet(self, sourceStylesheet):
+    '''
+    Copy styling acts from stylesheet to self's stylesheet.
+    '''
+    assert isinstance(sourceStylesheet, DocumentElementStyleSheet)
+    # For now, SAS doesn't know its selector, so pass self.selector
+    targetStylingActSet = self._styleSheet.stylingActSet(self.selector)
+    # targetStylingActSet refers to styling acts on the owning DocumentElement of this Styler
+    for each in sourceStylesheet.generateStylingActs(self.selector):
+      # each is an original, not a copy from source
+      targetStylingActSet.put(deepcopy(each))
+    #print("out targetSASC", targetStylingActSet)
   
   
   def addToStyleCascade(self):

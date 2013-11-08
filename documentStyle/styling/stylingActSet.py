@@ -42,6 +42,13 @@ class StylingActSet(dict):
   @reportReturn
   def put(self, stylingAct):
     ''' Add a styling act, or replace an existing one !!! '''
+    selector = stylingAct.selector
+    """
+    if selector in self:
+      print("replacing")
+    else:
+      print("adding")
+    """
     self[stylingAct.selector] = stylingAct
     
   @report
@@ -66,3 +73,9 @@ class StylingActSet(dict):
       # Doesn't exist
       # print "No styling act deleted for selector", selector
       return False
+    
+    
+  def generateStylingActs(self):
+    for each in self.values():
+      yield each
+      

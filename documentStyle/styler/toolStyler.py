@@ -36,13 +36,13 @@ class ToolStyler(DynamicStyler):
     Let user edit style of tool that creates DocumentElement.
     Return Style, or None if canceled.
     '''
-    newStyle = self.getEditedStyle(dialogTitle=self.toolName + "Tool Style")
-    if newStyle is None:
+    styling = self.getEditedStyle(dialogTitle=self.toolName + "Tool Style")
+    if styling is None:
       # canceled, self's styleSheet unchanged
       result = False
     else:
       # update self's styleSheet, but doesn't affect any document elements now
-      self.setFormation(newStyle)
+      self.styleDocElementFromStyling(styling=styling)
       result = True
     return result
     
@@ -54,15 +54,26 @@ class ToolStyler(DynamicStyler):
     
     Assert documentElement has-a styler.
     '''
-    # Stamp documentElement's stylesheet with my stylesheet
-    # i.e. change model
-    style = self.formation()
-    documentElement.styler.setFormation(style)
+    #print('foo', documentElement.styler._styleSheet)
+    #documentElement.styler._styleSheet._dump()
+    # Stamp documentElement's styler from my stylesheet i.e. change model
+    documentElement.styler.styleDocElementFromStyleSheet(self.styleSheet())
+    
+    # Now documentElement.styler.stylesheet has styling acts the same as self
+    # TODO assertions that check that new styling acts were added.
     
     # Change view i.e. visuals
+    documentElement.polish()  # Cascade again, through updated styling acts.
+    
+    '''
+    OLD, BAD DESIGN:
+    Why does it fail to work as expected?  If self formation is cascaded,
+    why isn't this enough to style the document element?
+    Maybe the above is not successfully adding styling acts.
+    
     # Essentially documentElement.polish(), but more efficient (forego another cascade.)
-    #style.applyTo(documentElement)
-    documentElement.polish()
+    style.applyTo(documentElement)
+    '''
     
   
   def saveAsSetting(self):

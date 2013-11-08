@@ -5,6 +5,8 @@ This is free software, covered by the GNU General Public License.
 '''
 
 from ..styling.stylingActSet import StylingActSet
+from documentStyle.debugDecorator import report
+
 
 class StylingActSetCollection(dict):
   '''
@@ -23,15 +25,23 @@ class StylingActSetCollection(dict):
   def put(self, stylingActSet):
     self[stylingActSet.selector] = stylingActSet
   
-  def getOrNew(self, selector):
+  
+  @report
+  def putNewBySelector(self, selector):
+    ''' Put new SAS in self and return it. '''
+    result = StylingActSet(selector) # Empty of StylingAct
+    self.put(result)
+    return result
+    
+    
+  def getMatchingOrNewStylingActSet(self, selector):
     '''
     Existing StylingActSet that matches selector, OR a new, empty StylingActSet.
     '''
     if selector in self:
       result = self[selector]
     else:
-      result = StylingActSet(selector) # Empty of StylingAct
-      self.put(result)
+      result = self.putNewBySelector(selector)
     return result
   
     

@@ -66,8 +66,8 @@ class ContextMenuStyleable(object):
       print(">>>capturing original Style")
       self.oldStyle = self.serializedStyle()
     
-    newStyle = self.editStyle()
-    if newStyle is None:
+    styling = self.editStyle()
+    if styling is None:
       # testing undo: be careful in testing, if you cancel a dialog it might have this unexpected result.
       print(">>>Restoring oldStyle")
       self.resetStyleFromSerialized(self.oldStyle)
@@ -75,7 +75,7 @@ class ContextMenuStyleable(object):
     else:
       # A real app would call item.polish() after the dialog
       print(">>>applyingStyle to element after dialog")
-      self.applyStyle(newStyle)
+      self.applyStyle(styling=styling)
       
     
       
@@ -158,7 +158,8 @@ class DiagramScene(QGraphicsScene):
     self.addItem(TextItem("RMB styles item.\n a,u,d, keys edit stylesheets, s,r save/restore doc stylesheet"))
     self.addItem(EllipseItem())
     # Two lines to show that both are styled by docStyleSheet change
-    self.addItem(LineItem(80, 80, 80, 150))
+    self.line = LineItem(80, 80, 80, 150)
+    self.addItem(self.line)
     self.addItem(LineItem(90, 90, 90, 160))
     #self.addItem(PixmapItem("/home/bootch/Pictures/smalldonkey.png"))
     #self.addItem(PixmapItem("/home/bootch/ufoWTransparent.png"))
@@ -203,6 +204,10 @@ class GraphicsView(QGraphicsView):
       QCoreApplication.instance().cascadion.docStyleSheet.edit()
     elif key == Qt.Key_U:
       QCoreApplication.instance().cascadion.userStyleSheet.edit()
+    elif key == Qt.Key_T:
+      ''' Edit tool styler and apply to line element. '''
+      QCoreApplication.instance().toolStyler.edit()
+      QCoreApplication.instance().toolStyler.applyTo(self.scene.line)
     elif key == Qt.Key_Z:
       QCoreApplication.instance().cascadion.docStyleSheet._dump()
     elif key == Qt.Key_S:
@@ -264,6 +269,7 @@ class App(QApplication):
     toolStyler = ToolStyler('Line', 'Freehand')
     toolStyler.saveAsSetting()
     unpickled = ToolStyler.getToolStylerFromSettings('Freehand')
+    self.toolStyler = toolStyler
     
     # Initial polishing (using Styleable)
     mainWindow.scene.polish()

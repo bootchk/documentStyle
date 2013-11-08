@@ -105,11 +105,11 @@ class Styleable(object):
     return result
   
   
-  def _setStyle(self, style):
+  def _setStyle(self, styling=None):
     '''
-    Set style of DocumentElement.
+    Set style of DocumentElement from a styling.
     
-    The usual source of style is editStyle().
+    The usual source of styling is editStyle().
     
     There is no getStyle() exported.  Only this module knows that 'style' is a Styler's Formation.
     Only serializableStyle is exported.
@@ -120,7 +120,7 @@ class Styleable(object):
     !!! Styler (certain subclasses) may convert Formation into StylingActs on StyleSheet.
     !!! Does not apply style (i.e. send it to GraphicsFramework.
     '''
-    self.styler.setFormation(style)
+    self.styler.styleDocElementFromStyling(styling)
   
   
   @report
@@ -171,13 +171,13 @@ class Styleable(object):
     self.polish()
     
   @report
-  def applyStyle(self, style):
+  def applyStyle(self, styling):
     " Apply given style to self."
     '''
     From passed style to model.
     Essentially, create StylingActs on self's StyleSheet.
     '''
-    self._setStyle(style)
+    self._setStyle(styling=styling)
     '''
     From model to view.
     Essentially, cascade StyleSheets and apply resulting Formation to Drawable.

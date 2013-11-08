@@ -6,7 +6,7 @@ This is free software, covered by the GNU General Public License.
 
 from PyQt5.QtCore import QCoreApplication
 from .intermediateStyleSheet import IntermediateStyleSheet
-
+from documentStyle.styling.stylingActSet import StylingActSet
 
 
 class DocumentElementStyleSheet(IntermediateStyleSheet):
@@ -28,5 +28,29 @@ class DocumentElementStyleSheet(IntermediateStyleSheet):
     self.setParent(QCoreApplication.instance().cascadion.docStyleSheet)
     
     
-  
+  def generateStylingActs(self, selector):
+    for each in self.stylingActSet(selector).generateStylingActs():
+      yield each
+    
+    
+  def stylingActSet(self, selector):
+    '''
+    Return existing SAS, or lazily create empty SAS.
+    
+    Note that a styleSheet doesn't have a selector, one must be passed.
+    '''
+    assert selector.isDETypeSelector()
+    # Invariant, DSS has only zero or one SAS.
+    assert len(self.stylingActSetCollection) <= 1
+    ''' Lazy '''
+    if len(self.stylingActSetCollection) == 0:
+      self.stylingActSetCollection.putNewBySelector(selector)
+    else:
+      # Already exists, and its selector matches the one passed
+      assert self.stylingActSetCollection.values()[0].selector == selector
+      pass
+    assert len(self.stylingActSetCollection) == 1
+    result = self.stylingActSetCollection.values()[0]
+    assert isinstance(result, StylingActSet)
+    return result
         

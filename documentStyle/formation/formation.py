@@ -180,13 +180,18 @@ class Formation(list):
     
     Self was derived through derivingStylingActSet.  
     Update it with user's changes.
+    
+    For debugging, return count of StylingActs reflected.
     '''
     #print "reflectToStylingActSet", derivingStylingActSet
-
+    count = 0
     for item in self.generateStyleProperties():
       if item.isTouched():  # WAS not item.isReset():
+        #print('touched')
         self.reflectItemToStylingAct(item, derivingStylingActSet)
-      
+        count += 1
+    return count
+  
       
   def reflectItemToStylingAct(self, item, derivingStylingActSet):
     '''

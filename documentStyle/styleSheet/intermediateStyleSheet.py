@@ -160,7 +160,7 @@ class IntermediateStyleSheet(StyleSheet):
       '''
       if topLevelFormation.isTouched(): # WAS isEdited():
         # when formation was derived through None stylingActSet, create a new one.
-        target = self.stylingActSetCollection.getOrNew(topLevelFormation.selector)
+        target = self.stylingActSetCollection.getMatchingOrNewStylingActSet(topLevelFormation.selector)
         editedFormation.reflectToStylingActSet(derivingStylingActSet=target)
     
     

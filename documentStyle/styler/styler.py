@@ -21,7 +21,8 @@ class Styler(object):
   def formation(self):
     raise NotImplementedError("Deferred")
     
-  def setFormation(self, newFormation):
+  def styleDocElementFromStyle(self, editedFormation):
+    ''' Style document element that owns this styler with the given editedFormation. '''
     raise NotImplementedError("Deferred")
 
   def addToStyleCascade(self):
