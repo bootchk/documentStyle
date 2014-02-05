@@ -13,6 +13,7 @@ from PyQt5.QtWidgets import QApplication
 # global, singletons created during init of StyleSheetCascadion (when can assert translator is installed.)
 
 i18ns = None  # Eventually of type Translations
+
 BrushModel = None # Eventually of type AdaptedBrushModel
 PenModel = None # Eventuall of type AdaptedPenModel
 LineSpacingModel = None # Eventually of type AdaptedLineSpacingModel
@@ -29,9 +30,10 @@ class Translations(QObject):
     
     '''
     Translated strings.
+    
+    We do not use leading or trailing spaces or punctuation; those are untranslated and inserted programatically
     '''
-    self.Any = self.tr("Any:")
-    self.User = self.tr("User")
+    self.Any = self.tr("Any")
     
     # Document Element Types
     self.Line = self.tr("Line")
@@ -96,9 +98,10 @@ class Translations(QObject):
     
     # Parts (suffixes) of dialog titles
     self.App = self.tr("App")
+    self.User = self.tr("User")
     self.Doc = self.tr("Doc")
-    self.ElementStyle = self.tr(" Element Style")
-    self.StyleSheet = self.tr(" Style Sheet")
+    self.ElementStyle = self.tr("Element Style")
+    self.StyleSheet = self.tr("Style Sheet")
     
     
   def styleTranslate(self, untranslated):

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 '''
 A Qt app that demonstrates DocumentElement (QGraphicItem) styling.
@@ -254,6 +254,7 @@ class App(QApplication):
     self.setOrganizationDomain("lloyd konneker")
     self.setApplicationName("testStyling")
     
+    print("To test i18n localization in Spanish, set OS locale or temporarily >export LANGUAGE=es")
     self._establishTranslator() # i18n
     
     # Must precede creation of document because documentElementStyleSheets parented to docStyleSheet
@@ -281,8 +282,11 @@ class App(QApplication):
  
  
   def _establishTranslator(self):
-    # This is just a test harness.  Load the Spanish translation if possible.
-    self.myTranslator = self._installTranslator(name="documentStyle_es")
+    locale = QLocale.system()
+    # :/ is resource directory, often same as app's working directory?
+    translationsName = "documentStyle_" + locale.name()
+    # translationsName = "documentStyle_es"  # Spanish
+    self.myTranslator = self._installTranslator(name=translationsName)
     # !!! Keep reference, since installing does not copy instance
     
     
@@ -301,7 +305,7 @@ class App(QApplication):
       print("Failed to install translator.")
       result = None
     else:
-      print("Translation for Open", translator.translate("Translations", "Open"))
+      print("Localized using", name)
       result = translator
     return result # !!! Caller should keep a reference
   

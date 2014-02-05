@@ -104,16 +104,18 @@ class FormationForm(QFormLayout):
     
     translatedDEType = config.i18ns.styleTranslate(selector.DEType)
     translatedRoleName = config.i18ns.styleTranslate(formation.role)
+    if len(translatedRoleName) > 0:
+      translatedRoleName = translatedRoleName + " "
+    # assert role is '' or role is 'Foo ' with trailing space
     translatedFormationName = config.i18ns.styleTranslate(formation.name)
     
     if selector.isAnyDETypeAndInstrumentSelector():
-      text = config.i18ns.Any + translatedFormationName
+      text = config.i18ns.Any + ":" + translatedFormationName # e.g. Any:Pen
     elif selector.isDETypeSelector():
-      text = translatedFormationName
+      text = translatedFormationName  # e.g. Pen
     elif selector.isDETypeAndInstrumentSelector():
       # e.g. Text:Frame Pen or Line:Pen
-      # assert role is '' or role is 'Foo ' with trailing space
-      text = translatedDEType + ":" + translatedRoleName + " " + translatedFormationName
+      text = translatedDEType + ":" + translatedRoleName + translatedFormationName
         
       
     label = QLabel(text)

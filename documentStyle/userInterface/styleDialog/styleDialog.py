@@ -74,7 +74,7 @@ class StyleSheetDialog(QDialog):
     Translate and compose title string from tuple of parts.
     '''
     # assert parts are strings
-    return config.i18ns.styleTranslate(titleTuple[0]) + config.i18ns.styleTranslate(titleTuple[1])
+    return config.i18ns.styleTranslate(titleTuple[0]) + " " + config.i18ns.styleTranslate(titleTuple[1])
   
   
   def createDialogCenterWidget(self, formation):
