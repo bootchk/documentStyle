@@ -100,6 +100,7 @@ class Translations(QObject):
     self.App = self.tr("App")
     self.User = self.tr("User")
     self.Doc = self.tr("Doc")
+    self.ToolStyle = self.tr("Tool Style")
     self.ElementStyle = self.tr("Element Style")
     self.StyleSheet = self.tr("Style Sheet")
     

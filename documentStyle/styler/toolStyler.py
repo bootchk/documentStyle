@@ -36,7 +36,7 @@ class ToolStyler(DynamicStyler):
     Let user edit style of tool that creates DocumentElement.
     Return Style, or None if canceled.
     '''
-    styling = self.getEditedStyle(dialogTitle=self.toolName + "Tool Style")
+    styling = self.getEditedStyle(titleParts=(self.toolName, "Tool Style"))
     if styling is None:
       # canceled, self's styleSheet unchanged
       result = False
