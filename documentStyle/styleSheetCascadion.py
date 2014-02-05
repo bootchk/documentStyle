@@ -10,9 +10,18 @@ from PyQt5.QtCore import QSettings, Qt
 
 from documentStyle.styleSheet.appStyleSheet import AppStyleSheet
 from documentStyle.styleSheet.intermediateStyleSheet import IntermediateStyleSheet
+
+from documentStyle.model.brush import AdaptedBrushModel
+from documentStyle.model.pen import AdaptedPenModel
+from documentStyle.model.lineSpacing import AdaptedLineSpacingModel
+from documentStyle.model.textalignment import AdaptedAlignmentModel
+
+import documentStyle.config as config
 from documentStyle.debugDecorator import report
 
 from . import compat
+
+
 
 class StyleSheetCascadion(object):
   '''
@@ -37,6 +46,14 @@ class StyleSheetCascadion(object):
     '''
     # !!! styleSheet() also a method of Qt QGV
     
+    # assert translator installed
+    # create singletons requiring translation
+    config.i18ns = config.Translations()
+    config.BrushModel = AdaptedBrushModel()
+    config.PenModel = AdaptedPenModel()
+    config.LineSpacingModel = AdaptedLineSpacingModel()
+    config.AlignmentModel = AdaptedAlignmentModel()
+    
     # Root (default) stylesheet
     self.appStyleSheet = AppStyleSheet() 
     
@@ -44,7 +61,7 @@ class StyleSheetCascadion(object):
     savedUserStyleSheet = self._getUserStylesheetFromSettings()
     if savedUserStyleSheet is None:
       # Default userStyleSheet (empty of styling acts.)
-      self.userStyleSheet = IntermediateStyleSheet(name="User")
+      self.userStyleSheet = IntermediateStyleSheet(name='User')
     else:
       self.userStyleSheet = savedUserStyleSheet
     self.userStyleSheet.setParent(self.appStyleSheet)
@@ -55,7 +72,7 @@ class StyleSheetCascadion(object):
     Don't assume that a document and its stylesheet exists when cascadion is created.
     If not-trivial DocStyleSheet does exist, caller should call restoreDocStyleSheet
     '''
-    self.docStyleSheet = IntermediateStyleSheet(name="Doc")
+    self.docStyleSheet = IntermediateStyleSheet(name='Doc')
     self.docStyleSheet.setParent(self.userStyleSheet)
     
     # DocumentElementStyleSheets are created and owned by DocumentElements
@@ -85,21 +102,21 @@ class StyleSheetCascadion(object):
     '''
     settings = QSettings()
     '''
-    This does not work, yields "invalid load key" on unpickling:
+    This does not work, yields 'invalid load key' on unpickling:
     pickledUserStyleSheet = piclle.dumps(self.userStyleSheet, pickle.HIGHEST_PROTOCOL)
     Attempting: settings.setIniCodec('UTF-8') does not help the problem.
     So we use the default protocol.
     '''
     pickledUserStyleSheet = pickle.dumps(self.userStyleSheet)
-    settings.setValue("UserStyleSheet", pickledUserStyleSheet)
+    settings.setValue('UserStyleSheet', pickledUserStyleSheet)
     
     
   def _getUserStylesheetFromSettings(self):
-    " Private, called at init. "
-    #print "UserStyleSheetFromSettings"
+    ' Private, called at init. '
+    #print 'UserStyleSheetFromSettings'
     settings = QSettings()
     
-    styleSheetPickledInSettings = settings.value("UserStyleSheet")
+    styleSheetPickledInSettings = settings.value('UserStyleSheet')
     
     if styleSheetPickledInSettings is not None:
       if compat.PY2:

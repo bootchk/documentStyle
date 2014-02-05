@@ -8,6 +8,8 @@ import sys
 from PyQt5.QtCore import QCoreApplication, Qt
 from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QVBoxLayout, QWidget, QScrollArea, QLabel
 
+import documentStyle.config as config
+
 
 class StyleSheetDialog(QDialog):
   '''
@@ -23,7 +25,7 @@ class StyleSheetDialog(QDialog):
   '''
 
 
-  def __init__(self, formation, title, flags=Qt.Dialog):
+  def __init__(self, formation, titleParts, flags=Qt.Dialog):
     
     # TODO, parentWindow should be the document, which may not be the activeWindow?
     parentWindow = QCoreApplication.instance().activeWindow()
@@ -34,9 +36,9 @@ class StyleSheetDialog(QDialog):
     
     if sys.platform.startswith('darwin'):
       # GUI sheet has no title bar
-      dialogLayout.addWidget(QLabel(title))
+      dialogLayout.addWidget(QLabel(self._composeTitle(titleParts)))
     else:
-      self.setWindowTitle(title)
+      self.setWindowTitle(self._composeTitle(titleParts))
       
     dialogLayout.addWidget(self.createDialogCenterWidget(formation))
     
@@ -66,6 +68,13 @@ class StyleSheetDialog(QDialog):
     # If changed, create a StylingAct in StyleSheet
     self.emit(SIGNAL("changed"))
   """
+  
+  def _composeTitle(self, titleTuple):
+    '''
+    Translate and compose title string from tuple of parts.
+    '''
+    # assert parts are strings
+    return config.i18ns.styleTranslate(titleTuple[0]) + config.i18ns.styleTranslate(titleTuple[1])
   
   
   def createDialogCenterWidget(self, formation):

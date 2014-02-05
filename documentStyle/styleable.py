@@ -172,7 +172,7 @@ class Styleable(object):
     
   @report
   def applyStyle(self, styling):
-    " Apply given style to self."
+    ' Apply given style to self.'
     '''
     From passed style to model.
     Essentially, create StylingActs on self's StyleSheet.
@@ -196,10 +196,10 @@ class Styleable(object):
     '''
     '''
     assert getStylingDocumentElementType() is a string that describes document element type
-    We say "Element" to distinguish that this is a leaf(terminal) style sheet for a single element.
-    Style type may be general, e.g. it may be "Shape" whereas element is specifically a "Rect" subclass of Shape.
+    We say 'Element' to distinguish that this is a leaf(terminal) style sheet for a single element.
+    Style type may be general, e.g. it may be 'Shape' whereas element is specifically a 'Rect' subclass of Shape.
     '''
-    dialogTitle = self.getStylingDocumentElementType() + " Element Style"
+    dialogTitle = (self.getStylingDocumentElementType(), " Element Style")
     return self.styler.getEditedStyle(dialogTitle=dialogTitle)
     
 
@@ -211,12 +211,12 @@ class Styleable(object):
     E.G. called on StyleSheet changed. 
     Renews style Formation via cascading and applies. 
     '''
-    #print "Polish ", self.selector
+    #print 'Polish ', self.selector
     ## self.getStyle().applyTo(self)
     try:
       self.styler.formation().applyTo(self)
     except AttributeError:
-      print("If no styler attribute, programming error: must call setStylingDocumentElementType()")
+      print('If no styler attribute, programming error: must call setStylingDocumentElementType()')
       raise
 
 

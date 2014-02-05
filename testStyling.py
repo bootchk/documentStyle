@@ -241,7 +241,8 @@ class MainWindow(QMainWindow):
     QCoreApplication.instance().cascadion.saveUserStylesheetAsSettings()
     event.accept()
   
-  
+
+
     
        
 class App(QApplication):
@@ -252,6 +253,8 @@ class App(QApplication):
     self.setOrganizationName("DocumentStyle")
     self.setOrganizationDomain("lloyd konneker")
     self.setApplicationName("testStyling")
+    
+    self._establishTranslator() # i18n
     
     # Must precede creation of document because documentElementStyleSheets parented to docStyleSheet
     self.cascadion = StyleSheetCascadion() 
@@ -276,7 +279,32 @@ class App(QApplication):
     
     self.exec_()
  
+ 
+  def _establishTranslator(self):
+    # This is just a test harness.  Load the Spanish translation if possible.
+    self.myTranslator = self._installTranslator(name="documentStyle_es")
+    # !!! Keep reference, since installing does not copy instance
     
+    
+  def _installTranslator(self, name):
+    '''
+    Create a translator for given name.
+    '''
+    translator = QTranslator()
+    
+    result = translator.load(name)
+    if not result:
+      print("Failed to load translation for:", name)
+      # Not an exception: program continues in default (usually English)
+    
+    if not self.installTranslator(translator):
+      print("Failed to install translator.")
+      result = None
+    else:
+      print("Translation for Open", translator.translate("Translations", "Open"))
+      result = translator
+    return result # !!! Caller should keep a reference
+  
   
 app = App(sys.argv)
 

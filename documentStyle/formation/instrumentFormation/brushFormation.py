@@ -5,8 +5,10 @@ from PyQt5.QtGui import QBrush
 
 from .instrumentFormation import InstrumentFormation
 from ..styleProperty import ColorStyleProperty, ComboBoxStyleProperty
-from ...model.brush import BrushModel
-# from ...styleWrapper.styleWrapper import BrushStyleWrapper
+import documentStyle.config as config
+
+#from ...model.brush import BrushModel
+#from ...styleWrapper.styleWrapper import BrushStyleWrapper
 
 
 
@@ -22,7 +24,7 @@ class BrushFormation(InstrumentFormation):
                                                 self.instrument.setStyle, self.selector,
                                                 default=self.instrument.style(),
                                                 # PySide default=BrushStyleWrapper(self.instrument.style()),
-                                                model = BrushModel),]
+                                                model = config.BrushModel),]
     
     '''
     sic, BrushPattern is called Style in Qt
@@ -38,7 +40,10 @@ class BrushFormation(InstrumentFormation):
   
   def applyTo(self, morph):
     #print "setBrush on morph", self.instrument.color()
+    
+    # Morph knows it's scale and applies it to self instrument
     morph.scaleInstrument(self.instrument)  # No baseValue, defaults to 1
+    # Tell Morph to use self.instrument to draw itself
     morph.setBrush(self.instrument) 
   
   

@@ -4,9 +4,9 @@ Copyright 2013 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-#from PyQt5.QtCore import Qt
-# from documentStyle.styleWrapper.styleWrapper import LineSpacingStyleWrapper
+#from documentStyle.styleWrapper.styleWrapper import LineSpacingStyleWrapper
 
+import documentStyle.config as config
 
 class AdaptedLineSpacingModel(object):
   '''
@@ -16,10 +16,8 @@ class AdaptedLineSpacingModel(object):
   and the values are in percent.
   '''
   def __init__(self):
-    self.values = {"Single": 100,
-                   "1.5": 150,
-                  "Double": 200,
+    self.values = {config.i18ns.Single : 100,
+                   config.i18ns.OnePointFive : 150,
+                  config.i18ns.Double : 200,
                   }
     # TODO more values
-
-lineSpacingModel = AdaptedLineSpacingModel()

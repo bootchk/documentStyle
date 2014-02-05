@@ -5,7 +5,10 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QLabel, QFormLayout
 
+import documentStyle.config as config # i18n
+
 # circular from documentStyle.formation.instrumentFormation.instrumentFormation import InstrumentFormation
+
 
 
 class FormationForm(QFormLayout):
@@ -54,7 +57,7 @@ class FormationForm(QFormLayout):
     if top == True:
       pass  # name is in window title
     else:
-      self.addFormationLabelToForm(formation)
+      self._addFormationLabelToForm(formation)
     
     if len(formation) > 0:  # recursion termination
       for subformation in formation:
@@ -84,25 +87,33 @@ class FormationForm(QFormLayout):
       self.addRow(label, layout)
     
       
-  def addFormationLabelToForm(self, formation):
+  def _addFormationLabelToForm(self, formation):
     ''' 
-    Add a QLabel to form, spanning columns, as a separator.
-    Text equal to role cat name to form. 
-    Return text.
+    Add row to self, where row is QLabel, spanning columns, as a separator.
+    Text equal to catenation of various attributes of form, etc.. 
+    Return text (for debugging, this is command)
+    
+    Text is translated.
+    Note that everywhere else in code, name of formation stays in English.
     
     Note no special logic for single-property formations:
     they still yield a label separator.
     '''
     #print "add label"
     selector = formation.selector
+    
+    translatedDEType = config.i18ns.styleTranslate(selector.DEType)
+    translatedRoleName = config.i18ns.styleTranslate(formation.role)
+    translatedFormationName = config.i18ns.styleTranslate(formation.name)
+    
     if selector.isAnyDETypeAndInstrumentSelector():
-      text = "Any:" + formation.name
+      text = config.i18ns.Any + translatedFormationName
     elif selector.isDETypeSelector():
-      text = formation.name
+      text = translatedFormationName
     elif selector.isDETypeAndInstrumentSelector():
       # e.g. Text:Frame Pen or Line:Pen
       # assert role is '' or role is 'Foo ' with trailing space
-      text = selector.DEType + ":" + formation.role + formation.name
+      text = translatedDEType + ":" + translatedRoleName + " " + translatedFormationName
         
       
     label = QLabel(text)

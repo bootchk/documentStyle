@@ -3,6 +3,7 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPen
 
+import documentStyle.config as config
 #from documentStyle.styleWrapper.styleWrapper import PenStyleWrapper
 
 
@@ -28,11 +29,11 @@ class AdaptedPenModel(object):
                    "DashDot": PenStyleWrapper(qtEnum.DashDotLine),
                    }
     """
-    self.values = {"None": qtEnum.NoPen,
-                   "Solid": qtEnum.SolidLine,
-                   "Dashed": qtEnum.DashLine,
-                   "Dotted": qtEnum.DotLine,
-                   "DashDot": qtEnum.DashDotLine,
+    self.values = {config.i18ns.NoneName : qtEnum.NoPen,
+                   config.i18ns.Solid : qtEnum.SolidLine,
+                   config.i18ns.Dashed : qtEnum.DashLine,
+                   config.i18ns.Dotted : qtEnum.DotLine,
+                   config.i18ns.DashDot : qtEnum.DashDotLine,
                    }
     
     # TODO more values Qt::DashDotDotLine  Qt::CustomDashLine
@@ -42,7 +43,3 @@ class AdaptedPenModel(object):
     ''' Framework defined default, from a new pen. '''
     #return PenStyleWrapper(QPen().style())
     return QPen().style()
-
-
-
-PenModel = AdaptedPenModel()

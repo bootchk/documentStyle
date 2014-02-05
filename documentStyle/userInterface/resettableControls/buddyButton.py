@@ -48,6 +48,7 @@ class BuddyIconButton(QToolButton):
   
   def __init__(self, name, initialState=False, buddiedControl=None):
     super(BuddyIconButton, self).__init__()
+    # name not used?
     self._initIcon()
     self.setEnabled(initialState)
     self.clicked.connect(self.handleClicked)

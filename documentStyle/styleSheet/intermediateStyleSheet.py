@@ -119,7 +119,7 @@ class IntermediateStyleSheet(StyleSheet):
     # dialog = NoneditableStyleDialog(parentWindow=None, formation=formation)
     
     # parentWindow is document so dialog centers in document.  If parentWindow were mainWindow (toplevel), Qt not center dialog
-    dialog = EditableStyleSheetDialog(formation=self.editedFormation, title = self.name + " StyleSheet", flags=Qt.Sheet)
+    dialog = EditableStyleSheetDialog(formation=self.editedFormation, titleParts = (self.name, " StyleSheet"), flags=Qt.Sheet)
     dialog.accepted.connect(self.acceptEdit)
     dialog.rejected.connect(self.cancelEdit)
     dialog.open() # window modal

@@ -25,14 +25,14 @@ class CharacterFormation(TextFormation):
   '''
   
   def __init__(self, parentSelector):
-    InstrumentFormation.__init__(self, name="Character", parentSelector=parentSelector)
+    InstrumentFormation.__init__(self, name='Character', parentSelector=parentSelector)
     self.instrument = QTextCharFormat()
-    self.styleProperties=[ColorStyleProperty("Color", 
+    self.styleProperties=[ColorStyleProperty('Color', 
                                              self.setForegroundColor,  
                                              self.selector,
                                              default=self.instrument.foreground().color(),
                                              minimum=0, maximum=0), 
-                      FontStyleProperty("Font", self.instrument.setFont, self.selector,
+                      FontStyleProperty('Font', self.instrument.setFont, self.selector,
                                         # !!! Must be wrapped for PySide and PyQt
                                         default=FontStyleWrapper(self.instrument.font()),
                                         minimum=0, maximum=0,)]
@@ -44,7 +44,7 @@ class CharacterFormation(TextFormation):
     Effect deferred method. 
     
     !!! Must be setCharFormat, not mergeCharFormat.
-    Merge seems to mean "only set properties that program touched in the Format.
+    Merge seems to mean: only set properties that program touched in the Format.
     We don't touch them all, so for a merge, Qt will not set them all.
     Yet for a reset, we need the defaulted properties to be set on cursor.
     '''

@@ -18,6 +18,8 @@ from documentStyle.formation.morphFormation import ShapeFormation, LineFormation
 
 from documentStyle.userInterface.styleDialog.styleDialog import NoneditableStyleSheetDialog
 
+import documentStyle.config as config
+
 
 class AppStyleSheet(StyleSheet):
   '''
@@ -38,7 +40,7 @@ class AppStyleSheet(StyleSheet):
     Since user will rarely look at the appStyleSheet, not important.
     # self.appReadOnlyFormation = 
     '''
-    super(AppStyleSheet, self).__init__(name="App")
+    super(AppStyleSheet, self).__init__(name='App')
     
     
   def _allSharedInstrumentFormationClasses(self):
@@ -78,7 +80,7 @@ class AppStyleSheet(StyleSheet):
     
     Must create a new formation, since caller may edit it.
     '''
-    formation = Formation( name="Application Style Sheet", selector = newAllSelector() )
+    formation = Formation( name='Application Style Sheet', selector = newAllSelector() )
     
     '''
     Configure instrumentFormations.  
@@ -105,7 +107,7 @@ class AppStyleSheet(StyleSheet):
     Selector selects one, or all, of default DocumentElementFormat (MorphFormation).
     '''
     assert self.parent is None  # invariant: AppStyleSheet is root
-    assert selector.DEType in ("Shape", "Line", "Text", "Pixmap", "*"), "Unknown document element type" + selector.DEType
+    assert selector.DEType in ('Shape', 'Line', 'Text', 'Pixmap', '*'), 'Unknown document element type' + selector.DEType
     appFormation = self._newAppStyleSheetFormation()
     result = appFormation.selectSubformation(selector)
     assert result is not None
@@ -120,7 +122,7 @@ class AppStyleSheet(StyleSheet):
     This may not seem useful, but user needs to know what styling is default,
     so can understand inheritance via cascading.
     '''
-    dialog = NoneditableStyleSheetDialog(formation=self._newAppStyleSheetFormation(), title="App Style Defaults")
+    dialog = NoneditableStyleSheetDialog(formation=self._newAppStyleSheetFormation(), title=config.i18ns.AppStyleSheet)
     dialog.exec_()
     
   

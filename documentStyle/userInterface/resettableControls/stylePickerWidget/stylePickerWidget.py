@@ -5,7 +5,9 @@ This is free software, covered by the GNU General Public License.
 '''
 
 from PyQt5.QtWidgets import QPushButton
+from PyQt5.QtGui import QFont
 from documentStyle.userInterface.resettableControls.resettable import Resettable
+import documentStyle.config as config
 
 '''
 Setting color via pallette is not reliable on all platforms, for some widgets.
@@ -22,7 +24,7 @@ class StylePicker(Resettable, QPushButton):
   Responsibility:
   - let user pick a <style> (using further, standard dialog) via mouse click on widget
   - display <style> (as a swatch)
-  - API for a "control" (has setValue(), and value() methods)
+  - API for a 'control' (has setValue(), and value() methods)
   - emit valueChanged signal
   
   !!! A QLabel: does not have visual cues to let user know can be clicked.
@@ -36,13 +38,17 @@ class StylePicker(Resettable, QPushButton):
     '''
     Text may be blank char. 
     In subclasses: 
-    Could be "Color", but <style> being set may be only the background color.
+    Could be 'Color', but <style> being set may be only the background color.
     Then the text could disappear into the background.
-    Could be "Text", and <style> being set is font.
+    Could be 'Text', and <style> being set is font.
     '''
-    QPushButton.__init__(self, text)  # Must be init before Resettable
+    QPushButton.__init__(self, config.i18ns.styleTranslate(text))  # Must be init before Resettable
     Resettable.__init__(self, resettableValue)
     
+    '''
+    type of styleType may actually be pyqtWrapperType, although conceptually it is QFont or QColor
+    assert isinstance(styleType, QFont), str(type(styleType))
+    '''
     self.styleType = styleType  # <style> being controlled e.g. QColor
     '''
     subDialog is typically static method of some framework dialog class, e.g. QFontDialog
@@ -99,9 +105,11 @@ class StylePicker(Resettable, QPushButton):
   
   def setWrappedValue(self, value):
     '''
+    Set value after wrapping given value to a type that is pickleable.
     Default: no actual wrapping.
     Some subclasses reimplement.
     '''
+    assert isinstance(value, self.styleType) # e.g. QColor, QFont
     self.setValue(value)
     
     

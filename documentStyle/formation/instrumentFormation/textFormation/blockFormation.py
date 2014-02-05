@@ -5,15 +5,17 @@ from PyQt5.QtGui import QTextBlockFormat
 
 from .textFormation import TextFormation
 from documentStyle.formation.instrumentFormation.instrumentFormation import InstrumentFormation
-from documentStyle.formation.styleProperty import IntStyleProperty
+#from documentStyle.formation.styleProperty import IntStyleProperty
 from documentStyle.formation.styleProperty import ComboBoxStyleProperty
 from documentStyle.formation.styleProperty import UnwrappedComboBoxStyleProperty
-from documentStyle.model.textalignment import alignmentModel
-from documentStyle.model.lineSpacing import lineSpacingModel
+import documentStyle.config as config
 #from documentStyle.styleWrapper.styleWrapper import AlignmentStyleWrapper
 
 from documentStyle.debugDecorator import report, reportReturn
 
+'''
+i18n: no names are translated here.  Names here are internal names, always in English.  Translated before display.
+'''
 
 
 class BlockFormation(TextFormation):
@@ -24,26 +26,26 @@ class BlockFormation(TextFormation):
   '''
   
   def __init__(self, parentSelector):
-    InstrumentFormation.__init__(self, name="Block", parentSelector=parentSelector)
+    InstrumentFormation.__init__(self, name='Block', parentSelector=parentSelector)
     self.instrument = QTextBlockFormat()
     '''
     Note in Qt a doc has a global indentWidth having default of 40 pixels.
     This is the count of indents, more or less tabs.
     '''
-    self.styleProperties=[# WAS "Alignment"
-                          ComboBoxStyleProperty("Aligned", self.instrument.setAlignment, self.selector,
+    self.styleProperties=[# WAS 'Alignment'
+                          ComboBoxStyleProperty('Aligned', self.instrument.setAlignment, self.selector,
                                                 # PySide default=AlignmentStyleWrapper(self.instrument.alignment()),
                                                 default=self.instrument.alignment(),
-                                                model = alignmentModel),
-                          # WAS "Line spacing", too long
-                          UnwrappedComboBoxStyleProperty("Spacing", self.adaptLineSpacing, self.selector,
+                                                model = config.AlignmentModel),
+                          # WAS 'Line spacing', too long
+                          UnwrappedComboBoxStyleProperty('Spacing', self.adaptLineSpacing, self.selector,
                                                 default=100,  # single spacing is 100% is default
-                                                model = lineSpacingModel),
+                                                model = config.LineSpacingModel),
                           ]
     """
     #Eliminated this because it is buggy: it doesn't seem to get properly layout by document.
     
-    IntStyleProperty("Indent", self.instrument.setIndent, self.selector,
+    IntStyleProperty('Indent', self.instrument.setIndent, self.selector,
                                            default=self.instrument.indent(), 
                                            minimum=0, maximum=10, singleStep=1),
     """

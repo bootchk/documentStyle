@@ -20,10 +20,10 @@ class FormationListModel(QAbstractListModel):
   def data(self, index, role ):
     if role == Qt.DisplayRole:
       if index.row() == 0:
-        return "foo"
+        return 'foo'
       else:
-        print("Index", index)
+        print('Index', index)
     else:
-      print("Role", role)
+      print('Role', role)
       
     #setIndexWidget ( const QModelIndex & index, QWidget * widget )

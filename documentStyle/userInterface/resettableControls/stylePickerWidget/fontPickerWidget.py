@@ -22,7 +22,7 @@ class FontPicker(StylePicker):
   
   
   def __init__(self, resettableValue):
-    super(FontPicker, self).__init__(text="Font", 
+    super(FontPicker, self).__init__(text='Font',   # i18ns translation by super
                                      styleType=QFont, 
                                      subDialog = self._baseDialog,
                                      resettableValue = resettableValue)
@@ -46,7 +46,7 @@ class FontPicker(StylePicker):
   """
   Not relevant: whether exactMatch or not, sometimes italic-light does not display?
   if not newValue.exactMatch():
-    #print "Not an exact match"
+    #print 'Not an exact match'
   """
   
   

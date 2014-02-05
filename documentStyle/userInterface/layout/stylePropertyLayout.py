@@ -13,6 +13,7 @@ from ..resettableControls.stylePickerWidget.colorPickerWidget import ColorPicker
 from ..resettableControls.stylePickerWidget.fontPickerWidget import FontPicker
 from ..resettableControls.comboBox import StyleComboBox
 from ..resettableControls.buddyButton import BuddyIconButton
+import documentStyle.config as config
 
 from documentStyle.debugDecorator import reportReturn
 
@@ -108,9 +109,9 @@ class StylePropertyLayout(QHBoxLayout):
     
     TODO maybe the controls should be left aligned to the labels?
     '''
-    # Child: optional label
+    # Child: optional label.  Label not used when control has it's own displayed name
     if isLabeled:
-      self.addWidget(QLabel(self.model.name))
+      self.addWidget(QLabel(self.getLabel()))
     
     # Child: Control
     # Some widgets don't use model
@@ -118,15 +119,20 @@ class StylePropertyLayout(QHBoxLayout):
     self.addWidget(self.controlWidget, stretch=1)  # TODO, stretch=0, alignment=Qt.AlignLeft)
    
     # Child: Buddy button
-    self.buddyButton = BuddyIconButton("Inherit", 
+    self.buddyButton = BuddyIconButton("Inherit", # name, not used?
                                 initialState = not model.isReset(),
                                 buddiedControl = self.controlWidget)
     self.addWidget(self.buddyButton)
    
   
   def getLabel(self):
-    ''' Label for the layout (even if not in the layout, i.e. the model label. '''
-    return self.model.name
+    ''' 
+    Label for the layout (even if not in the layout, i.e. the model label.
+    
+    !!! i18n translated
+    '''
+    #print("model name", self.model.name)
+    return config.i18ns.styleTranslate(self.model.name)
   
   
   '''

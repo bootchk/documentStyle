@@ -10,7 +10,7 @@ class Instrument(object):
   '''
   An Instrument applies style attributes to DocumentElements.
   
-  Also known as "Format"
+  Also known as Format
   
   Stereotype: information holder.  It is simply a set of parameters.
   

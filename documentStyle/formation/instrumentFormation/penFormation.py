@@ -5,7 +5,8 @@
 from PyQt5.QtGui import QPen
 from .instrumentFormation import InstrumentFormation
 from ..styleProperty import ColorStyleProperty, IntStyleProperty, ComboBoxStyleProperty
-from ...model.pen import PenModel
+import documentStyle.config as config
+
 #from documentStyle.styleWrapper.styleWrapper import PenStyleWrapper
 
 
@@ -32,13 +33,14 @@ class PenFormation(InstrumentFormation):
                           ComboBoxStyleProperty("Style", self.instrument.setStyle, 
                                                 self.selector,
                                                 default=self.instrument.style(), # PySide PenStyleWrapper(self.instrument.style()),
-                                                model = PenModel)
+                                                model = config.PenModel)
                           ]
   '''
   Old getters: self.instrument.color, ), 
   self.instrument.width, 
   self.instrument.style, 
   '''
+
 
   def applyTo(self, morph):
     '''

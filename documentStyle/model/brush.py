@@ -4,6 +4,8 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QBrush
 
+import documentStyle.config as config
+
 #from documentStyle.styleWrapper.styleWrapper import BrushStyleWrapper
 
 
@@ -20,12 +22,12 @@ class AdaptedBrushModel(object):
                    "Half dense": BrushStyleWrapper(qtEnum.Dense4Pattern),
                    "Quadrule": BrushStyleWrapper(qtEnum.CrossPattern),
                    "Crosshatch": BrushStyleWrapper(qtEnum.DiagCrossPattern),}
-    """
-    self.values = {"None": qtEnum.NoBrush,
-                   "Solid": qtEnum.SolidPattern,
-                   "Half dense": qtEnum.Dense4Pattern,
-                   "Quadrule": qtEnum.CrossPattern,
-                   "Crosshatch": qtEnum.DiagCrossPattern,}
+    """# BrushModel = AdaptedBrushModel()
+    self.values = {config.i18ns.NoneName : qtEnum.NoBrush,
+                   config.i18ns.Solid : qtEnum.SolidPattern,
+                   config.i18ns.HalfDense : qtEnum.Dense4Pattern,
+                   config.i18ns.Quadrule : qtEnum.CrossPattern,
+                   config.i18ns.Crosshatch : qtEnum.DiagCrossPattern,}
     # TODO more values
     """
     Qt.Dense1Pattern   2   Extremely dense brush pattern.
@@ -47,11 +49,10 @@ Qt.RadialGradientPattern   16   Radial gradient (set using a dedicated QBrush co
 Qt.TexturePattern
     """
   
+  
   def default(self):
     '''
     A new brush has default style.
     '''
     # PySide return BrushStyleWrapper(QBrush().style())
     return QBrush().style()
-  
-BrushModel = AdaptedBrushModel()
