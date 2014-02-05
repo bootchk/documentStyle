@@ -199,8 +199,8 @@ class Styleable(object):
     We say 'Element' to distinguish that this is a leaf(terminal) style sheet for a single element.
     Style type may be general, e.g. it may be 'Shape' whereas element is specifically a 'Rect' subclass of Shape.
     '''
-    dialogTitle = (self.getStylingDocumentElementType(), " Element Style")
-    return self.styler.getEditedStyle(dialogTitle=dialogTitle)
+    titleParts = (self.getStylingDocumentElementType(), "Element Style")
+    return self.styler.getEditedStyle(titleParts=titleParts)
     
 
   @report

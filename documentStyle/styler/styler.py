@@ -28,5 +28,5 @@ class Styler(object):
   def addToStyleCascade(self):
     raise NotImplementedError("Deferred")
 
-  def getEditedStyle(self, dialogTitle):
+  def getEditedStyle(self, titleParts):
     raise NotImplementedError("Deferred")
