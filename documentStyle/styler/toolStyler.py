@@ -10,7 +10,7 @@ from PyQt5.QtCore import QSettings
 
 from .dynamicStyler import DynamicStyler
 from documentStyle.selector import DETypeSelector
-
+from documentStyle.compat import PY2
 
 
 
@@ -97,10 +97,14 @@ class ToolStyler(DynamicStyler):
   def getToolStylerFromSettings(cls, toolName):
     " Private, called at init. "
     toolStylerPickledInSettings = QSettings().value(cls._settingsNameForTool(toolName))
-    ## P2 type is unicode, P3 type is bytes.  Don't know a clean way to handle both
-    ## assert toolStylerPickledInSettings is None or isinstance(toolStylerPickledInSettings, bytes), str(type(toolStylerPickledInSettings))
+    
     if toolStylerPickledInSettings is not None:
-      result = pickle.loads(toolStylerPickledInSettings)
+      ## P2 type of toolStylerPickledInSettings is unicode, P3 type is bytes.  Don't know a clean way to handle both
+      if not PY2:
+        isinstance(toolStylerPickledInSettings, bytes)
+        result = pickle.loads(toolStylerPickledInSettings)
+      else:
+        result = pickle.loads(str(toolStylerPickledInSettings))
       result.addToStyleCascade()
     else:
       result = None
