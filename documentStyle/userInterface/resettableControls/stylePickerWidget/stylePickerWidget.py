@@ -53,7 +53,9 @@ class StylePicker(Resettable, QPushButton):
     '''
     subDialog is typically static method of some framework dialog class, e.g. QFontDialog
     Or a method that adapts a framework dialog, e.g. QColorDialog, which returns a QColor that not isValid() if canceled.
-    It must return a tuple: (ok, value of <style>) 
+    It must have API:
+    -callable with parameter 'initialValue'
+    -return a tuple: (ok, value of <style>) 
     '''
     self.subDialog = subDialog  
     
@@ -99,7 +101,8 @@ class StylePicker(Resettable, QPushButton):
     parentWidget is not QDialog if self is nested inside a QScrollArea:
     CANNOT assert isinstance(parentWidget, QDialog)
     '''
-    return self.subDialog(parent=self.parentWidget())
+    return self.subDialog(parent=self.parentWidget(), # parent to StyleDialog (parent of StylePicker)
+                          initialValue=self._value)
 
     
   

@@ -28,17 +28,19 @@ class FontPicker(StylePicker):
                                      resettableValue = resettableValue)
 
   
-  def _baseDialog(self, parent):
+  def _baseDialog(self, parent, initialValue):
     '''
     Adapter: !!! the value returned by QFontDialog.getFont() is a tuple.
     Adapt (flip) to tuple required by Super
     '''
-    result, ok = QFontDialog.getFont(parent)
+    # Use overloaded PyQt signature whose first parameter is initial, not a keyword.
+    # Unwrap initialValue
+    result, ok = QFontDialog.getFont(initialValue.rawValue(), parent=parent)
     assert isinstance(ok, bool), str(type(ok))
     assert result is None or isinstance(result, QFont), str(type(result))
     '''
     Qt docs say: ok==False implies canceled and result is Qt's default font
-    But oesn't work??? assert isinstance(result, QFont)
+    But doesn't work??? assert isinstance(result, QFont)
     '''
     return ok, result
   

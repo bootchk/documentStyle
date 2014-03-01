@@ -42,8 +42,8 @@ class StylingActSet(dict):
   @reportReturn
   def put(self, stylingAct):
     ''' Add a styling act, or replace an existing one !!! '''
-    selector = stylingAct.selector
     """
+    selector = stylingAct.selector
     if selector in self:
       print("replacing")
     else:
