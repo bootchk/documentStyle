@@ -3,6 +3,8 @@ Copyright 2012 Lloyd Konneker
 
 This is free software, covered by the GNU General Public License.
 '''
+from PyQt5.QtGui import QColor # debugging
+#from documentStyle.styleWrapper.fontStyleWrapper import FontStyleWrapper
 
 from documentStyle.selector import Selector
 
@@ -28,7 +30,15 @@ class StylingAct(object):
 
 
   def __repr__(self):
-    return "StylingAct(" + str(self.selector) + "," + str(self.value) + ")"
+    '''
+    Used for debugging only, so this hack to print names of certain values.
+    Alternatively, wrap Qt values in class having __repr__
+    '''
+    if isinstance(self.value, (QColor, )):
+      valueRepr = str(self.value.name())
+    else:
+      valueRepr = str(self.value)
+    return "StylingAct(" + str(self.selector) + "," + valueRepr + ")"
   
   
   @reportTrueReturn

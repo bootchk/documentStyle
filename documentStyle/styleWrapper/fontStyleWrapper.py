@@ -22,6 +22,10 @@ class FontStyleWrapper(object):
     return self.wrapped
   
   
+  def __repr__(self):
+    " QFont.toString() is readable "
+    return self.wrapped.toString()
+  
   " No setter currently required. "
   
   
