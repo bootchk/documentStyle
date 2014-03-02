@@ -41,7 +41,11 @@ class ToolStyler(DynamicStyler):
       # canceled, self's styleSheet unchanged
       result = False
     else:
-      # update self's styleSheet, but doesn't affect any document elements now
+      '''
+      update self's styleSheet.
+      Doesn't affect any document elements now.
+      Strangely named: actually reflects styling acts to stylesheet of tool, which is not a DE.
+      '''
       self.styleDocElementFromStyling(styling=styling)
       result = True
     return result
@@ -108,6 +112,7 @@ class ToolStyler(DynamicStyler):
       result.addToStyleCascade()
     else:
       result = None
+    assert result is None or result.isInCascadion() # parented to DocumentStyleSheet
     return result
     
   

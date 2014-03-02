@@ -45,6 +45,7 @@ class DynamicStyler(Styler):
   def styleDocElementFromStyling(self, styling):
     '''
     See docstring at super.
+    Misnamed, called to style a documentElement OR a Tool.
     '''
     assert isinstance(styling, Formation)
     
@@ -54,10 +55,14 @@ class DynamicStyler(Styler):
     if not styling.isTouched():
       return
     
+    # See similar code at IntermediateStyleSheet.reflectEditsToStylingActSetCollection
+    # Assert there is only one StylingActSet that matches styling.selector?
     targetStylingActSet = self._styleSheet.stylingActSetCollection.getMatchingOrNewStylingActSet(styling.selector)
     # targetStylingActSet refers to styling acts on the owning DocumentElement of this Styler
     #print("targetSASC", targetStylingActSet)
-    styling.reflectToStylingActSet(targetStylingActSet)
+    deletedCount = styling.reflectToStylingActSet(targetStylingActSet)
+    #print("Styling documentElement or Tool, deleted count", deletedCount)
+  
   
   @report
   def styleDocElementFromStyleSheet(self, sourceStylesheet):
@@ -85,9 +90,15 @@ class DynamicStyler(Styler):
     # TODO rename parent->parentStyleSheet since parent and parent() are commonly used.
     assert self._styleSheet.parent is not None, 'self is parented'
     # TODO, 'Doc' is hardcoded elsewhere, this should be a weaker assertion that parent is subclass IntermediateStyleSheet
-    assert self._styleSheet.parent.name == 'Doc', 'parent is a DocumentStyleSheet'
+    assert self.isInCascadion()
   
   
+  def isInCascadion(self):
+    return self._styleSheet.parent.name == 'Doc', 'parent is a DocumentStyleSheet'
+  
+  
+  
+  @report
   def getEditedStyle(self, titleParts):
     ''' 
     Let user edit style held by styler.

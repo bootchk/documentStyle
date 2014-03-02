@@ -52,4 +52,15 @@ class StylingActSetCollection(dict):
     # TODO order by selectivity
     for (selector, stylingActSet) in self.items():
       yield stylingActSet
-        
+  
+  
+  def countStylingActs(self):
+    '''
+    Count is total over my collection of stylingActSet
+    '''
+    total = 0
+    for stylingActSet in self.itervalues():
+      total += stylingActSet.countStylingActs()
+    return total
+      
+    

@@ -88,6 +88,7 @@ class StylingAct(object):
     - the Reset button is enabled (the in-line exists)
     - the value is the same as the value further up the cascade (e.g. in the DocStyleSheet.)
     '''
+    # DEBUG uncomment this to see stylingacts applied
     #print "Overriding ", styleProperty, "with args", self.value
     ##if styleProperty.get() != self.value:
     ##  styleProperty.setPropertyValue(self.value)

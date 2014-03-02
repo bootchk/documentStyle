@@ -63,6 +63,7 @@ class StyleSheetCascadion(object):
       # Default userStyleSheet (empty of styling acts.)
       self.userStyleSheet = IntermediateStyleSheet(name='User')
     else:
+      print("UserStyleSheet restored from settings")
       self.userStyleSheet = savedUserStyleSheet
     self.userStyleSheet.setParent(self.appStyleSheet)
     
@@ -135,7 +136,10 @@ class StyleSheetCascadion(object):
     
     
   def restoreDocStyleSheet(self, pickledStylesheet):
-    ''' set DocStyleSheet from a pickledStylesheet. '''
+    '''
+    set DocStyleSheet from a pickledStylesheet. 
+    !!! Caller must restore downstream styleables and toolStylers to cascadion.
+    '''
     newDocStyleSheet = pickle.loads(pickledStylesheet)
     self.setDocStyleSheet(newDocStyleSheet)
     
@@ -153,6 +157,7 @@ class StyleSheetCascadion(object):
     (No caller should directly write self.docStyleSheet.)
 
     '''
+    del(self.docStyleSheet) # !!! Old references to it are stale.
     self.docStyleSheet = newDocStyleSheet
     self.docStyleSheet.setParent(self.userStyleSheet)
     

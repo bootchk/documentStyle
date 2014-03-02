@@ -14,8 +14,8 @@ __indentCount = [0]
 [a.__repr__() for a in params[1:]] excludes self
 '''
 
-DOC_STYLE_DEBUG = False     # <<<<<<<<<<<<<<<<<<<<<<<<<<<< 
-
+DOC_STYLE_DEBUG = False     
+#DOC_STYLE_DEBUG = True  # Uncomment to debug
 
 if DOC_STYLE_DEBUG:
 

@@ -176,10 +176,14 @@ class DiagramScene(QGraphicsScene):
       item.polish()
     
     
-  def restoreItemsToStyleCascade(self):
+  def restoreStyleCascade(self):
     ''' reparent item's to new DSS in cascade. '''
     for item in self.items():
       item.addToStyleCascade()
+      
+    # ToolStylers also are downstream of new DSS
+    global app
+    app.toolStyler.addToStyleCascade()
   
     
    
@@ -207,7 +211,7 @@ class GraphicsView(QGraphicsView):
     elif key == Qt.Key_T:
       ''' Edit tool styler and apply to line element. '''
       QCoreApplication.instance().toolStyler.edit()
-      QCoreApplication.instance().toolStyler.applyTo(self.scene.line)
+      # QCoreApplication.instance().toolStyler.applyTo(self.scene.line)
     elif key == Qt.Key_Z:
       QCoreApplication.instance().cascadion.docStyleSheet._dump()
     elif key == Qt.Key_S:
@@ -219,7 +223,7 @@ class GraphicsView(QGraphicsView):
         QCoreApplication.instance().cascadion.restoreDocStyleSheet(self.pickledDSS)
         # !!! So far we have only tested unpickling.) 
         # To complete test, tell document to reparent documentElements (if they already exist)
-        self.scene.restoreItemsToStyleCascade()
+        self.scene.restoreStyleCascade()
         # Now must polish (via events or otherwise.)
       else:
         print("You must save doc style sheet before you can restore it.")

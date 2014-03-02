@@ -179,28 +179,30 @@ class Formation(list):
     Self was derived through derivingStylingActSet.  
     Update it with user's changes.
     
-    For debugging, return count of StylingActs reflected.
+    For debugging, return count of StylingActs deleted.
     '''
     #print "reflectToStylingActSet", derivingStylingActSet
-    count = 0
+    deletedCount = 0
     for item in self.generateStyleProperties():
       if item.isTouched():  # WAS not item.isReset():
         #print('touched')
-        self.reflectItemToStylingAct(item, derivingStylingActSet)
-        count += 1
-    return count
+        if self.reflectItemToStylingAct(item, derivingStylingActSet):
+          deletedCount += 1
+    return deletedCount
   
       
   def reflectItemToStylingAct(self, item, derivingStylingActSet):
     '''
     Item was touched by user.  Create, update, or delete styling act.
+    
+    Return True if delete
     '''
     if item.isReset():
       '''
       User touched (one or more changes) but last act was to Reset to inherited value.
       Delete any previous styling act. (If initially reset, then user touched, then reset, no styling act exists.)
       '''
-      derivingStylingActSet.deleteIfExists(item.selector)
+      result = derivingStylingActSet.deleteIfExists(item.selector)
     else:
       ''' 
       User edited (in-lined.)  Create or replace styling act.
@@ -208,22 +210,24 @@ class Formation(list):
       stylingAct = StylingAct(item.selector, item.get())
       #print("New styling act", stylingAct)
       derivingStylingActSet.put(stylingAct)
+      result = False
+    return result
       
       
-      """
-      OLD
-      if not item.isReset():
-        '''
-        property was inherited, but was overridden.  StylingAct will be new.
-        OR property was not inherited, but might have been changed.  StylingAct will be updated.
-        '''
-        stylingAct = StylingAct(item.selector, item.get())
-        derivingStylingActSet.put(stylingAct)
-      elif item.wasReset():
-        # property was not inherited (overridden), but was reinherited.  StylingAct revoked.
-        derivingStylingActSet.delete(item.selector)
-      # else item isReset, was inherited, and still inherited.  No StylingAct
-      """
+    """
+    OLD
+    if not item.isReset():
+      '''
+      property was inherited, but was overridden.  StylingAct will be new.
+      OR property was not inherited, but might have been changed.  StylingAct will be updated.
+      '''
+      stylingAct = StylingAct(item.selector, item.get())
+      derivingStylingActSet.put(stylingAct)
+    elif item.wasReset():
+      # property was not inherited (overridden), but was reinherited.  StylingAct revoked.
+      derivingStylingActSet.delete(item.selector)
+    # else item isReset, was inherited, and still inherited.  No StylingAct
+    """
         
   
   @report

@@ -75,7 +75,7 @@ class StyleSheetDialog(QDialog):
     '''
     # assert parts are strings
     assert not isinstance(titleTuple, basestring), 'titleParts is a tuple'
-    print titleTuple[0], titleTuple[1]
+    #print titleTuple[0], titleTuple[1]
     return config.i18ns.styleTranslate(titleTuple[0]) + " " + config.i18ns.styleTranslate(titleTuple[1])
   
   

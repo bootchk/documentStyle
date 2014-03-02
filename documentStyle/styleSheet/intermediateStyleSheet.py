@@ -98,10 +98,12 @@ class IntermediateStyleSheet(StyleSheet):
     count = 0
     for stylingActSet in self.stylingActSetCollection.generateMatchingStylingActSets(selector):
       count += 1
+      # DEBUG uncomment this to see cascade in action
+      #print("applySelectedStylingActSet from ", str(self), "to ", str(formation))
       stylingActSet.applyToFormation(formation)
     return count
       
-  
+  @report
   def edit(self):
     '''
     Let user edit style sheet.  I.E.:
@@ -153,6 +155,9 @@ class IntermediateStyleSheet(StyleSheet):
     (each top level is a group of edits to be a SAS.)
     each that has been changed should reflect itself to one of my StylingActSets
     '''
+    #beforeStylingActCount = self.stylingActSetCollection.countStylingActs()
+    
+    deletedCount = 0
     for topLevelFormation in editedFormation:
       '''
       Optimization: only if subformation edited.
@@ -161,8 +166,12 @@ class IntermediateStyleSheet(StyleSheet):
       if topLevelFormation.isTouched(): # WAS isEdited():
         # when formation was derived through None stylingActSet, create a new one.
         target = self.stylingActSetCollection.getMatchingOrNewStylingActSet(topLevelFormation.selector)
-        editedFormation.reflectToStylingActSet(derivingStylingActSet=target)
+        deletedCount += editedFormation.reflectToStylingActSet(derivingStylingActSet=target)
     
+    # TODO assertion on change to count: after = before - deleted + added
+    #afterStylingActCount = self.stylingActSetCollection.countStylingActs()
+    #print('Reflection results on', str(self))
+    #print('before, after, deleted', beforeStylingActCount, afterStylingActCount, deletedCount)
     
   '''
   Persistence (pickling)

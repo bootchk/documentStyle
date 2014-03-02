@@ -36,7 +36,8 @@ class StylingActSet(dict):
   #@report
   def applyToFormation(self, formation):
     for stylingAct in self.values():
-      #print "From StylingActSet " + str(self)
+      # DEBUG uncomment this to see cascade in action
+      #print "Applying StylingAct" + str(self)
       stylingAct.applyToFormation(formation)
       
   @reportReturn
@@ -65,13 +66,14 @@ class StylingActSet(dict):
     '''
     Same as above but does not raise KeyError.
     '''
-    # For debugging purposes, return whether deleted.
+    # For DEBUG, return whether deleted.
     try:
       del self[selector]
       return True
     except KeyError:
       # Doesn't exist
-      # print "No styling act deleted for selector", selector
+      # DEBUG uncomment this to see no styling act deleted for a selector.
+      #print "No styling act deleted for selector", selector
       return False
     
     
@@ -79,3 +81,13 @@ class StylingActSet(dict):
     for each in self.values():
       yield each
       
+
+  def countStylingActs(self):
+    '''
+    Count is total of my stylingActs.
+    '''
+    total = 0
+    for stylingAct in self.itervalues():
+      total += 1
+    return total
+    
