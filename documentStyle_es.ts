@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="es">
+<!DOCTYPE TS><TS version="2.0" language="es" sourcelanguage="">
 <context>
     <name>Translations</name>
     <message>
@@ -211,7 +210,7 @@
     <message>
         <location filename="documentStyle/config.py" line="94"/>
         <source>Justify</source>
-        <translation>Justifica</translation>
+        <translation>Justificar</translation>
     </message>
     <message>
         <location filename="documentStyle/config.py" line="104"/>
@@ -231,7 +230,6 @@
     <message>
         <location filename="documentStyle/config.py" line="103"/>
         <source>Tool Style</source>
-        <translatorcomment>Instrumento  ? Utensilio</translatorcomment>
         <translation>Instrumento Estilo</translation>
     </message>
 </context>

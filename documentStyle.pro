@@ -5,3 +5,4 @@ SOURCES += documentStyle/config.py
 
 # translations wanted
 TRANSLATIONS += documentStyle_es.ts
+TRANSLATIONS += documentStyle_cn.ts
