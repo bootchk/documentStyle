@@ -196,6 +196,7 @@ class GraphicsView(QGraphicsView):
     self.setRenderHint(QPainter.Antialiasing)
     self.setRenderHint(QPainter.TextAntialiasing)
     self.scene = scene
+    self.pickledDSS = None
     
   
   def keyPressEvent(self, event):
