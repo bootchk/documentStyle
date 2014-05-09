@@ -74,7 +74,7 @@ class StyleSheetDialog(QDialog):
     Translate and compose title string from tuple of parts.
     '''
     # assert parts are strings
-    assert not isinstance(titleTuple, basestring), 'titleParts is a tuple'
+    assert isinstance(titleTuple, tuple), 'titleParts is a tuple'
     #print titleTuple[0], titleTuple[1]
     return config.i18ns.styleTranslate(titleTuple[0]) + " " + config.i18ns.styleTranslate(titleTuple[1])
   
