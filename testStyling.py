@@ -25,6 +25,7 @@ from documentStyle.styleSheetCascadion import StyleSheetCascadion
 from documentStyle.styleable import Styleable
 from documentStyle.styler.toolStyler import ToolStyler
 
+mainWindow = None   # global
 
 '''
 Test cases:
@@ -182,8 +183,8 @@ class DiagramScene(QGraphicsScene):
       item.addToStyleCascade()
       
     # ToolStylers also are downstream of new DSS
-    global app
-    app.toolStyler.addToStyleCascade()
+    global mainWindow
+    mainWindow.toolStyler.addToStyleCascade()
   
     
    
@@ -234,6 +235,12 @@ class MainWindow(QMainWindow):
   def __init__(self, *args):
     QMainWindow.__init__(self, *args)
     
+    # Tool styler not used in the GUI, but define it to test code imports
+    toolStyler = ToolStyler('Line', 'Freehand')
+    toolStyler.saveAsSetting()
+    unused = ToolStyler.getToolStylerFromSettings('Freehand')
+    self.toolStyler = toolStyler
+    
   def newDocument(self):
     ''' Widget for new document (scene). '''
     self.scene = DiagramScene()
@@ -265,6 +272,8 @@ class App(QApplication):
     # Must precede creation of document because documentElementStyleSheets parented to docStyleSheet
     self.cascadion = StyleSheetCascadion() 
     
+    global mainWindow # for access by ToolStyler
+    
     mainWindow = MainWindow()
     self.documentView = mainWindow.newDocument()
     mainWindow.setGeometry(100, 100, 500, 400)
@@ -273,12 +282,6 @@ class App(QApplication):
     
     # Arrange that changes to styleSheets will polish doc
     self.cascadion.connectSignals(mainWindow.scene.polish)
-    
-    # Not used, but test code imports
-    toolStyler = ToolStyler('Line', 'Freehand')
-    toolStyler.saveAsSetting()
-    unpickled = ToolStyler.getToolStylerFromSettings('Freehand')
-    self.toolStyler = toolStyler
     
     # Initial polishing (using Styleable)
     mainWindow.scene.polish()
@@ -315,5 +318,5 @@ class App(QApplication):
     return result # !!! Caller should keep a reference
   
   
-app = App(sys.argv)
+app = App(sys.argv) # since this never returns, app is never defined until the program ends
 

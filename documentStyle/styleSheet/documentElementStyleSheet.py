@@ -48,10 +48,13 @@ class DocumentElementStyleSheet(IntermediateStyleSheet):
       self.stylingActSetCollection.putNewBySelector(selector)
     else:
       # Already exists, and its selector matches the one passed
-      assert self.stylingActSetCollection.values()[0].selector == selector
+      # Python3: values() returns view.  Convert to list so it is indexable.
+      assert list(self.stylingActSetCollection.values())[0].selector == selector
       pass
     assert len(self.stylingActSetCollection) == 1
-    result = self.stylingActSetCollection.values()[0]
+    # Python3: values() returns view.  Convert to list so it is indexable.
+    # SASC is hack, not fully implemented.
+    result = list(self.stylingActSetCollection.values())[0]
     assert isinstance(result, StylingActSet)
     return result
         
