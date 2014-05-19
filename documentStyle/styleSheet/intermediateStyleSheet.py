@@ -104,7 +104,7 @@ class IntermediateStyleSheet(StyleSheet):
     return count
       
   @report
-  def edit(self):
+  def edit(self, parentWindow):
     '''
     Let user edit style sheet.  I.E.:
     - modify a SAS
@@ -122,13 +122,16 @@ class IntermediateStyleSheet(StyleSheet):
     
     # parentWindow is document so dialog centers in document.  
     # If parentWindow were mainWindow (toplevel), Qt not center dialog
-    dialog = EditableStyleSheetDialog(formation=self.editedFormation, 
+    dialog = EditableStyleSheetDialog(parentWindow = parentWindow,
+                                      formation=self.editedFormation, 
                                       titleParts = (self.name, "Style Sheet"))
                                       # WAS flags=Qt.Sheet)
                                       # but that is not needed if open() which is window modal
     dialog.accepted.connect(self.acceptEdit)
     dialog.rejected.connect(self.cancelEdit)
-    dialog.open() # window modal
+    #dialog.open() # window modal
+    dialog.exec() # app modal
+
     
   
   '''

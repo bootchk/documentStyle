@@ -31,12 +31,13 @@ class ToolStyler(DynamicStyler):
     # ensure self is in style cascade (DESS() ensures it.)
     
   
-  def edit(self):
+  def edit(self, parentWindow):
     ''' 
     Let user edit style of tool that creates DocumentElement.
     Return Style, or None if canceled.
     '''
-    styling = self.getEditedStyle(titleParts=(self.toolName, "Tool Style"))
+    styling = self.getEditedStyle(parentWindow = parentWindow,
+                                  titleParts=(self.toolName, "Tool Style"))
     if styling is None:
       # canceled, self's styleSheet unchanged
       result = False

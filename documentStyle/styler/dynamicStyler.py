@@ -99,7 +99,7 @@ class DynamicStyler(Styler):
   
   
   @report
-  def getEditedStyle(self, titleParts):
+  def getEditedStyle(self, parentWindow, titleParts):
     ''' 
     Let user edit style held by styler.
     Return Style, or None if canceled.
@@ -111,7 +111,9 @@ class DynamicStyler(Styler):
     FUTURE, if a document element is its own window, parent to it?
     Or position the dialog closer to the document element.
     '''
-    styleDialog = EditableStyleSheetDialog(formation=editableCopyOfStyle, titleParts=titleParts)
+    styleDialog = EditableStyleSheetDialog(parentWindow=parentWindow,
+                                           formation=editableCopyOfStyle, 
+                                           titleParts=titleParts)
     styleDialog.exec_()
     if styleDialog.result() == QDialog.Accepted:
       return editableCopyOfStyle

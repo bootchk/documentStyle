@@ -114,15 +114,16 @@ class AppStyleSheet(StyleSheet):
     return result
     
     
-  def edit(self):
+  def edit(self, parentWindow):
     '''
-    Display read-only a form comprising section ror each DocumentElementType.
+    Display read-only a form comprising section for each DocumentElementType.
     TODO also display InstrumentFormations??
     
     This may not seem useful, but user needs to know what styling is default,
     so can understand inheritance via cascading.
     '''
-    dialog = NoneditableStyleSheetDialog(formation=self._newAppStyleSheetFormation(), 
+    dialog = NoneditableStyleSheetDialog(parentWindow=parentWindow,
+                                         formation=self._newAppStyleSheetFormation(), 
                                           titleParts = (config.i18ns.AppStyleSheet, ""))
     dialog.exec_()
     

@@ -25,10 +25,10 @@ class StyleSheetDialog(QDialog):
   '''
 
 
-  def __init__(self, formation, titleParts, flags=Qt.Dialog):
+  def __init__(self, parentWindow, formation, titleParts, flags=Qt.Dialog, ):
     
     # TODO, parentWindow should be the document, which may not be the activeWindow?
-    parentWindow = QCoreApplication.instance().activeWindow()
+    # parentWindow = QCoreApplication.instance().activeWindow()
     super(StyleSheetDialog, self).__init__(parent=parentWindow, flags=flags)
     
     # Layout components

@@ -67,7 +67,7 @@ class ContextMenuStyleable(object):
       print(">>>capturing original Style")
       self.oldStyle = self.serializedStyle()
     
-    styling = self.editStyle()
+    styling = self.editStyle(parentWindow=mainWindow.view)
     if styling is None:
       # testing undo: be careful in testing, if you cancel a dialog it might have this unexpected result.
       print(">>>Restoring oldStyle")
@@ -205,15 +205,15 @@ class GraphicsView(QGraphicsView):
     key = event.key()
     # Note editing is window modal: execution returns immediately
     if key == Qt.Key_A:
-      QCoreApplication.instance().cascadion.appStyleSheet.edit()
+      QCoreApplication.instance().cascadion.appStyleSheet.edit(parentWindow=self)
     elif key == Qt.Key_D:
-      QCoreApplication.instance().cascadion.docStyleSheet.edit()
+      QCoreApplication.instance().cascadion.docStyleSheet.edit(parentWindow=self)
     elif key == Qt.Key_U:
-      QCoreApplication.instance().cascadion.userStyleSheet.edit()
+      QCoreApplication.instance().cascadion.userStyleSheet.edit(parentWindow=self)
     elif key == Qt.Key_T:
       ''' Edit tool styler and apply to line element. '''
       global mainWindow
-      mainWindow.toolStyler.edit()
+      mainWindow.toolStyler.edit(parentWindow=self)
       #QCoreApplication.instance().toolStyler.edit()
       #QCoreApplication.instance().toolStyler.applyTo(self.scene.line)
     elif key == Qt.Key_Z:

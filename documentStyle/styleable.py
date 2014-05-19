@@ -186,7 +186,7 @@ class Styleable(object):
 
     
   
-  def editStyle(self):
+  def editStyle(self, parentWindow):
     ''' 
     Let user edit style of DocumentElement.
     Return Style, or None if canceled.
@@ -200,7 +200,8 @@ class Styleable(object):
     Style type may be general, e.g. it may be 'Shape' whereas element is specifically a 'Rect' subclass of Shape.
     '''
     titleParts = (self.getStylingDocumentElementType(), "Element Style")
-    return self.styler.getEditedStyle(titleParts=titleParts)
+    return self.styler.getEditedStyle(parentWindow = parentWindow,
+                                      titleParts=titleParts)
     
 
   @report
