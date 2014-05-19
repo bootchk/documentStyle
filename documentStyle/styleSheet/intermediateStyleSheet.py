@@ -120,8 +120,12 @@ class IntermediateStyleSheet(StyleSheet):
     assert self.editedFormation is not None
     # dialog = NoneditableStyleDialog(parentWindow=None, formation=formation)
     
-    # parentWindow is document so dialog centers in document.  If parentWindow were mainWindow (toplevel), Qt not center dialog
-    dialog = EditableStyleSheetDialog(formation=self.editedFormation, titleParts = (self.name, "Style Sheet"), flags=Qt.Sheet)
+    # parentWindow is document so dialog centers in document.  
+    # If parentWindow were mainWindow (toplevel), Qt not center dialog
+    dialog = EditableStyleSheetDialog(formation=self.editedFormation, 
+                                      titleParts = (self.name, "Style Sheet"))
+                                      # WAS flags=Qt.Sheet)
+                                      # but that is not needed if open() which is window modal
     dialog.accepted.connect(self.acceptEdit)
     dialog.rejected.connect(self.cancelEdit)
     dialog.open() # window modal
