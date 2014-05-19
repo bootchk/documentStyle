@@ -156,7 +156,7 @@ class DiagramScene(QGraphicsScene):
   def __init__(self, *args):
     QGraphicsScene.__init__(self, *args)
     
-    self.addItem(TextItem("RMB styles item.\n a,u,d, keys edit stylesheets, s,r save/restore doc stylesheet"))
+    self.addItem(TextItem("RMB styles item.\n a,u,d,t keys edit stylesheets, s,r save/restore doc stylesheet"))
     self.addItem(EllipseItem())
     # Two lines to show that both are styled by docStyleSheet change
     self.line = LineItem(80, 80, 80, 150)
@@ -212,8 +212,10 @@ class GraphicsView(QGraphicsView):
       QCoreApplication.instance().cascadion.userStyleSheet.edit()
     elif key == Qt.Key_T:
       ''' Edit tool styler and apply to line element. '''
-      QCoreApplication.instance().toolStyler.edit()
-      # QCoreApplication.instance().toolStyler.applyTo(self.scene.line)
+      global mainWindow
+      mainWindow.toolStyler.edit()
+      #QCoreApplication.instance().toolStyler.edit()
+      #QCoreApplication.instance().toolStyler.applyTo(self.scene.line)
     elif key == Qt.Key_Z:
       QCoreApplication.instance().cascadion.docStyleSheet._dump()
     elif key == Qt.Key_S:

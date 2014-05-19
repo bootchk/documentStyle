@@ -15,7 +15,7 @@ __indentCount = [0]
 '''
 
 DOC_STYLE_DEBUG = False     
-#DOC_STYLE_DEBUG = True  # Uncomment to debug
+DOC_STYLE_DEBUG = True  # Uncomment to debug
 
 if DOC_STYLE_DEBUG:
 
