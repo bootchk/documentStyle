@@ -1,10 +1,6 @@
-'''
-'''
-try:
-  import cPickle as pickle
-except ImportError:
-  import pickle # Python3
-  
+
+
+import pickle
 
 from PyQt5.QtCore import QSettings, Qt
 
