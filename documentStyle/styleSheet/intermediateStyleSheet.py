@@ -129,8 +129,8 @@ class IntermediateStyleSheet(StyleSheet):
                                       # but that is not needed if open() which is window modal
     dialog.accepted.connect(self.acceptEdit)
     dialog.rejected.connect(self.cancelEdit)
-    #dialog.open() # window modal
-    dialog.exec() # app modal
+    dialog.open() # window modal
+    #dialog.exec() # app modal (since modality defaults to app modal)
 
     
   
