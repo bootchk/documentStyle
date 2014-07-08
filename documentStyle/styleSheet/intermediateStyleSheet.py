@@ -130,7 +130,9 @@ class IntermediateStyleSheet(StyleSheet):
     dialog.accepted.connect(self.acceptEdit)
     dialog.rejected.connect(self.cancelEdit)
     dialog.open() # window modal
-    #dialog.exec() # app modal (since modality defaults to app modal)
+    
+    ## !!! Note exec_, not exec(), for Python2 exec is a stmt.
+    #dialog.exec_() # app modal (since modality defaults to app modal)
 
     
   
