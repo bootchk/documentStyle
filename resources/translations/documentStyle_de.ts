@@ -1,56 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="ja" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.1" language="de">
 <context>
     <name>Translations</name>
     <message>
         <location filename="../../documentStyle/config.py" line="36"/>
         <source>Any</source>
-        <translation>すべて</translation>
+        <translatorcomment>anything</translatorcomment>
+        <translation>Alle</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="39"/>
         <source>Line</source>
-        <translation>線</translation>
+        <translation>Strich</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="40"/>
         <source>Shape</source>
-        <translation>形状</translation>
+        <translation>Gestalt</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="41"/>
         <source>Text</source>
-        <translation>テキスト</translation>
+        <translation>Text</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="42"/>
         <source>Pixmap</source>
-        <translation>画像</translation>
+        <translation>Bild</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="50"/>
         <source>Pen</source>
-        <translation>ペン</translation>
+        <translatorcomment>drawing feather</translatorcomment>
+        <translation>Schreibfeder</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="46"/>
         <source>Brush</source>
-        <translation>筆</translation>
+        <translatorcomment>painter</translatorcomment>
+        <translation>Maler</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="47"/>
         <source>Block</source>
-        <translation>段落</translation>
+        <translatorcomment>paragrph</translatorcomment>
+        <translation>Absatz</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="48"/>
         <source>Character</source>
-        <translation>文字</translation>
+        <translatorcomment>typeface</translatorcomment>
+        <translation>Schreibschrift</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="49"/>
         <source>Opacity</source>
-        <translation>不透明、不透過度、混濁</translation>
+        <translation>Undurchsichtigkeit</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="51"/>
@@ -60,92 +66,98 @@
     <message>
         <location filename="../../documentStyle/config.py" line="54"/>
         <source>Frame</source>
-        <translation>枠</translation>
+        <translatorcomment>frame</translatorcomment>
+        <translation>Rahmen</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="55"/>
         <source>Ground</source>
-        <translation>背景</translation>
+        <translatorcomment>background</translatorcomment>
+        <translation>Hintergrund</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="59"/>
         <source>Color</source>
-        <translation>カラー</translation>
+        <translation>Farbe</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="62"/>
         <source>Width</source>
-        <translation>幅</translation>
+        <translatorcomment>size m</translatorcomment>
+        <translation>Breite</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="63"/>
         <source>Style</source>
-        <translation>描出法</translation>
+        <translation>Stil</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="65"/>
         <source>Pattern</source>
-        <translation>柄</translation>
+        <translation>Muster</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="67"/>
         <source>Font</source>
-        <translation>フォント</translation>
+        <translation>Schriftart</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="69"/>
         <source>Aligned</source>
-        <translation>～と手を組む、提携する</translation>
+        <translation>Bündig</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="70"/>
         <source>Spacing</source>
-        <translation>間隔（をあけること）</translation>
+        <translation>Abstand</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="82"/>
         <source>Solid</source>
-        <translation>中身の詰まった</translation>
+        <translation>Fest</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="77"/>
         <source>Dashed</source>
-        <translation>ダッシュ</translation>
+        <translatorcomment>broken line (sketched line)</translatorcomment>
+        <translation>Gestrichelte Linie</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="78"/>
         <source>Dotted</source>
-        <translation>ドット</translation>
+        <translation>Punkt</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="79"/>
         <source>DashDot</source>
-        <translation>ダッシュ,ドット</translation>
+        <translation>Punkt und Striche</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="81"/>
         <source>None</source>
-        <translation>なし</translation>
+        <translation>Kein</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="83"/>
         <source>Half dense</source>
-        <translation>ハーフトーンの、中間調の</translation>
+        <translatorcomment>half dense</translatorcomment>
+        <translation>Hälftedicht</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="84"/>
         <source>Quadrule</source>
-        <translation>格子状にする</translation>
+        <translatorcomment>TYPO quad</translatorcomment>
+        <translation>Geviert</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="85"/>
         <source>Crosshatch</source>
-        <translation>草、わら、シュロ</translation>
+        <translation>Schraffieren</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="87"/>
         <source>Single</source>
-        <translation>ひとつ</translation>
+        <translation>Einzeiliger</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="88"/>
@@ -155,27 +167,29 @@
     <message>
         <location filename="../../documentStyle/config.py" line="89"/>
         <source>Double</source>
-        <translation>2つの</translation>
+        <translation>zweizeiliger</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="91"/>
         <source>Left</source>
-        <translation>←</translation>
+        <translation>Links</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="92"/>
         <source>Right</source>
-        <translation>→</translation>
+        <translation>Rechts</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="93"/>
         <source>Center</source>
-        <translation>真ん中</translation>
+        <translatorcomment>adj centered</translatorcomment>
+        <translation>Mittig</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="94"/>
         <source>Justify</source>
-        <translation>～の行末を揃える</translation>
+        <translatorcomment>TYPO justified</translatorcomment>
+        <translation>Justieren</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="97"/>
@@ -185,32 +199,34 @@
     <message>
         <location filename="../../documentStyle/config.py" line="100"/>
         <source>App</source>
-        <translation>アプリケーション</translation>
+        <translation>Anwendersoftware</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="101"/>
         <source>User</source>
-        <translation>ユーザー</translation>
+        <translation>Benutzer</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="102"/>
         <source>Doc</source>
-        <translation>ドキュメント</translation>
+        <translation>Dokument</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="103"/>
         <source>Tool Style</source>
-        <translation>道具,描出法</translation>
+        <translation>Werkzeugstil</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="104"/>
         <source>Element Style</source>
-        <translation>部分,描出法</translation>
+        <translatorcomment>component style</translatorcomment>
+        <translation>Bauteilstil</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="105"/>
         <source>Style Sheet</source>
-        <translation>描出法, 詳細</translation>
+        <translatorcomment>format model</translatorcomment>
+        <translation>Formatvorlage</translation>
     </message>
 </context>
 </TS>
