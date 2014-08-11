@@ -1,56 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="de" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.1" language="fr">
 <context>
     <name>Translations</name>
     <message>
         <location filename="../../documentStyle/config.py" line="36"/>
         <source>Any</source>
-        <translation>Alle</translation>
+        <translation>Tous</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="39"/>
         <source>Line</source>
-        <translation>Strich</translation>
+        <translation>Ligne</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="40"/>
         <source>Shape</source>
-        <translation>Gestalt</translation>
+        <translation>Forme</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="41"/>
         <source>Text</source>
-        <translation>Text</translation>
+        <translation>Texte</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="42"/>
         <source>Pixmap</source>
-        <translation>Bild</translation>
+        <translation>Image</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="50"/>
         <source>Pen</source>
-        <translation>Schreibfeder</translation>
+        <translation>Stylo</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="46"/>
         <source>Brush</source>
-        <translation>Maler</translation>
+        <translatorcomment>paint brush</translatorcomment>
+        <translation>Pinceau</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="47"/>
         <source>Block</source>
-        <translation>Absatz</translation>
+        <translation>Paragraphe</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="48"/>
         <source>Character</source>
-        <translation>Schreibschrift</translation>
+        <translation>Caractère</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="49"/>
         <source>Opacity</source>
-        <translation>Undurchsichtigkeit</translation>
+        <translation>opacité</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="51"/>
@@ -60,92 +62,96 @@
     <message>
         <location filename="../../documentStyle/config.py" line="54"/>
         <source>Frame</source>
-        <translation>Rahmen</translation>
+        <translation>Cadre</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="55"/>
         <source>Ground</source>
-        <translation>Hintergrund</translation>
+        <translatorcomment>background</translatorcomment>
+        <translation>Fond</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="59"/>
         <source>Color</source>
-        <translation>Farbe</translation>
+        <translation>Couleur</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="62"/>
         <source>Width</source>
-        <translation>Breite</translation>
+        <translation>Largeur</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="63"/>
         <source>Style</source>
-        <translation>Stil</translation>
+        <translation>Style</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="65"/>
         <source>Pattern</source>
-        <translation>Muster</translation>
+        <translation>Motif</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="67"/>
         <source>Font</source>
-        <translation>Schriftart</translation>
+        <translatorcomment>Policy font</translatorcomment>
+        <translation>Police fonte</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="69"/>
         <source>Aligned</source>
-        <translation>Bündig</translation>
+        <translation>Aligné</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="70"/>
         <source>Spacing</source>
-        <translation>Abstand</translation>
+        <translation>Interligne</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="82"/>
         <source>Solid</source>
-        <translation>Fest</translation>
+        <translation>Solide</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="77"/>
         <source>Dashed</source>
-        <translation>Gestrichelte Linie</translation>
+        <translatorcomment>pl of dash</translatorcomment>
+        <translation>Tirets</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="78"/>
         <source>Dotted</source>
-        <translation>Punkt</translation>
+        <translation>Pointillés</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="79"/>
         <source>DashDot</source>
-        <translation>Punkt und Striche</translation>
+        <translation>Point et le tiret</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="81"/>
         <source>None</source>
-        <translation>Kein</translation>
+        <translation>Aucun</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="83"/>
         <source>Half dense</source>
-        <translation>Hälftedicht</translation>
+        <translatorcomment>Half</translatorcomment>
+        <translation>Demi-dense</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="84"/>
         <source>Quadrule</source>
-        <translation>Geviert</translation>
+        <translation>Quadrilatère</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="85"/>
         <source>Crosshatch</source>
-        <translation>Schraffieren</translation>
+        <translation>Hachure</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="87"/>
         <source>Single</source>
-        <translation>Einzeiliger</translation>
+        <translation>Simple</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="88"/>
@@ -155,27 +161,28 @@
     <message>
         <location filename="../../documentStyle/config.py" line="89"/>
         <source>Double</source>
-        <translation>zweizeiliger</translation>
+        <translation>Double</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="91"/>
         <source>Left</source>
-        <translation>Links</translation>
+        <translation>Gauche</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="92"/>
         <source>Right</source>
-        <translation>Rechts</translation>
+        <translation>Droite</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="93"/>
         <source>Center</source>
-        <translation>Mittig</translation>
+        <translatorcomment>v</translatorcomment>
+        <translation>Centrer</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="94"/>
         <source>Justify</source>
-        <translation>Justieren</translation>
+        <translation>Justifier</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="97"/>
@@ -185,32 +192,33 @@
     <message>
         <location filename="../../documentStyle/config.py" line="100"/>
         <source>App</source>
-        <translation>Anwendersoftware</translation>
+        <translation>App</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="101"/>
         <source>User</source>
-        <translation>Benutzer</translation>
+        <translation>Utilisateur</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="102"/>
         <source>Doc</source>
-        <translation>Dokument</translation>
+        <translation>Document</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="103"/>
         <source>Tool Style</source>
-        <translation>Werkzeugstil</translation>
+        <translation>Outil Style</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="104"/>
         <source>Element Style</source>
-        <translation>Bauteilstil</translation>
+        <translation>Elément Style</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="105"/>
         <source>Style Sheet</source>
-        <translation>Formatvorlage</translation>
+        <translatorcomment>Paper of style</translatorcomment>
+        <translation>Feuille de Style</translation>
     </message>
 </context>
 </TS>
