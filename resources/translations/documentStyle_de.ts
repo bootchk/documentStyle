@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="de" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.1" language="de">
 <context>
     <name>Translations</name>
     <message>
@@ -155,7 +156,7 @@
     <message>
         <location filename="../../documentStyle/config.py" line="89"/>
         <source>Double</source>
-        <translation>zweizeiliger</translation>
+        <translation type="unfinished">Zweizeiliger</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="91"/>

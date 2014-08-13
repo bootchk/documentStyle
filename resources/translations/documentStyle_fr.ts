@@ -52,7 +52,7 @@
     <message>
         <location filename="../../documentStyle/config.py" line="49"/>
         <source>Opacity</source>
-        <translation>opacité</translation>
+        <translation type="unfinished">Opacité</translation>
     </message>
     <message>
         <location filename="../../documentStyle/config.py" line="51"/>
