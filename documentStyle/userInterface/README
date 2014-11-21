@@ -1,0 +1,6 @@
+This directory is a QWidget implementation of StyleSheetDialog.
+
+Alternatively, see the qmlUI directory.
+
+Switch back and forth by changing styleDialog.py:
+inherit from StyleDialogWidget or StyleDialogQML.

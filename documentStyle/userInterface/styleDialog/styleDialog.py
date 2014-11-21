@@ -7,7 +7,7 @@ This is free software, covered by the GNU General Public License.
 from PyQt5.QtWidgets import QDialogButtonBox
 
 from documentStyle.userInterface.styleDialog.styleDialogWidget import StyleSheetDialogWidget
-from documentStyle.userInterface.styleDialog.styleDialogQML import StyleSheetDialogQML
+from documentStyle.qmlUI.styleDialogQML import StyleSheetDialogQML
   
 
 '''
@@ -26,9 +26,10 @@ When implemented by inheriting from QWidget QDialog, open() and signals accepted
   
 '''
 Choice of implementation: QML or QWidget.
+Uncomment one, and see config.useQML
 '''
-class EditableStyleSheetDialog(StyleSheetDialogQML): 
-#class EditableStyleSheetDialog(StyleSheetDialogWidget):
+#class EditableStyleSheetDialog(StyleSheetDialogQML): 
+class EditableStyleSheetDialog(StyleSheetDialogWidget):
   '''
   Editable has buttons and is enabled.
   '''

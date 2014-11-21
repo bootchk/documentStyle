@@ -15,7 +15,10 @@ from documentStyle.model.textalignment import AdaptedAlignmentModel
 import documentStyle.config as config
 from documentStyle.debugDecorator import report
 
+from documentStyle.qmlUI.qmlModel import QmlModel
+
 from . import compat
+
 
 
 
@@ -75,6 +78,10 @@ class StyleSheetCascadion(object):
     # DocumentElementStyleSheets are created and owned by DocumentElements
     # and are parented automatically (in init()) to docStyleSheet
     
+    if config.useQML:
+      " Create QML editor stuff"
+      model = QmlModel()
+      model.register()
     
     
     
