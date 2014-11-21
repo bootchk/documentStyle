@@ -127,8 +127,7 @@ class IntermediateStyleSheet(StyleSheet):
                                       titleParts = (self.name, "Style Sheet"))
                                       # WAS flags=Qt.Sheet)
                                       # but that is not needed if open() which is window modal
-    dialog.accepted.connect(self.acceptEdit)
-    dialog.rejected.connect(self.cancelEdit)
+    dialog.connectSignals(acceptSlot=self.acceptEdit, cancelSlot=self.cancelEdit)
     dialog.open() # window modal
     
     ## !!! Note exec_, not exec(), for Python2 exec is a stmt.
