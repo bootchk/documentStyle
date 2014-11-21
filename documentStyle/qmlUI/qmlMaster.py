@@ -12,6 +12,7 @@ from PyQt5.QtQuick import QQuickItem, QQuickView
 from PyQt5.QtQml import QQmlProperty
 
 
+
 class QmlMaster(object):
   
   def quickViewRoot(self, quickview):
@@ -104,6 +105,8 @@ class QmlMaster(object):
     '''
     quickView = QQuickView()
     quickView.statusChanged.connect(self.onStatusChanged)
+    # TEMP test to fix bug dialog not appearing?
+    #quickView.setResizeMode(QQuickView.SizeRootObjectToView)
     quickView.setSource(self.qmlFilenameToQUrl(qmlFilename))
     return quickView
   

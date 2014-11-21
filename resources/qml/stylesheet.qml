@@ -1,10 +1,13 @@
 // QML for stylesheet editor
+// The shell with delegate and connections.
 
 import QtQuick 2.3
 import QtQuick.Controls 1.2
 import QtQuick.Dialogs 1.2
+//import QtQuick.Window 2.0
 
 import QmlDelegate 1.0
+import "dialogs" as MyDialogs
 
 Item {
 	DialogDelegate {
@@ -12,22 +15,13 @@ Item {
 		objectName: "dialogDelegate"
 	}
 
-	Dialog {
+	MyDialogs.Dialog2 {
 		id: styleDialog
-	    visible: true
-	    title: "Style dialog"
-	    standardButtons: StandardButton.Ok | StandardButton.Cancel
-	
-	    contentItem: Rectangle {
-	        color: "lightskyblue"
-	        implicitWidth: 400
-	        implicitHeight: 100
-	        Text {
-	            text: "Hello blue sky!"
-	            color: "navy"
-	            anchors.centerIn: parent
-	        }
-	    }
+		
+		onVisibleChanged: {
+			console.log("Dialog visible changed")
+			console.log(styleDialog.visible)
+		}
 	}
 	
 	Connections {
@@ -35,6 +29,12 @@ Item {
 	    onActivated: {
 	    	console.log("Dialog activated")
 	    	styleDialog.open()
+	    	console.log("After dialog activated")
+	    	console.assert(styleDialog.visible)
 	    }	
 	 }
+	 Connections {
+    	target: styleDialog
+    	onVisibleChanged: console.log("Dialog visible changed")
+}
 }

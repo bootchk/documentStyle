@@ -4,6 +4,7 @@ from PyQt5.QtQml import qmlRegisterType
 
 
 from documentStyle.qmlUI.qmlDelegate import QmlDelegate
+from documentStyle.qmlUI.person import Person
 
 
 class QmlModel(object):
@@ -29,3 +30,5 @@ class QmlModel(object):
     Unlike c++, where you cast result to a type, in Python first arg is type
     '''
     qmlRegisterType(QmlDelegate, 'QmlDelegate', 1, 0, 'DialogDelegate')
+    # temp: model for business, i.e. a style property
+    qmlRegisterType(Person, 'People', 1, 0, 'Person')
