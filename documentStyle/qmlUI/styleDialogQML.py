@@ -29,19 +29,46 @@ class StyleSheetDialogQML(QObject):
     # TODO, parentWindow should be the document, which may not be the activeWindow?
     # parentWindow = QCoreApplication.instance().activeWindow()
     super(StyleSheetDialogQML, self).__init__() # parent=parentWindow, flags=flags)
+    self.createDialog(parentWindow)
     
+    
+    
+  def createDialog(self, parentWindow):
     qmlFilename = "resources/qml/stylesheet.qml"
     
     qmlMaster = QmlMaster()
-    self.styleQuickView = qmlMaster.quickViewForQML(qmlFilename)
+    qwin = qmlMaster.appQWindow()
+    self.styleQuickView = qmlMaster.quickViewForQML(qmlFilename, transientParent=qwin)
     self.dialogDelegate = qmlMaster.findComponent(quickview=self.styleQuickView, 
-                                                       className=QmlDelegate, 
-                                                       objectName="dialogDelegate")
+                                                  className=QmlDelegate, 
+                                                  objectName="dialogDelegate")
+    assert self.dialogDelegate is not None
+    
+    "Wrap it, so it is visible?"
+    " container takes ownership.  container is a widget"
+    self.container = qmlMaster.widgetForQuickView(self.styleQuickView, parentWindow)
+    
+    
+    
+  
+  def createDialog2(self):
+    qmlFilename = "resources/qml/stylesheet.qml"
+    
+    qmlMaster = QmlMaster()
+    qwin = qmlMaster.appQWindow()
+    self.widget, self.styleQuickView = qmlMaster.widgetAndQuickViewForQML(qmlFilename, transientParent=qwin)
+    
+    self.dialogDelegate = qmlMaster.findComponent(quickview=self.styleQuickView, 
+                                                  className=QmlDelegate, 
+                                                  objectName="dialogDelegate")
+    assert self.dialogDelegate is not None
     
   def open(self):
-    print("TODO open")
-    # self.quickView.show()
-    ''' ??? showing crashes. '''
+    '''
+    execute the dialog.
+    Just show() ing is not enough.
+    Tell delegate to call QML Dialog method open()
+    '''
     self.dialogDelegate.activate()
     
 

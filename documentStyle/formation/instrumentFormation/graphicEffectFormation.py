@@ -1,12 +1,10 @@
-'''
-'''
 
 from PyQt5.QtWidgets import QGraphicsBlurEffect, QGraphicsDropShadowEffect, QGraphicsEffect
 
 from documentStyle.instrument.graphicEffectInstrument import PGraphicEffectInstrument
 from documentStyle.formation.instrumentFormation.instrumentFormation import InstrumentFormation
-from documentStyle.formation.styleProperty import ComboBoxStyleProperty
-from documentStyle.formation.styleProperty import UnwrappedComboBoxStyleProperty
+from documentStyle.styleProperty.stylePropertyWidgetable import ComboBoxStyleProperty
+from documentStyle.styleProperty.stylePropertyWidgetable import UnwrappedComboBoxStyleProperty
 from documentStyle.model.graphicEffect import graphicEffectModel
 
 

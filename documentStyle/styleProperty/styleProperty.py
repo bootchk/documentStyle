@@ -8,12 +8,11 @@ This is free software, covered by the GNU General Public License.
 
 from documentStyle.selector import fieldSelector
 
-from documentStyle.userInterface.layout.stylePropertyLayout import FloatStylePropertyLayout, IntStylePropertyLayout
-from documentStyle.userInterface.layout.stylePropertyLayout import ColorStylePropertyLayout, FontStylePropertyLayout
-from documentStyle.userInterface.layout.stylePropertyLayout import ComboBoxStylePropertyLayout
 from documentStyle.formation.resettableValue import ResettableValue
 
 from documentStyle.debugDecorator import report, reportReturn
+
+
 
 # Inherit QObject if signals
 # Signals are not needed unless we want live dialogs showing WYSIWYG style changes to document before OK button is pressed.
@@ -132,61 +131,3 @@ class BaseStyleProperty(object):
     self.resettableValue.roll()
 
 
-
-'''
-Subclasses specialize GUI, i.e. have unique layouts.
-And some subclasses use wrapped style values.
-
-TODO refactor using Pluggable Behavior??
-'''
-
-class FloatStyleProperty(BaseStyleProperty):
-  def getLayout(self, isLabeled=False):
-    return FloatStylePropertyLayout(parentStyleProperty=self, isLabeled=isLabeled)
-
-  
-class IntStyleProperty(BaseStyleProperty):
-  def getLayout(self, isLabeled=False):
-    return IntStylePropertyLayout(parentStyleProperty=self, isLabeled=isLabeled)
-
-class ColorStyleProperty(BaseStyleProperty):
-  def getLayout(self, isLabeled=False):
-    return ColorStylePropertyLayout(parentStyleProperty=self, isLabeled=isLabeled)
-  
-class UnwrappedComboBoxStyleProperty(BaseStyleProperty):
-  " Combobox for style objects that don't need wrapping (pickle.) "
-  def getLayout(self, isLabeled=False):
-    return ComboBoxStylePropertyLayout(parentStyleProperty=self, isLabeled=isLabeled)
-  
-  
-class ComboBoxStyleProperty(BaseStyleProperty):
-  def getLayout(self, isLabeled=False):
-    return ComboBoxStylePropertyLayout(parentStyleProperty=self, isLabeled=isLabeled)
-  
-
-'''
-These return pickleable values via wrapping or other adaption.
-Reimplement propagateValueToInstrument() to wrap instruments type with a pickleable type
-'''
-  
-class Wrappable(object):
-  '''
-  Mixin class for StyleProperty classes that wrap.
-  '''
-  def propagateValueToInstrument(self):
-    ''' Apply unwrapped value to instrument. '''
-    self.instrumentSetter(self.resettableValue.value().rawValue())
-  
-  
-class FontStyleProperty(Wrappable, BaseStyleProperty):
-  ''' Needed for both PySide and PyQt. '''
-  def getLayout(self, isLabeled=False):
-    return FontStylePropertyLayout(parentStyleProperty=self, isLabeled=isLabeled)
-  
-  
-class PSComboBoxStyleProperty(Wrappable, ComboBoxStyleProperty):
-  ''' Needed for PySide, but not for PyQt. '''
-  pass
-
-  
-  

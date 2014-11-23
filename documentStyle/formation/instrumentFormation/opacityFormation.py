@@ -1,10 +1,8 @@
-'''
-'''
 
 from documentStyle.instrument.opacityInstrument import POpacityInstrument
 
 from documentStyle.formation.instrumentFormation.instrumentFormation import InstrumentFormation
-from documentStyle.formation.styleProperty import FloatStyleProperty
+from documentStyle.styleProperty.stylePropertyWidgetable import FloatStyleProperty
 
 class OpacityFormation(InstrumentFormation):
   '''

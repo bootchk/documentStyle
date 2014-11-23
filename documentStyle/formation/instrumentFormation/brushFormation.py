@@ -4,7 +4,7 @@ from PyQt5.QtGui import QBrush
 
 
 from .instrumentFormation import InstrumentFormation
-from ..styleProperty import ColorStyleProperty, ComboBoxStyleProperty
+from documentStyle.styleProperty.stylePropertyWidgetable import ColorStyleProperty, ComboBoxStyleProperty
 import documentStyle.config as config
 
 #from ...model.brush import BrushModel

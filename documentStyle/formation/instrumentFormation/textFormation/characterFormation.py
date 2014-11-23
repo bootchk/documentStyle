@@ -1,11 +1,9 @@
-'''
-'''
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QTextCharFormat
 from .textFormation import TextFormation
 from documentStyle.formation.instrumentFormation.instrumentFormation import InstrumentFormation
-from documentStyle.formation.styleProperty import ColorStyleProperty, FontStyleProperty
+from documentStyle.styleProperty.stylePropertyWidgetable import ColorStyleProperty, FontStyleProperty
 from documentStyle.styleWrapper.fontStyleWrapper import FontStyleWrapper
 
 

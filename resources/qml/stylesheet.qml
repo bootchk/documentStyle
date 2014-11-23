@@ -15,7 +15,7 @@ Item {
 		objectName: "dialogDelegate"
 	}
 
-	MyDialogs.Dialog2 {
+	MyDialogs.StyleDialog {
 		id: styleDialog
 		
 		onVisibleChanged: {

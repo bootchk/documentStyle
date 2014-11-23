@@ -237,6 +237,8 @@ class MainWindow(QMainWindow):
   def __init__(self, *args):
     QMainWindow.__init__(self, *args)
     
+    
+  def newToolStyler(self):
     # Tool styler not used in the GUI, but define it to test code imports
     toolStyler = ToolStyler('Line', 'Freehand')
     toolStyler.saveAsSetting()
@@ -271,16 +273,15 @@ class App(QApplication):
     print("To test i18n localization in Spanish, set OS locale or temporarily >export LANGUAGE=es")
     self._establishTranslator() # i18n
     
-    # Must precede creation of document because documentElementStyleSheets parented to docStyleSheet
-    self.cascadion = StyleSheetCascadion() 
-    
     global mainWindow # for access by ToolStyler
-    
     mainWindow = MainWindow()
-    self.documentView = mainWindow.newDocument()
     mainWindow.setGeometry(100, 100, 500, 400)
     mainWindow.show()
     self.mainWindow = mainWindow
+    
+    self.cascadion = StyleSheetCascadion()
+    mainWindow.newToolStyler()  # depends on cascadion
+    self.documentView = mainWindow.newDocument()  # depends on cascadion
     
     # Arrange that changes to styleSheets will polish doc
     self.cascadion.connectSignals(mainWindow.scene.polish)

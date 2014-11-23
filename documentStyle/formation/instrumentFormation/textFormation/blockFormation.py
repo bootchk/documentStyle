@@ -1,13 +1,12 @@
-'''
-'''
+
 
 from PyQt5.QtGui import QTextBlockFormat
 
 from .textFormation import TextFormation
 from documentStyle.formation.instrumentFormation.instrumentFormation import InstrumentFormation
-#from documentStyle.formation.styleProperty import IntStyleProperty
-from documentStyle.formation.styleProperty import ComboBoxStyleProperty
-from documentStyle.formation.styleProperty import UnwrappedComboBoxStyleProperty
+#from documentStyle.styleProperty.stylePropertyWidgetable import IntStyleProperty
+from documentStyle.styleProperty.stylePropertyWidgetable import ComboBoxStyleProperty
+from documentStyle.styleProperty.stylePropertyWidgetable import UnwrappedComboBoxStyleProperty
 import documentStyle.config as config
 #from documentStyle.styleWrapper.styleWrapper import AlignmentStyleWrapper
 

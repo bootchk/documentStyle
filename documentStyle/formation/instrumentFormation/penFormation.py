@@ -1,10 +1,7 @@
-'''
-
-'''
 
 from PyQt5.QtGui import QPen
 from .instrumentFormation import InstrumentFormation
-from ..styleProperty import ColorStyleProperty, IntStyleProperty, ComboBoxStyleProperty
+from documentStyle.styleProperty.stylePropertyWidgetable import ColorStyleProperty, IntStyleProperty, ComboBoxStyleProperty
 import documentStyle.config as config
 
 #from documentStyle.styleWrapper.styleWrapper import PenStyleWrapper
