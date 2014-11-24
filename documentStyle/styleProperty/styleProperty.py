@@ -10,6 +10,7 @@ from documentStyle.selector import fieldSelector
 from documentStyle.formation.resettableValue import ResettableIntValue
 from documentStyle.debugDecorator import report, reportReturn
 
+import documentStyle.config as config
 
 
 # Inherit QObject if signals
@@ -57,13 +58,43 @@ class BaseStyleProperty(object):
     self.model = model  # enum dictionary maps GUI strings to values
     
     # TODO: simplify by asking model for default (requires model not optional.)
-    self.resettableValue = ResettableIntValue(default) # Initialize local cache with default from instrument
+    " This is model.  Init with default from instrument. "
+    self.resettableValue = ResettableIntValue(default)
     assert self.resettableValue.value is not None, "Default is required."
+    
     
     
     
   def __repr__(self):
     return self.name + ":" + str(self.selector) + ":" + str(self.resettableValue)
+  
+  
+  '''
+  Gui related methods.
+  
+  exposeToQML() is analagous to getLayout().
+  Neither is necessary unless self is part of an editedFormation
+  '''
+  
+  def exposeToQML(self, view, styleSheetTitle):
+    '''
+    Expose self's model (resettableValue) to QQuickView of QML.
+    
+    TODO only if parent formation is editable.
+    '''
+    assert view is not None # created earlier
+    view.rootContext().setContextProperty(self._QMLName(styleSheetTitle), self.resettableValue)
+
+  
+  def _QMLName(self, styleSheetTitle):
+    '''
+    String for id of self's model in QML.
+    Qualified by stylesheet title.
+    E.G. userAnyPenColor or docLinePenColor
+    '''
+    result = styleSheetTitle + str(self.selector)
+    print("setContextProperty", result)
+    return result
   
   
   def getLayout(self, isLabeled=False):

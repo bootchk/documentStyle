@@ -20,6 +20,7 @@ LineSpacingModel = None # Eventually of type AdaptedLineSpacingModel
 AlignmentModel = None
 
 useQML = True
+QMLView = None
 
 class Translations(QObject):
   '''

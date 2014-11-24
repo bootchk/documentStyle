@@ -34,7 +34,16 @@ class IntermediateStyleSheet(StyleSheet):
     StyleSheet.__init__(self, name)
     # Collection may include many NamedStylingActSets
     self.stylingActSetCollection = StylingActSetCollection()
-    self.editFormation = None # temporary storage of formation copy
+    
+    '''
+    gui
+    - might be lazy instantiated
+    - is not pickled
+    - QWidget *OR* QML
+    '''
+    self.editedFormation = None
+    self.dialog = None
+    
     
   def __repr__(self):
     return "IntermediateStyleSheet:" + self.name
@@ -103,37 +112,33 @@ class IntermediateStyleSheet(StyleSheet):
       stylingActSet.applyToFormation(formation)
     return count
       
-  @report
-  def edit(self, parentWindow):
+
+  def createGui(self, parentWindow):
     '''
-    Let user edit style sheet.  I.E.:
-    - modify a SAS
-    - delete a SAS
-    - or append SAS
+    Gui comprises a formation (a structured model) and a dialog(sic) that controls it.
+    The dialog is a View.  View displays the model and controls it.
+    One way: user is the only one controlling the model (not any other business logic.)
+    After editing formation, it is reflected (converted) to StylingActs.
+    The edited formation (or at least the contents) is then discarded.
     
-    No result returned.
+    Formerly, this was created on the fly then discarded, over and over.
+    
+    Note the gui may be QWidget based, or QML based.
+    For QML, we create the gui early so that we can expose the model to it.
     '''
-    # testing: canned SAS
-    # self.testSAS()
-  
     self.editedFormation = self.getFormation(newAllSelector())  # Temporary: previous is garbage collected.
     assert self.editedFormation is not None
     # dialog = NoneditableStyleDialog(parentWindow=None, formation=formation)
     
     # parentWindow is document so dialog centers in document.  
     # If parentWindow were mainWindow (toplevel), Qt not center dialog
-    dialog = EditableStyleSheetDialog(parentWindow = parentWindow,
+    self.dialog = EditableStyleSheetDialog(parentWindow = parentWindow,
                                       formation=self.editedFormation, 
                                       titleParts = (self.name, "Style Sheet"))
                                       # WAS flags=Qt.Sheet)
                                       # but that is not needed if open() which is window modal
-    dialog.connectSignals(acceptSlot=self.acceptEdit, cancelSlot=self.cancelEdit)
-    dialog.open() # window modal
-    
-    ## !!! Note exec_, not exec(), for Python2 exec is a stmt.
-    #dialog.exec_() # app modal (since modality defaults to app modal)
-
-    
+    self.dialog.connectSignals(acceptSlot=self.acceptEdit, cancelSlot=self.cancelEdit)
+  
   
   '''
   Note dialog is created anew, and its signals are connected to these relay methods.

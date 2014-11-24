@@ -114,7 +114,7 @@ class AppStyleSheet(StyleSheet):
     return result
     
     
-  def edit(self, parentWindow):
+  def createGui(self, parentWindow):
     '''
     Display read-only a form comprising section for each DocumentElementType.
     TODO also display InstrumentFormations??
@@ -122,10 +122,14 @@ class AppStyleSheet(StyleSheet):
     This may not seem useful, but user needs to know what styling is default,
     so can understand inheritance via cascading.
     '''
-    dialog = NoneditableStyleSheetDialog(parentWindow=parentWindow,
+    self.dialog = NoneditableStyleSheetDialog(parentWindow=parentWindow,
                                          formation=self._newAppStyleSheetFormation(), 
                                           titleParts = (config.i18ns.AppStyleSheet, ""))
-    dialog.exec_()
+    '''
+    Note difference from IntermediateStyleSheet:
+    - formation is not kept
+    - not dialog connections, it is just closed, since it is readonly.
+    TODO QML
+    '''
     
-  
         

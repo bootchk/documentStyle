@@ -60,10 +60,41 @@ class StyleSheet(QObject):  # QObject for signals
     self.parent = parent
   
   
+  @report
+  def edit(self, parentWindow):
+    '''
+    Let user edit style sheet.
+    
+    Editing may be readonly.
+    If not readonly, user can:
+    - modify a SAS
+    - delete a SAS
+    - or append SAS
+    
+    No result returned, but side effects on self.
+    '''
+    # testing: canned SAS
+    # self.testSAS()
+    if self.dialog is None:
+      self.createGui(parentWindow)
+    assert self.dialog is not None
+    self.dialog.open() # window modal
+    
+    ## !!! Note exec_, not exec(), for Python2 exec is a stmt.
+    #dialog.exec_() # app modal (since modality defaults to app modal)
+    #formerly, editing app stylesheet was exec_ i.e. app modal
+  
+  """
+  Formerly implemented in subclasses.
+  def edit(self):
+    raise NotImplementedError('Deferred')
+  """
+
+  
   def getFormation(self, selector):
     raise NotImplementedError('Deferred')
 
-  
-  def edit(self):
+    
+  def createGui(self, parentWindow):
     raise NotImplementedError('Deferred')
   

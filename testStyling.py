@@ -25,6 +25,8 @@ from documentStyle.styleSheetCascadion import StyleSheetCascadion
 from documentStyle.styleable import Styleable
 from documentStyle.styler.toolStyler import ToolStyler
 
+#import documentStyle.config as config
+
 mainWindow = None   # global
 
 '''
@@ -279,7 +281,7 @@ class App(QApplication):
     mainWindow.show()
     self.mainWindow = mainWindow
     
-    self.cascadion = StyleSheetCascadion()
+    self.cascadion = StyleSheetCascadion(parentWindow=mainWindow)
     mainWindow.newToolStyler()  # depends on cascadion
     self.documentView = mainWindow.newDocument()  # depends on cascadion
     

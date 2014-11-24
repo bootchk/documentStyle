@@ -27,6 +27,13 @@ class Selector(namedtuple('Selector', 'name DEType instrument field')):
   def __repr__(self):
     return "Selector(" + self.name + "," + self.DEType + "," + self.instrument + "," + self.field + ")"
 
+  def __str__(self):
+    '''
+    Short string identifying (not recreating) self.
+    Just catenate components.
+    '''
+    #TODO may need to convert * to "Any"
+    return self.name + self.DEType + self.instrument + self.field
   
   def noncommutativeMatches(self, other):
     ''' Non-commutative: self more selective than other raises exception. '''

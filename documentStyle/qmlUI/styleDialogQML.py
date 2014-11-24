@@ -10,6 +10,9 @@ from PyQt5.QtCore import pyqtSignal as Signal
 from documentStyle.qmlUI.qmlMaster import QmlMaster
 from documentStyle.qmlUI.qmlDelegate import QmlDelegate
 
+import documentStyle.config as config
+
+
 
 class StyleSheetDialogQML(QObject):
   '''
@@ -30,10 +33,14 @@ class StyleSheetDialogQML(QObject):
     # parentWindow = QCoreApplication.instance().activeWindow()
     super(StyleSheetDialogQML, self).__init__() # parent=parentWindow, flags=flags)
     self.createDialog(parentWindow)
+    self.exposeFormationModelToQML(view=self.styleQuickView, editedFormation=formation, title=titleParts[0])
     
     
     
   def createDialog(self, parentWindow):
+    '''
+    Create QML based dialog.
+    '''
     qmlFilename = "resources/qml/stylesheet.qml"
     
     qmlMaster = QmlMaster()
@@ -48,7 +55,18 @@ class StyleSheetDialogQML(QObject):
     " container takes ownership.  container is a widget"
     self.container = qmlMaster.widgetForQuickView(self.styleQuickView, parentWindow)
     
+    " Remember view so later can setContext."
+    config.QMLView = self.styleQuickView
     
+    
+  def exposeFormationModelToQML(self, view, editedFormation, title):
+    '''
+    Put formation's StyleProperty models into context of QML dialog.
+    '''
+    print("exposeFormationModelToQML", title)
+    # TODO title into QML?
+    for styleProperty in editedFormation.generateStyleProperties():
+      styleProperty.exposeToQML(view, styleSheetTitle=title)
     
   
   def createDialog2(self):

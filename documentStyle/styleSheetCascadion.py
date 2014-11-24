@@ -37,7 +37,7 @@ class StyleSheetCascadion(object):
   - know what part of cascade may change (be able to connect signals)
   '''
 
-  def __init__(self):
+  def __init__(self, parentWindow):
     '''
     Create cascading sequence of stylesheets.
     Ordering is important.
@@ -48,11 +48,14 @@ class StyleSheetCascadion(object):
     # assert translator installed
     # create singletons requiring translation
     config.i18ns = config.Translations()
-    config.BrushModel = AdaptedBrushModel()
-    config.PenModel = AdaptedPenModel()
-    config.LineSpacingModel = AdaptedLineSpacingModel()
-    config.AlignmentModel = AdaptedAlignmentModel()
     
+    self._initModels()
+    self._initStyleSheets()
+    self._initGui(parentWindow)
+    
+    
+    
+  def _initStyleSheets(self):
     # Root (default) stylesheet
     self.appStyleSheet = AppStyleSheet() 
     
@@ -77,11 +80,30 @@ class StyleSheetCascadion(object):
     
     # DocumentElementStyleSheets are created and owned by DocumentElements
     # and are parented automatically (in init()) to docStyleSheet
-    
+  
+  
+  def _initGui(self, parentWindow):
+    '''
+    Init editors for stylesheets.
+    For QWidgets, formerly these were created on the fly.
+    For QML
+    '''
+    print("TODO: _initGui was called")
     if config.useQML:
       " Create QML editor stuff"
       model = QmlModel()
       model.register()
+      self.appStyleSheet.createGui(parentWindow)
+      self.userStyleSheet.createGui(parentWindow)
+      self.docStyleSheet.createGui(parentWindow)
+      # TODO others
+  
+  def _initModels(self):
+    " Create domain models. Needed by GUI, except for QML? "
+    config.BrushModel = AdaptedBrushModel()
+    config.PenModel = AdaptedPenModel()
+    config.LineSpacingModel = AdaptedLineSpacingModel()
+    config.AlignmentModel = AdaptedAlignmentModel()
     
     
     

@@ -125,7 +125,11 @@ E.G. to eliminate the "Indent" style property for a Text morph, edit BlockFormat
 
 Status
 ======
-IN PROGRESS see the TODO list
+
+Nov. 2014  Undergoing major changes to support QML or QWidget GUI.
+This entails cleanly separating the view and the model.
+
+The file TODO.txt is a list of minor things probably will never get done.
 
 A button on StyleSheetDialogs to reset all values to cascaded values (erase in-lining.)
 
