@@ -42,6 +42,7 @@ class StylingActSetCollection(dict):
       result = self[selector]
     else:
       result = self.putNewBySelector(selector)
+    assert isinstance(result, StylingActSet)
     return result
   
     

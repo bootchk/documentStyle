@@ -9,6 +9,7 @@ from PyQt5.QtCore import pyqtSignal as Signal
 from PyQt5.QtCore import QCoreApplication, Qt
 from PyQt5.QtWidgets import QPushButton, QToolButton, QStyle # QIcon
 
+# Not used?
 class BuddyPushButton(QPushButton):
   '''
   Toggle button which resets a buddy Widget

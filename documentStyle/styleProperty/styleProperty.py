@@ -7,9 +7,7 @@ This is free software, covered by the GNU General Public License.
 #from PyQt5.QtCore import QObject
 
 from documentStyle.selector import fieldSelector
-
-from documentStyle.formation.resettableValue import ResettableValue
-
+from documentStyle.formation.resettableValue import ResettableIntValue
 from documentStyle.debugDecorator import report, reportReturn
 
 
@@ -48,9 +46,7 @@ class BaseStyleProperty(object):
     self.name = name
     self.touched = False  # whether user touched (edited value or pressed Reset)
     self.instrumentSetter = instrumentSetter
-    # TODO: simplify by asking model for default (requires model not optional.)
-    self.resettableValue = ResettableValue(default) # Initialize local cache with default from instrument
-    assert self.resettableValue.value() is not None, "Default is required."
+    
     # My selector describes parents and field of self e.g. Foo,Line,Pen,Color
     self.selector = fieldSelector(parentSelector, name)
     
@@ -59,6 +55,10 @@ class BaseStyleProperty(object):
     self.maximum = maximum
     self.singleStep = singleStep
     self.model = model  # enum dictionary maps GUI strings to values
+    
+    # TODO: simplify by asking model for default (requires model not optional.)
+    self.resettableValue = ResettableIntValue(default) # Initialize local cache with default from instrument
+    assert self.resettableValue.value is not None, "Default is required."
     
     
     
@@ -77,7 +77,7 @@ class BaseStyleProperty(object):
     Every set() may change state of resettableValue.
     This may be called programmatically, from StylingActs.
     '''
-    #print "StyleProperty.set()", newValue
+    #print("StyleProperty.set()", newValue)
     self._throughSet(newValue) # Model
       
     # self.stylePropertyValueChanged.emit()
@@ -85,12 +85,13 @@ class BaseStyleProperty(object):
   
   def get(self):
     " get from self (master), not from instrument. "
-    return self.resettableValue.value()
+    return self.resettableValue.value
   
   
   def _throughSet(self, value):
     ''' Set cached value and propagate to instrument. '''
-    self.resettableValue.setValue(value)
+    # OLD self.resettableValue.setValue(value)
+    self.resettableValue.value = value
     # TODO propagate now, OR flush values at end (dumb dialog)
     self.propagateValueToInstrument()
   
@@ -102,7 +103,7 @@ class BaseStyleProperty(object):
     
     Default implementation.  Some subclasses reimplement to wrap values.
     '''
-    value = self.resettableValue.value()
+    value = self.resettableValue.value
     self.instrumentSetter(value)
     # for debugging, return value
     return value
@@ -125,7 +126,7 @@ class BaseStyleProperty(object):
   
   
   def isReset(self):
-    return self.resettableValue.isReset()
+    return self.resettableValue.isReset
 
   def roll(self):
     self.resettableValue.roll()

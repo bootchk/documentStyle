@@ -120,7 +120,7 @@ class StylePropertyLayout(QHBoxLayout):
    
     # Child: Buddy button
     self.buddyButton = BuddyIconButton("Inherit", # name, not used?
-                                initialState = not model.isReset(),
+                                initialState = not model.isReset,
                                 buddiedControl = self.controlWidget)
     self.addWidget(self.buddyButton)
    

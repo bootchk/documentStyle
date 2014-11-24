@@ -5,6 +5,7 @@ from documentStyle.userInterface.layout.stylePropertyLayout import FloatStylePro
 from documentStyle.userInterface.layout.stylePropertyLayout import ColorStylePropertyLayout, FontStylePropertyLayout
 from documentStyle.userInterface.layout.stylePropertyLayout import ComboBoxStylePropertyLayout
 
+#from documentStyle.formation.resettableValue import ResettableIntValue  # , ResettableFloatValue, ResettableColorValue
 
 '''
 Subclasses specialize GUI, i.e. have unique layouts.
@@ -18,25 +19,33 @@ TODO refactor using Pluggable Behavior??
 '''
 
 class FloatStyleProperty(BaseStyleProperty):
+    
   def getLayout(self, isLabeled=False):
     return FloatStylePropertyLayout(parentStyleProperty=self, isLabeled=isLabeled)
 
-  
+
+#TODO default not needed by base class
 class IntStyleProperty(BaseStyleProperty):
+   
   def getLayout(self, isLabeled=False):
     return IntStylePropertyLayout(parentStyleProperty=self, isLabeled=isLabeled)
+  
 
 class ColorStyleProperty(BaseStyleProperty):
+    
   def getLayout(self, isLabeled=False):
     return ColorStylePropertyLayout(parentStyleProperty=self, isLabeled=isLabeled)
   
+  
 class UnwrappedComboBoxStyleProperty(BaseStyleProperty):
   " Combobox for style objects that don't need wrapping (pickle.) "
+    
   def getLayout(self, isLabeled=False):
     return ComboBoxStylePropertyLayout(parentStyleProperty=self, isLabeled=isLabeled)
   
   
 class ComboBoxStyleProperty(BaseStyleProperty):
+    
   def getLayout(self, isLabeled=False):
     return ComboBoxStylePropertyLayout(parentStyleProperty=self, isLabeled=isLabeled)
   
@@ -52,11 +61,14 @@ class Wrappable(object):
   '''
   def propagateValueToInstrument(self):
     ''' Apply unwrapped value to instrument. '''
-    self.instrumentSetter(self.resettableValue.value().rawValue())
+    self.instrumentSetter(self.resettableValue.value.rawValue())
+  
+  
   
   
 class FontStyleProperty(Wrappable, BaseStyleProperty):
   ''' Needed for both PySide and PyQt. '''
+  
   def getLayout(self, isLabeled=False):
     return FontStylePropertyLayout(parentStyleProperty=self, isLabeled=isLabeled)
   

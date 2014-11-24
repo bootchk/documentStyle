@@ -197,11 +197,12 @@ class Formation(list):
     
     Return True if delete
     '''
-    if item.isReset():
+    if item.isReset():  # !!! StyleProperty.isReset() is callable, not a property
       '''
       User touched (one or more changes) but last act was to Reset to inherited value.
       Delete any previous styling act. (If initially reset, then user touched, then reset, no styling act exists.)
       '''
+      #print("item.isReset is true")
       result = derivingStylingActSet.deleteIfExists(item.selector)
     else:
       ''' 
@@ -261,7 +262,7 @@ class Formation(list):
     result = False
     for item in self.generateStyleProperties():
       print("isEdited", item)
-      if not item.isReset():
+      if not item.isReset:
         result = True
     return result
   """

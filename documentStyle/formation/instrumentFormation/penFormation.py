@@ -46,7 +46,7 @@ class PenFormation(InstrumentFormation):
     Also, scale instrument correlated with scale of morph.
     '''
     # Callback morph API: only morph knows its scale, and how to inversely scale drawing instrument
-    morph.scaleInstrument(self.instrument, baseValue=self.styleProperties[1].resettableValue.value())
+    morph.scaleInstrument(self.instrument, baseValue=self.styleProperties[1].resettableValue.value)
     morph.setPen(self.instrument)
     
   """

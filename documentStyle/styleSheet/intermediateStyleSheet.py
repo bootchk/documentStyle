@@ -142,6 +142,7 @@ class IntermediateStyleSheet(StyleSheet):
   '''
   def acceptEdit(self):
     ''' Slot for signal accepted of dialog. Relay to caller as signal styleSheetChanged. '''
+    #print(self.editedFormation._longRepr())
     self.reflectEditsToStylingActSetCollection(self.editedFormation)
     '''
     Self is intermediate (user or doc or documentElement) stylesheet instance.
@@ -173,13 +174,29 @@ class IntermediateStyleSheet(StyleSheet):
       '''
       if topLevelFormation.isTouched(): # WAS isEdited():
         # when formation was derived through None stylingActSet, create a new one.
-        target = self.stylingActSetCollection.getMatchingOrNewStylingActSet(topLevelFormation.selector)
-        deletedCount += editedFormation.reflectToStylingActSet(derivingStylingActSet=target)
+        #print("toplevelFormation isTouched")
+        targetSAS = self.stylingActSetCollection.getMatchingOrNewStylingActSet(topLevelFormation.selector)
+        beforeCount = len(targetSAS)
+        deletedCount += editedFormation.reflectToStylingActSet(derivingStylingActSet=targetSAS)
+        #print("Count styling acts before and after:", beforeCount, len(targetSAS))
+        '''
+        This is hacking for a ensure clause:
+        if the user touched formation,
+        it should change the sas in a verifiable way.
+        
+        If user in-lined, the count should go up.
+        If the user reset, the count should go down.
+        But its complicated by the fact that there could be offsetting changes in the count.
+        
+        afterCount = len(targetSAS)
+        print(beforeCount, afterCount)
+        assert afterCount >= (beforeCount - deletedCount)
     
-    # TODO assertion on change to count: after = before - deleted + added
-    #afterStylingActCount = self.stylingActSetCollection.countStylingActs()
-    #print('Reflection results on', str(self))
-    #print('before, after, deleted', beforeStylingActCount, afterStylingActCount, deletedCount)
+        # TODO assertion on change to count: after = before - deleted + added
+        #afterStylingActCount = self.stylingActSetCollection.countStylingActs()
+        #print('Reflection results on', str(self))
+        #print('before, after, deleted', beforeStylingActCount, afterStylingActCount, deletedCount)
+        '''
     
   '''
   Persistence (pickling)

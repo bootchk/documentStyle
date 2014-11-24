@@ -15,7 +15,8 @@ class Resettable(object):
 
   def __init__(self, resettableValue):
     self.resettableValue = resettableValue
-    self.setValue(self.resettableValue.value())
+    # OLD when value was not a property: self.setValue(self.resettableValue.value())
+    self.setValue(self.resettableValue.value)
       
       
   def doUserReset(self):
@@ -26,10 +27,10 @@ class Resettable(object):
     whose handler will buddyButton.setEnabled() to a wrong state.
     '''
     # change model's value and state to reset value and state
-    self.resettableValue.reset()
+    self.resettableValue.isReset = True
     # changing view emits viewChanged, which changes model value (again) and state to isReset==False
-    self.setValue(self.resettableValue.value()) # model->view
+    self.setValue(self.resettableValue.value) # model->view
     # !!! change model state back to isReset, since above setValue just changed it.
-    self.resettableValue.reset()
-    assert self.resettableValue.isReset() == True
+    self.resettableValue.isReset = True
+    assert self.resettableValue.isReset == True
     
