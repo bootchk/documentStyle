@@ -4,7 +4,7 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PyQt5.QtCore import Qt
+#from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
 
 from .styleSheet import StyleSheet
@@ -148,6 +148,7 @@ class IntermediateStyleSheet(StyleSheet):
   def acceptEdit(self):
     ''' Slot for signal accepted of dialog. Relay to caller as signal styleSheetChanged. '''
     #print(self.editedFormation._longRepr())
+    print("IntermediateStyleSheet.acceptEdit")
     self.reflectEditsToStylingActSetCollection(self.editedFormation)
     '''
     Self is intermediate (user or doc or documentElement) stylesheet instance.

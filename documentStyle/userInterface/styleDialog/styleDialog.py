@@ -13,10 +13,11 @@ from documentStyle.qmlUI.styleDialogQML import StyleSheetDialogQML
 '''
 let user edit StyleSheet (which may be style of DocumentElement)
 
-Abstract Base Class API:
+Abstract Base Class API: (but it is not formally declared. TODO declare it and inherit.)
 buttonBox()
 isEditable()
 open()
+connectSignals()
 
 Two subclasses: editable and noneditable.
 The Editable one has accept/reject buttons.  Noneditable can only be closed.
@@ -45,10 +46,6 @@ class EditableStyleSheetDialog(StyleSheetDialogQML):
 
   def isEditable(self):
     return True
-
-  def connectSignals(self, acceptSlot, cancelSlot):
-    self.accepted.connect(acceptSlot)
-    self.rejected.connect(cancelSlot)
 
 
 class NoneditableStyleSheetDialog(StyleSheetDialogWidget):

@@ -89,7 +89,16 @@ class StyleSheetDialogQML(QObject):
     '''
     self.dialogDelegate.activate()
     
-
+    
+  def connectSignals(self, acceptSlot, cancelSlot):
+    '''
+    Self has-a dialogDelegate in QML.
+    Connect its signals to give slots.
+    '''
+    self.dialogDelegate.accepted.connect(acceptSlot)
+    self.dialogDelegate.rejected.connect(cancelSlot)
+    
+    
     
   
     

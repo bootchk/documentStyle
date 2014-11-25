@@ -97,6 +97,9 @@ class StyleSheetCascadion(object):
       self.userStyleSheet.createGui(parentWindow)
       self.docStyleSheet.createGui(parentWindow)
       # TODO others
+    '''
+    Otherwise (QWidget gui) gui is created as needed (when edit() is called.)
+    '''
   
   def _initModels(self):
     " Create domain models. Needed by GUI, except for QML? "

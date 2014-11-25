@@ -45,7 +45,6 @@ class BaseStyleProperty(object):
     '''
     '''
     self.name = name
-    self.touched = False  # whether user touched (edited value or pressed Reset)
     self.instrumentSetter = instrumentSetter
     
     # My selector describes parents and field of self e.g. Foo,Line,Pen,Color
@@ -90,7 +89,7 @@ class BaseStyleProperty(object):
     '''
     String for id of self's model in QML.
     Qualified by stylesheet title.
-    E.G. userAnyPenColor or docLinePenColor
+    E.G. UserAnyPenColor or DocLinePenColor
     '''
     result = styleSheetTitle + str(self.selector)
     print("setContextProperty", result)
@@ -148,12 +147,24 @@ class BaseStyleProperty(object):
   
   Note this is called from StylePropertyLayout.onValueChanged()
   '''
+  """
+  OLD: touched was attribute of StyleProperty
   def touch(self):
     self.touched = True
     
   def isTouched(self):
     return self.touched
-  
+  """
+  '''
+  Delegate to resettableValue.
+  QWidget calls this touch()
+  QML does resettableValue = True
+  '''
+  def touch(self):
+    self.resettableValue.touch()
+    
+  def isTouched(self):
+    return self.resettableValue.touched
   
   
   def isReset(self):

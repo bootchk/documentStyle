@@ -33,6 +33,7 @@ class BaseResettableValue(QObject):
     self._value = valueToResetTo
     self._valueToResetTo = valueToResetTo
     self._isReset = True
+    self._touched = False
     
     
   def __str__(self):
@@ -68,6 +69,18 @@ class BaseResettableValue(QObject):
     self._isReset = True
 
 
+  '''
+  touched property
+  '''
+  @pyqtProperty(bool)
+  def touched(self):
+    return self._touched
+
+  @touched.setter
+  def touched(self, newValue):
+    assert newValue == True # Semantics is: can reset, cannot set isReset to False
+    self._touched = newValue
+
 
   def roll(self):
     '''
@@ -76,6 +89,9 @@ class BaseResettableValue(QObject):
     '''
     self.__init__(valueToResetTo = self._value)
     
+
+
+
 
 
 class ResettableIntValue(BaseResettableValue):

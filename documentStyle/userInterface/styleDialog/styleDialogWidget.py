@@ -116,4 +116,16 @@ class StyleSheetDialogWidget(QDialog):
     '''
     scrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
     return scrollArea
+  
+  
+  def connectSignals(self, acceptSlot, cancelSlot):
+    '''
+    Effect deferred method.
+    
+    Self is-a QDialog.
+    Connect QDialog's signals to given slots.
+    '''
+    self.accepted.connect(acceptSlot)
+    self.rejected.connect(cancelSlot)
+    
     

@@ -32,8 +32,18 @@ class Selector(namedtuple('Selector', 'name DEType instrument field')):
     Short string identifying (not recreating) self.
     Just catenate components.
     '''
-    #TODO may need to convert * to "Any"
-    return self.name + self.DEType + self.instrument + self.field
+    # Convert * to "Any" since QML parser chokes on *
+    if self.name == "*":
+      name = "Any"
+    else:
+      name = self.name
+    if self.DEType == "*":
+      detype = "Any"
+    else:
+      detype = self.DEType
+
+    return name + detype + self.instrument + self.field
+  
   
   def noncommutativeMatches(self, other):
     ''' Non-commutative: self more selective than other raises exception. '''

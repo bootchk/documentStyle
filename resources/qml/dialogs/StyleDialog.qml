@@ -6,19 +6,24 @@ import QtQuick.Dialogs 1.2
 import "../styleControls" as StyleControls
 
 Dialog {
-     id: dialog
-     
-     // Usually hidden unless call open()
-     visible: true
-     // Not a property: anchors.centerIn: parent
-     // Not a property: flags: Qt.Dialog
-     title: "My dialog"
-	 standardButtons: StandardButton.Ok | StandardButton.Cancel
+	id: dialog
 	 
-	 //Calendar {
-	 //	id: calendar
-	//	onDoubleClicked: dateDialog.click(StandardButton.Save)
-	//	}
+	// Usually hidden unless call open()
+	visible: true
+	// Not a property: anchors.centerIn: parent
+	// Not a property: flags: Qt.Dialog
+	title: "My dialog"
+	standardButtons: StandardButton.Ok | StandardButton.Cancel
+	 
+	onAccepted: {
+		console.log("Accepted")
+		dialogDelegate.accept()
+	}
+	 
+	onRejected: {
+		console.log("Rejected")
+		dialogDelegate.reject()
+	}
 	
 	Column {
 		anchors.fill: parent
