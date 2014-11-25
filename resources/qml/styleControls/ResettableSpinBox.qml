@@ -8,10 +8,15 @@ import People 1.0
 
 Row {
 	id: row
+	//anchors.fill: parent
+	
+	// Passed at instantiation
+	property string text // label.text bound here
+	property var model
 	
 	Label {
 		id: label
-		text: "foo"
+		text: parent.text
 	}
 	// Demonstrate model owned by control.
 	// Simpler than putting model outside control (which requires using Connection.)
@@ -25,14 +30,16 @@ Row {
 		onValueChanged: {
 			print("SpinBox.value changed")
 			// Access model exposed to here in context
-			DocAnyAnyPenWidth.value = 10
-			DocAnyAnyPenWidth.touched = true
+			model.value = value		// view->model
+			model.touched = true
+			resetButton.enabled = true
 			}
 		
 		// special signal on SpinBox lose focus
 		onEditingFinished: {
 			print("SpinBox.editingFinished")
-			// model.activate()	// Relay to business logic
+			// model.activate()	// Live Relay to business logic
+			// For now, has batch dialog semantics
 		}
 		
 		// This executed if business logic changes model value.
@@ -40,13 +47,19 @@ Row {
 		// onModelChanged: print("Model changed by business logic")
 	}
 	Button {
-		id: button
+		id: resetButton
 		text: "Reset"
+		enabled: false
 		onClicked: {
 			print("button clicked")
-			DocAnyAnyPenWidth.reset = true	// side effect on model, but not on view???
-			// TODO need to reset view also
-			DocAnyAnyPenWidth.touched = true
+			// Reset model
+			model.reset = true
+			model.touched = true
+			// TODO broken: model.value doesn't change
+			// Reset view also
+			spinbox.value = model.value
+			// Button state
+			enabled = false
 		}
 	}
 }

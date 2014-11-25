@@ -2,14 +2,15 @@ import QtQuick 2.3
 import QtQuick.Controls 1.2
 import QtQuick.Dialogs 1.2
 
-//import People 1.0
 import "../styleControls" as StyleControls
+
 
 Dialog {
 	id: dialog
+	property var dialogDelegate
 	 
 	// Usually hidden unless call open()
-	visible: true
+	// visible: true
 	// Not a property: anchors.centerIn: parent
 	// Not a property: flags: Qt.Dialog
 	title: "My dialog"
@@ -26,16 +27,24 @@ Dialog {
 	}
 	
 	Column {
-		anchors.fill: parent
+		// ??? This causes buttons to obscure content
+		//anchors.fill: parent
 		anchors.margins: 10
 
 		StyleControls.ResettableSpinBox {
 			id: bar
-			//row.label.text: "Width"	// override template
+			text: "Any:Pen:Width"
+			model: DocAnyAnyPenWidth
 		}
 		StyleControls.ResettableSpinBox {
 			id: baz
-			//row.label.text: "Color"
+			text: "Color"
+			model: DocAnyAnyPenColor
+		}
+		StyleControls.ResettableSpinBox {
+			id: docAnyAnyPenStyle
+			text: "Style"
+			model: DocAnyAnyPenStyle
 		}
 	}
 	// a contentItem will not have buttons

@@ -4,28 +4,24 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.2
 import QtQuick.Dialogs 1.2
-//import QtQuick.Window 2.0
 
 import QmlDelegate 1.0
 import "dialogs" as MyDialogs
 
 Item {
 	DialogDelegate {
-		id: dialogDelegate
-		objectName: "dialogDelegate"
+		id: userDialogDelegate
+		objectName: "userDialogDelegate"
 	}
 
 	MyDialogs.StyleDialog {
 		id: styleDialog
-		
-		onVisibleChanged: {
-			console.log("Dialog visible changed")
-			console.log(styleDialog.visible)
-		}
+		title: "User Style Sheet"
+		dialogDelegate: userDialogDelegate
 	}
 	
 	Connections {
-	    target: dialogDelegate
+	    target: userDialogDelegate
 	    onActivated: {
 	    	console.log("Dialog activated")
 	    	styleDialog.open()
@@ -36,5 +32,5 @@ Item {
 	 Connections {
     	target: styleDialog
     	onVisibleChanged: console.log("Dialog visible changed")
-}
+	}
 }

@@ -30,23 +30,23 @@ class StyleSheetDialogQML(QObject):
     # TODO, parentWindow should be the document, which may not be the activeWindow?
     # parentWindow = QCoreApplication.instance().activeWindow()
     super(StyleSheetDialogQML, self).__init__() # parent=parentWindow, flags=flags)
-    self.createDialog(parentWindow)
+    self.createDialog(parentWindow, prefix=titleParts[0].lower())
     self.exposeFormationModelToQML(view=self.styleQuickView, editedFormation=formation, title=titleParts[0])
     
     
     
-  def createDialog(self, parentWindow):
+  def createDialog(self, parentWindow, prefix):
     '''
     Create QML based dialog.
     '''
-    qmlFilename = "resources/qml/stylesheet.qml"
+    qmlFilename="resources/qml/"+prefix+"stylesheet.qml"  # e.g. Userstylesheet.qml
     
     qmlMaster = QmlMaster()
     qwin = qmlMaster.appQWindow()
     self.styleQuickView = qmlMaster.quickViewForQML(qmlFilename, transientParent=qwin)
     self.dialogDelegate = qmlMaster.findComponent(quickview=self.styleQuickView, 
                                                   className=QmlDelegate, 
-                                                  objectName="dialogDelegate")
+                                                  objectName=prefix+"DialogDelegate")
     assert self.dialogDelegate is not None
     
     "Wrap it, so it is visible?"
