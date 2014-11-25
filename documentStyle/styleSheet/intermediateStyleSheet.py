@@ -35,15 +35,6 @@ class IntermediateStyleSheet(StyleSheet):
     # Collection may include many NamedStylingActSets
     self.stylingActSetCollection = StylingActSetCollection()
     
-    '''
-    gui
-    - might be lazy instantiated
-    - is not pickled
-    - QWidget *OR* QML
-    '''
-    self.editedFormation = None
-    self.dialog = None
-    
     
   def __repr__(self):
     return "IntermediateStyleSheet:" + self.name

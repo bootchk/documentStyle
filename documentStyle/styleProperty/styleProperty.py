@@ -4,15 +4,13 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-#from PyQt5.QtCore import QObject
-
 from documentStyle.selector import fieldSelector
 from documentStyle.formation.resettableValue import ResettableIntValue
 from documentStyle.debugDecorator import report, reportReturn
+from documentStyle.formation.domain import Domain
 
-import documentStyle.config as config
 
-
+#from PyQt5.QtCore import QObject
 # Inherit QObject if signals
 # Signals are not needed unless we want live dialogs showing WYSIWYG style changes to document before OK button is pressed.
 class BaseStyleProperty(object): 
@@ -41,20 +39,17 @@ class BaseStyleProperty(object):
 
   # stylePropertyValueChanged = Signal()
   
-  def __init__(self, name, instrumentSetter, parentSelector, default, minimum=0, maximum=0, singleStep=0.1, model=None ):
+  def __init__(self, name, instrumentSetter, parentSelector, default, minimum=0, maximum=0, singleStep=0.1, domainModel=None ):
     '''
     '''
-    self.name = name
+    self.name = name  # used to select style property
     self.instrumentSetter = instrumentSetter
     
     # My selector describes parents and field of self e.g. Foo,Line,Pen,Color
     self.selector = fieldSelector(parentSelector, name)
     
     " GUI attributes, e.g. for spin box and combo box"
-    self.minimum = minimum
-    self.maximum = maximum
-    self.singleStep = singleStep
-    self.model = model  # enum dictionary maps GUI strings to values
+    self.domain = Domain(minimum, maximum, singleStep, domainModel)
     
     # TODO: simplify by asking model for default (requires model not optional.)
     " This is model.  Init with default from instrument. "
@@ -137,40 +132,15 @@ class BaseStyleProperty(object):
     self.instrumentSetter(value)
     # for debugging, return value
     return value
-    
-    
-    
-  '''
-  Did user touch by changing the value or by resetting the value?
-  This does NOT assert that final value is different from initial value before editing,
-  since user may have changed it many times, ending in the same value as initial.
-  
-  Note this is called from StylePropertyLayout.onValueChanged()
-  '''
-  """
-  OLD: touched was attribute of StyleProperty
-  def touch(self):
-    self.touched = True
-    
-  def isTouched(self):
-    return self.touched
-  """
-  '''
-  Delegate to resettableValue.
-  QWidget calls this touch()
-  QML does resettableValue = True
-  '''
-  def touch(self):
-    self.resettableValue.touch()
-    
-  def isTouched(self):
-    return self.resettableValue.touched
-  
-  
-  def isReset(self):
-    return self.resettableValue.isReset
 
+  
   def roll(self):
     self.resettableValue.roll()
 
 
+  """
+  Formerly, isTouched() and isReset() was delegated to resettableValue,
+  and/or it was a property of self.
+  Now the GUI deals exclusively with the model (resettableValue), not with StyleProperty.
+  """
+  

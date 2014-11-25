@@ -7,8 +7,9 @@ import People 1.0
 // Row:  [label, control, reset button]
 
 Row {
-	Label {
+	id: row
 	
+	Label {
 		id: label
 		text: "foo"
 	}
@@ -41,6 +42,11 @@ Row {
 	Button {
 		id: button
 		text: "Reset"
-		onClicked: print("button clicked")
+		onClicked: {
+			print("button clicked")
+			DocAnyAnyPenWidth.reset = true	// side effect on model, but not on view???
+			// TODO need to reset view also
+			DocAnyAnyPenWidth.touched = true
+		}
 	}
 }

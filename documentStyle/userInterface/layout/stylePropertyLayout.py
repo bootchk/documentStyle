@@ -6,12 +6,7 @@ This is free software, covered by the GNU General Public License.
 
 from PyQt5.QtWidgets import QHBoxLayout, QLabel # QPushButton, QSlider, QColor, QFont, QBoxLayout, 
 
-from ..resettableControls.doubleSpinBox import ResettableDoubleSpinBox
-from ..resettableControls.spinBox import ResettableSpinBox
-
-from ..resettableControls.stylePickerWidget.colorPickerWidget import ColorPicker
-from ..resettableControls.stylePickerWidget.fontPickerWidget import FontPicker
-from ..resettableControls.comboBox import StyleComboBox
+from documentStyle.formation.resettableValue import BaseResettableValue
 from ..resettableControls.buddyButton import BuddyIconButton
 import documentStyle.config as config
 
@@ -48,7 +43,7 @@ StylePropertyLayout.onUserReset handles it:
 
 class StylePropertyLayout(QHBoxLayout):
   '''
-  Layout for a StyleProperty.  
+  Layout for a StyleProperty.
   IOW a cooperating set of widgets that act as one.
   A better name is: LabeledResettableControlWidget
   
@@ -67,19 +62,24 @@ class StylePropertyLayout(QHBoxLayout):
   '''
 
 
-  def __init__(self, parentStyleProperty, isLabeled=False):
-    '''
-    
-    '''
+  def __init__(self, model, domain=None, labelText=None, isLabeled=False):
     super(StylePropertyLayout, self).__init__()
     
     # self.setDirection(QBoxLayout.RightToLeft)
     
-    self.model = parentStyleProperty
+    assert isinstance(model, BaseResettableValue)
+    self.model = model  # owned by styleProperty which this shows
+    
+    # owned by styleProperty which this shows
+    # optional
+    self.domain = domain 
+    
+    assert labelText is not None
+    self.labelText = labelText
     
     self._layoutChildWidgets(self.model, isLabeled)
     
-    self.controlWidget.setValue(self.model.get()) # initial value
+    self.controlWidget.setValue(self.model.value) # initial value
     
     '''
     Note possible race over BuddyButton.setEnabled.
@@ -114,8 +114,7 @@ class StylePropertyLayout(QHBoxLayout):
       self.addWidget(QLabel(self.getLabel()))
     
     # Child: Control
-    # Some widgets don't use model
-    self.controlWidget = self.createControlWidget(model) # delegate to subclass
+    self.controlWidget = self.createControlWidget() # delegate to subclass
     self.addWidget(self.controlWidget, stretch=1)  # TODO, stretch=0, alignment=Qt.AlignLeft)
    
     # Child: Buddy button
@@ -132,7 +131,7 @@ class StylePropertyLayout(QHBoxLayout):
     !!! i18n translated
     '''
     #print("model name", self.model.name)
-    return config.i18ns.styleTranslate(self.model.name)
+    return config.i18ns.styleTranslate(self.labelText)
   
   
   '''
@@ -173,72 +172,17 @@ class StylePropertyLayout(QHBoxLayout):
     '''
     self.buddyButton.setEnabled(True)
     
-    ''' User touched. '''
-    self.model.touch()  
+    self.model.touched = True # user touched
     
     
   def propagateValueFromWidgetToModel(self):
     changedValue = self.controlWidget.value()
-    self.model.setPropertyValue(changedValue)
+    #OLD self.model.setPropertyValue(changedValue)
+    self.model.value = changedValue
+
     
     
   def createControlWidget(self, model):
     raise NotImplementedError # deferred
   
-
-  
-
-
-class NumericStylePropertyLayout(StylePropertyLayout):
-  
-  def initializeWidgetRanges(self, widget, model):
-    assert model.maximum >= model.minimum
-    widget.setRange(model.minimum, model.maximum)
-    widget.setSingleStep(model.singleStep)
-    widget.setValue(model.minimum)
-    #print "Widget max", widget.maximum()
-    assert widget.hasAcceptableInput()
-  
-  
-    
-class FloatStylePropertyLayout(NumericStylePropertyLayout):
-  
-  def createControlWidget(self, model):
-    widget = ResettableDoubleSpinBox(resettableValue = model.resettableValue)
-    ## widget.setRange(model.minimum, model.maximum)
-    self.initializeWidgetRanges(widget, model)
-    return widget
-
-
-
-class IntStylePropertyLayout(NumericStylePropertyLayout):
-    
-  def createControlWidget(self, model):
-    widget = ResettableSpinBox(resettableValue = model.resettableValue)
-    self.initializeWidgetRanges(widget, model)
-    # TODO units suffix ?
-    return widget
-
-
-
-class ComboBoxStylePropertyLayout(StylePropertyLayout):
-    
-  def createControlWidget(self, model):
-    widget = StyleComboBox(model=model.model, 
-                           resettableValue = model.resettableValue)
-    return widget
-  
-    
-class ColorStylePropertyLayout(StylePropertyLayout):
-  
-  def createControlWidget(self, model):
-    return ColorPicker(resettableValue = model.resettableValue)
-
-    
-    
-class FontStylePropertyLayout(StylePropertyLayout):
-  
-  def createControlWidget(self, model):
-    return FontPicker(resettableValue = model.resettableValue)
-    
   

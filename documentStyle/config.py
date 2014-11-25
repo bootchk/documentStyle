@@ -19,7 +19,7 @@ PenModel = None # Eventuall of type AdaptedPenModel
 LineSpacingModel = None # Eventually of type AdaptedLineSpacingModel
 AlignmentModel = None
 
-useQML = True
+useQML = False
 QMLView = None
 
 class Translations(QObject):

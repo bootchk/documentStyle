@@ -47,6 +47,15 @@ class StyleSheet(QObject):  # QObject for signals
     super(StyleSheet, self).__init__()
     self.parent = None
     self.name = name
+    
+    '''
+    gui
+    - might be lazy instantiated
+    - is not pickled
+    - QWidget *OR* QML
+    '''
+    self.editedFormation = None
+    self.dialog = None
   
   
   @report

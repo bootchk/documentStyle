@@ -184,7 +184,7 @@ class Formation(list):
     #print "reflectToStylingActSet", derivingStylingActSet
     deletedCount = 0
     for item in self.generateStyleProperties():
-      if item.isTouched():  # WAS not item.isReset():
+      if item.resettableValue.touched:  # WAS not item.isReset():
         #print('touched')
         if self.reflectItemToStylingAct(item, derivingStylingActSet):
           deletedCount += 1
@@ -197,7 +197,7 @@ class Formation(list):
     
     Return True if delete
     '''
-    if item.isReset():  # !!! StyleProperty.isReset() is callable, not a property
+    if item.resettableValue.isReset:
       '''
       User touched (one or more changes) but last act was to Reset to inherited value.
       Delete any previous styling act. (If initially reset, then user touched, then reset, no styling act exists.)
@@ -272,7 +272,8 @@ class Formation(list):
     ''' Composite: Are any of my properties touched? Since formation was created for editing. '''
     result = False
     for item in self.generateStyleProperties():
-      if item.isTouched():
+      if item.resettableValue.touched:
         result = True
+        break 
     return result
     

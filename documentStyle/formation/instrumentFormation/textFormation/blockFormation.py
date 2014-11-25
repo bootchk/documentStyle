@@ -35,11 +35,11 @@ class BlockFormation(TextFormation):
                           ComboBoxStyleProperty('Aligned', self.instrument.setAlignment, self.selector,
                                                 # PySide default=AlignmentStyleWrapper(self.instrument.alignment()),
                                                 default=self.instrument.alignment(),
-                                                model = config.AlignmentModel),
+                                                domainModel = config.AlignmentModel),
                           # WAS 'Line spacing', too long
                           UnwrappedComboBoxStyleProperty('Spacing', self.adaptLineSpacing, self.selector,
                                                 default=100,  # single spacing is 100% is default
-                                                model = config.LineSpacingModel),
+                                                domainModel = config.LineSpacingModel),
                           ]
     """
     #Eliminated this because it is buggy: it doesn't seem to get properly layout by document.

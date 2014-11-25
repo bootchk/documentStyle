@@ -1,9 +1,9 @@
 
 from documentStyle.styleProperty.styleProperty import BaseStyleProperty
 
-from documentStyle.userInterface.layout.stylePropertyLayout import FloatStylePropertyLayout, IntStylePropertyLayout
-from documentStyle.userInterface.layout.stylePropertyLayout import ColorStylePropertyLayout, FontStylePropertyLayout
-from documentStyle.userInterface.layout.stylePropertyLayout import ComboBoxStylePropertyLayout
+from documentStyle.userInterface.layout.typedStylePropertyLayout import FloatStylePropertyLayout, IntStylePropertyLayout
+from documentStyle.userInterface.layout.typedStylePropertyLayout import ColorStylePropertyLayout, FontStylePropertyLayout
+from documentStyle.userInterface.layout.typedStylePropertyLayout import ComboBoxStylePropertyLayout
 
 #from documentStyle.formation.resettableValue import ResettableIntValue  # , ResettableFloatValue, ResettableColorValue
 
@@ -21,33 +21,47 @@ TODO refactor using Pluggable Behavior??
 class FloatStyleProperty(BaseStyleProperty):
     
   def getLayout(self, isLabeled=False):
-    return FloatStylePropertyLayout(parentStyleProperty=self, isLabeled=isLabeled)
+    return FloatStylePropertyLayout(model=self.resettableValue,
+                                    domain = self.domain,
+                                    labelText = self.name,
+                                    isLabeled=isLabeled)
 
 
-#TODO default not needed by base class
 class IntStyleProperty(BaseStyleProperty):
    
   def getLayout(self, isLabeled=False):
-    return IntStylePropertyLayout(parentStyleProperty=self, isLabeled=isLabeled)
+    return IntStylePropertyLayout(model=self.resettableValue,
+                                  domain = self.domain,
+                                  labelText = self.name,
+                                  isLabeled=isLabeled)
   
 
 class ColorStyleProperty(BaseStyleProperty):
     
   def getLayout(self, isLabeled=False):
-    return ColorStylePropertyLayout(parentStyleProperty=self, isLabeled=isLabeled)
+    return ColorStylePropertyLayout(model=self.resettableValue,
+                                    domain = self.domain,
+                                    labelText = self.name,
+                                    isLabeled=isLabeled)
   
   
 class UnwrappedComboBoxStyleProperty(BaseStyleProperty):
   " Combobox for style objects that don't need wrapping (pickle.) "
     
   def getLayout(self, isLabeled=False):
-    return ComboBoxStylePropertyLayout(parentStyleProperty=self, isLabeled=isLabeled)
+    return ComboBoxStylePropertyLayout(model=self.resettableValue,
+                                       domain = self.domain,
+                                       labelText = self.name,
+                                       isLabeled=isLabeled)
   
   
 class ComboBoxStyleProperty(BaseStyleProperty):
     
   def getLayout(self, isLabeled=False):
-    return ComboBoxStylePropertyLayout(parentStyleProperty=self, isLabeled=isLabeled)
+    return ComboBoxStylePropertyLayout(model=self.resettableValue,
+                                       domain = self.domain,
+                                       labelText = self.name,
+                                       isLabeled=isLabeled)
   
 
 '''
@@ -70,7 +84,10 @@ class FontStyleProperty(Wrappable, BaseStyleProperty):
   ''' Needed for both PySide and PyQt. '''
   
   def getLayout(self, isLabeled=False):
-    return FontStylePropertyLayout(parentStyleProperty=self, isLabeled=isLabeled)
+    return FontStylePropertyLayout(model=self.resettableValue,
+                                   domain = self.domain,
+                                   labelText = self.name,
+                                   isLabeled=isLabeled)
   
   
 class PSComboBoxStyleProperty(Wrappable, ComboBoxStyleProperty):

@@ -20,8 +20,6 @@ class StyleSheetDialogQML(QObject):
   
   Static: QML declaration must match the formation.
   Formation has the models?
-  
-  Abstract, uses Template pattern: subclasses specialize substeps of algorithm i.e. adding buttons and enabling
   '''
 
   accepted = Signal()

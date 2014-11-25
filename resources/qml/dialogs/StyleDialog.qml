@@ -31,9 +31,11 @@ Dialog {
 
 		StyleControls.ResettableSpinBox {
 			id: bar
+			//row.label.text: "Width"	// override template
 		}
 		StyleControls.ResettableSpinBox {
 			id: baz
+			//row.label.text: "Color"
 		}
 	}
 	// a contentItem will not have buttons

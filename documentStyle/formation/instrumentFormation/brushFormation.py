@@ -1,5 +1,4 @@
-'''
-'''
+
 from PyQt5.QtGui import QBrush
 
 
@@ -24,7 +23,7 @@ class BrushFormation(InstrumentFormation):
                                                 self.instrument.setStyle, self.selector,
                                                 default=self.instrument.style(),
                                                 # PySide default=BrushStyleWrapper(self.instrument.style()),
-                                                model = config.BrushModel),]
+                                                domainModel = config.BrushModel),]
     
     '''
     sic, BrushPattern is called Style in Qt

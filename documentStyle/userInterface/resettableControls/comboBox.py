@@ -17,7 +17,7 @@ class StyleComboBox(Resettable, QComboBox):
   Control widget:
   - GUI behaviour of QComboBox
   - adapts QComboBox to have value(), setValue(), valueChanged() API
-  - takes a model that is an enum of Style
+  - takes a domainModel that is an enum of Style
   - resettable
   
   QComboBox is too broad for our use: includes editing of text
@@ -27,13 +27,13 @@ class StyleComboBox(Resettable, QComboBox):
   valueChanged = Signal()
   
 
-  def __init__(self, model, resettableValue ):
+  def __init__(self, domainModel, resettableValue ):
   
     QComboBox.__init__(self)
-    self.model = model
-    self.addItems(list(model.values.keys()))
+    self.domainModel = domainModel
+    self.addItems(list(domainModel.values.keys()))
     
-    Resettable.__init__(self, resettableValue)  # MUST follow QComboBox init and create model
+    Resettable.__init__(self, resettableValue)  # MUST follow QComboBox init and create domainModel
     
     # connect adapted widget signal to adapter
     # !!! connecting to str type signal
@@ -78,15 +78,15 @@ class StyleComboBox(Resettable, QComboBox):
     
   
   '''
-  Convert to and from Widget text values to model values.
+  Convert to and from Widget text values to domainModel values.
   '''
   
   def _adaptNewValue(self, newValue):
     '''
-    Adapt Widget's string value to model value, i.e. enum value.
+    Adapt Widget's string value to domainModel value, i.e. enum value.
     '''
     # assert value is unicode. Use str() to decode
-    convertedValue = self.model.values[str(newValue)] # 
+    convertedValue = self.domainModel.values[str(newValue)] # 
     #print "Adapted ", newValue, "converted type", type(convertedValue)
     return convertedValue
   
@@ -96,14 +96,14 @@ class StyleComboBox(Resettable, QComboBox):
     # searchValue is an enum value or None, and None can be a value in dictionary
     i = 0
     foundKey = False
-    for _, value in self.model.values.items():
+    for _, value in self.domainModel.values.items():
       #print searchValue, value
       # if searchValue is None and None is in dictionary, or searchValue == value
       if value is searchValue or value == searchValue:  # !!! is, not ==, to match None
         foundKey = True
         break
       i += 1
-    assert foundKey, "Missing value: " + str(searchValue) + " in model" + str(self.model) # dict is complete on values
+    assert foundKey, "Missing value: " + str(searchValue) + " in domainModel" + str(self.domainModel) # dict is complete on values
     return i
 
 

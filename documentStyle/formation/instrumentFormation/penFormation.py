@@ -30,7 +30,7 @@ class PenFormation(InstrumentFormation):
                           ComboBoxStyleProperty("Style", self.instrument.setStyle, 
                                                 self.selector,
                                                 default=self.instrument.style(), # PySide PenStyleWrapper(self.instrument.style()),
-                                                model = config.PenModel)
+                                                domainModel = config.PenModel)
                           ]
   '''
   Old getters: self.instrument.color, ), 
