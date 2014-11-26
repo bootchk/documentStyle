@@ -4,7 +4,17 @@ import QtQuick.Dialogs 1.2
 
 import People 1.0
 
-// Row:  [label, control, reset button]
+/*
+ 
+See:
+	-userInterface.resettableControls.spinBox.py
+	-userInterface.layout.stylePropertyLayout.py
+which are the QWidget version of this QML.
+
+Row:  [label, control, reset button]
+
+The reset button resets the control.
+*/ 
 
 Row {
 	id: row
@@ -22,6 +32,8 @@ Row {
 	// Simpler than putting model outside control (which requires using Connection.)
 	SpinBox {
 		id: spinbox
+		// bind to model.  It must be a NOTIFYable property!!!
+		// value: model.value	
 		
 		// Model is a property
 		// property QtObject model: Person{}
@@ -29,8 +41,7 @@ Row {
 		// Usual signal on SpinBox.value property changed.
 		onValueChanged: {
 			print("SpinBox.value changed")
-			// Access model exposed to here in context
-			model.value = value		// view->model
+			// Access model exposed to here via context
 			model.touched = true
 			resetButton.enabled = true
 			}
@@ -47,17 +58,22 @@ Row {
 		// onModelChanged: print("Model changed by business logic")
 	}
 	Button {
+		/*
+		Model is resettable.
+		We do not need to update view from model now,
+		spinBox.value is bound to the model.
+		*/
 		id: resetButton
 		text: "Reset"
 		enabled: false
 		onClicked: {
 			print("button clicked")
 			// Reset model
-			model.reset = true
+			model.isReset = true
 			model.touched = true
-			// TODO broken: model.value doesn't change
-			// Reset view also
-			spinbox.value = model.value
+			spinbox.value = model.value	// Do this ourselves, instead of from signal from model
+			// Assert view value is reset also
+			print("model.value", model.value)
 			// Button state
 			enabled = false
 		}

@@ -13,6 +13,7 @@ from documentStyle.formation.domain import Domain
 #from PyQt5.QtCore import QObject
 # Inherit QObject if signals
 # Signals are not needed unless we want live dialogs showing WYSIWYG style changes to document before OK button is pressed.
+
 class BaseStyleProperty(object): 
   '''
   StyleProperty: leaves of a Formation tree.
@@ -33,15 +34,17 @@ class BaseStyleProperty(object):
   - conventional Property responsibilities: get and set
   - knows selector
   - knows resetness and how to roll: delegated to ResettableValue
+  - know widget (GUI view) that controls model (resettableValue)
   
   !!! Independent of framework, unless Qt signals used.
   '''
 
   # stylePropertyValueChanged = Signal()
   
-  def __init__(self, name, instrumentSetter, parentSelector, default, minimum=0, maximum=0, singleStep=0.1, domainModel=None ):
-    '''
-    '''
+  def __init__(self, name, instrumentSetter, parentSelector, default,
+               layoutFactory=None,
+               minimum=0, maximum=0, singleStep=0.1, domainModel=None ):
+  
     self.name = name  # used to select style property
     self.instrumentSetter = instrumentSetter
     
@@ -50,6 +53,9 @@ class BaseStyleProperty(object):
     
     " GUI attributes, e.g. for spin box and combo box"
     self.domain = Domain(minimum, maximum, singleStep, domainModel)
+    
+    " Pluggable behaviour.  Only for QWidget GUI, not used for QML GUI."
+    self.layoutFactory = layoutFactory
     
     # TODO: simplify by asking model for default (requires model not optional.)
     " This is model.  Init with default from instrument. "
@@ -92,9 +98,18 @@ class BaseStyleProperty(object):
   
   
   def getLayout(self, isLabeled=False):
-    ''' Layout widget that displays this StyleProperty'''
-    raise NotImplementedError # deferred
-  
+    ''' 
+    QWidget (a layout actually) that displays this StyleProperty.
+    Factory produces widget understanding specific type e.g. Float
+    
+    (In earlier design, implemented by subclasses.  Now pluggable behaviour.)
+    '''
+    assert self.layoutFactory is not None
+    return self.layoutFactory(model=self.resettableValue,
+                                    domain = self.domain,
+                                    labelText = self.name,
+                                    isLabeled=isLabeled)
+    
   
   @report
   def setPropertyValue(self, newValue):

@@ -1,5 +1,6 @@
 
 from PyQt5.QtCore import pyqtProperty, QObject
+#from PyQt5.QtCore import pyqtSignal as Signal
 
 #from documentStyle.debugDecorator import reportReturn, reportFalseReturn
 
@@ -27,6 +28,8 @@ class BaseResettableValue(QObject):
   An optimization for deleting existing StylingActs,
   but not absolutely necessary.
   '''
+  
+  
   
   def __init__(self, valueToResetTo):
     super().__init__()  # MUST init QObject
@@ -56,12 +59,12 @@ class BaseResettableValue(QObject):
   formerly reset()
   '''
   @isReset.setter
-  def isReset(self, newValue):
+  def isReset(self, newResetness):
     ''' 
     Restore current value to valueToResetTo. 
     At behest of user.
     '''
-    assert newValue == True # Semantics is: can reset, cannot set isReset to False
+    assert newResetness == True # Semantics is: can reset, cannot set isReset to False
     if self._isReset:
       #print "Resetting twice?"
       pass
@@ -77,9 +80,9 @@ class BaseResettableValue(QObject):
     return self._touched
 
   @touched.setter
-  def touched(self, newValue):
-    assert newValue == True # Semantics is: can reset, cannot set isReset to False
-    self._touched = newValue
+  def touched(self, newTouchedness):
+    assert newTouchedness == True # Semantics is: can reset, cannot set isReset to False
+    self._touched = newTouchedness
 
 
   def roll(self):
@@ -95,14 +98,18 @@ class BaseResettableValue(QObject):
 
 
 class ResettableIntValue(BaseResettableValue):
+  
+  #valueChanged = Signal()
+  # TODO does this clash with pre-defined QML signal valueChanged?
+  
   def __init__(self, valueToResetTo):
     super().__init__(valueToResetTo)
-    
+  
   '''
   Define getter of 'value' property.  
   The C++ type of the property is int
   '''
-  @pyqtProperty(int)
+  @pyqtProperty(int)  # , notify=valueChanged)
   def value(self):
     #print("get value", self._value)
     return self._value
@@ -122,5 +129,6 @@ class ResettableIntValue(BaseResettableValue):
     #print("set value")
     self._value = newValue
     self._isReset = False
+    #self.valueChanged.emit()
 
   

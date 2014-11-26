@@ -1,9 +1,13 @@
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QTextCharFormat
+
 from .textFormation import TextFormation
 from documentStyle.formation.instrumentFormation.instrumentFormation import InstrumentFormation
-from documentStyle.styleProperty.stylePropertyWidgetable import ColorStyleProperty, FontStyleProperty
+
+from documentStyle.styleProperty.styleProperty import BaseStyleProperty
+from documentStyle.styleProperty.stylePropertyFont import FontStyleProperty
+from documentStyle.userInterface.layout.typedStylePropertyLayout import ColorStylePropertyLayout, FontStylePropertyLayout
 from documentStyle.styleWrapper.fontStyleWrapper import FontStyleWrapper
 
 
@@ -25,15 +29,15 @@ class CharacterFormation(TextFormation):
   def __init__(self, parentSelector):
     InstrumentFormation.__init__(self, name='Character', parentSelector=parentSelector)
     self.instrument = QTextCharFormat()
-    self.styleProperties=[ColorStyleProperty('Color', 
+    self.styleProperties=[BaseStyleProperty('Color', 
                                              self.setForegroundColor,  
                                              self.selector,
-                                             default=self.instrument.foreground().color(),
-                                             minimum=0, maximum=0), 
+                                             layoutFactory=ColorStylePropertyLayout,
+                                             default=self.instrument.foreground().color()), 
                       FontStyleProperty('Font', self.instrument.setFont, self.selector,
                                         # !!! Must be wrapped for PySide and PyQt
                                         default=FontStyleWrapper(self.instrument.font()),
-                                        minimum=0, maximum=0,)]
+                                        layoutFactory=FontStylePropertyLayout,)]
                                         ## model = FontModel),]
 
   

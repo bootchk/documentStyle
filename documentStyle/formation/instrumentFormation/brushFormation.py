@@ -1,9 +1,9 @@
 
 from PyQt5.QtGui import QBrush
 
-
 from .instrumentFormation import InstrumentFormation
-from documentStyle.styleProperty.stylePropertyWidgetable import ColorStyleProperty, ComboBoxStyleProperty
+from documentStyle.styleProperty.styleProperty import BaseStyleProperty
+from documentStyle.userInterface.layout.typedStylePropertyLayout import ColorStylePropertyLayout, ComboBoxStylePropertyLayout
 import documentStyle.config as config
 
 #from ...model.brush import BrushModel
@@ -17,13 +17,15 @@ class BrushFormation(InstrumentFormation):
   def __init__(self, parentSelector, role=""):
     InstrumentFormation.__init__(self, name="Brush", parentSelector=parentSelector, role=role)
     self.instrument = QBrush()
-    self.styleProperties=[ColorStyleProperty("Color", self.instrument.setColor, self.selector,
-                                             default=self.instrument.color()),
-                          ComboBoxStyleProperty("Pattern", 
-                                                self.instrument.setStyle, self.selector,
-                                                default=self.instrument.style(),
-                                                # PySide default=BrushStyleWrapper(self.instrument.style()),
-                                                domainModel = config.BrushModel),]
+    self.styleProperties=[BaseStyleProperty("Color", self.instrument.setColor, self.selector,
+                                            layoutFactory=ColorStylePropertyLayout,
+                                            default=self.instrument.color()),
+                          BaseStyleProperty("Pattern", 
+                                            self.instrument.setStyle, self.selector,
+                                            default=self.instrument.style(),
+                                            layoutFactory=ComboBoxStylePropertyLayout,
+                                            # PySide default=BrushStyleWrapper(self.instrument.style()),
+                                            domainModel = config.BrushModel),]
     
     '''
     sic, BrushPattern is called Style in Qt

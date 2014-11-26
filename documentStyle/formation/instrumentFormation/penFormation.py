@@ -1,7 +1,8 @@
 
 from PyQt5.QtGui import QPen
 from .instrumentFormation import InstrumentFormation
-from documentStyle.styleProperty.stylePropertyWidgetable import ColorStyleProperty, IntStyleProperty, ComboBoxStyleProperty
+from documentStyle.styleProperty.styleProperty import BaseStyleProperty
+from documentStyle.userInterface.layout.typedStylePropertyLayout import IntStylePropertyLayout, ColorStylePropertyLayout, ComboBoxStylePropertyLayout
 import documentStyle.config as config
 
 #from documentStyle.styleWrapper.styleWrapper import PenStyleWrapper
@@ -18,19 +19,20 @@ class PenFormation(InstrumentFormation):
   # TODO: a QPen has a QBrush also, and it needs to be scaled also
   
   def __init__(self, parentSelector, role=""):
-    '''
-    '''
     InstrumentFormation.__init__(self, name="Pen", parentSelector=parentSelector, role=role)
     self.instrument = QPen()
-    self.styleProperties=[ColorStyleProperty("Color", self.instrument.setColor, self.selector,
+    self.styleProperties=[BaseStyleProperty("Color", self.instrument.setColor, self.selector,
+                                             layoutFactory=ColorStylePropertyLayout,
                                              default = self.instrument.color()), 
-                          IntStyleProperty("Width", self.instrument.setWidth, self.selector,
+                          BaseStyleProperty("Width", self.instrument.setWidth, self.selector,
                                            default=self.instrument.width(),
+                                           layoutFactory=IntStylePropertyLayout,
                                           minimum=0, maximum=10, singleStep=1),
-                          ComboBoxStyleProperty("Style", self.instrument.setStyle, 
-                                                self.selector,
-                                                default=self.instrument.style(), # PySide PenStyleWrapper(self.instrument.style()),
-                                                domainModel = config.PenModel)
+                          BaseStyleProperty("Style", self.instrument.setStyle, 
+                                            self.selector,
+                                            default=self.instrument.style(), # PySide PenStyleWrapper(self.instrument.style()),
+                                            layoutFactory=ComboBoxStylePropertyLayout,
+                                            domainModel = config.PenModel)
                           ]
   '''
   Old getters: self.instrument.color, ), 

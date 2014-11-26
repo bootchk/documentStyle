@@ -19,7 +19,7 @@ PenModel = None # Eventuall of type AdaptedPenModel
 LineSpacingModel = None # Eventually of type AdaptedLineSpacingModel
 AlignmentModel = None
 
-useQML = True # Whether GUI is QML or QWidget.  Also see EditableStyleDialog
+useQML = False # Whether GUI is QML or QWidget.  Also see EditableStyleDialog
 QMLView = None  # not used?
 
 class Translations(QObject):

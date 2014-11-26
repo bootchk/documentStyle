@@ -84,8 +84,18 @@ class StyleSheet(QObject):  # QObject for signals
     '''
     # testing: canned SAS
     # self.testSAS()
+    " Lazy instantiation. "
+    """
+    Currently, lazy instantiation is broken for QWidget GUI.
+    When DocSS is not resettable when it should be, or it resets to an old value.
+    Probably something about refreshing the widget values from the cascade
+    before displaying.
+    
     if self.dialog is None:
       self.createGui(parentWindow)
+    """
+    # Non-lazy, always create: 
+    self.createGui(parentWindow)
     assert self.dialog is not None
     self.dialog.open() # window modal
     
