@@ -5,6 +5,11 @@ import QtQuick.Layouts 1.1
 
 import "../tabs" as MyTabs
 
+/*
+Style dialog top is tabbed.
+*/
+
+
 //ColumnLayout {
 TabView {
 	// invalid: Layout.fillWidth: true
@@ -26,8 +31,10 @@ TabView {
     }
     Tab {
         title: "Line"
-        MyTabs.AnyStyleTab {}
+        MyTabs.LineStyleTab {}
     }
+    
+    // TODO dummy tabs below
     Tab {
         title: "Shape"
         MyTabs.AnyStyleTab {}
