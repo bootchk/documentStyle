@@ -5,7 +5,7 @@ This is free software, covered by the GNU General Public License.
 '''
 
 from documentStyle.selector import fieldSelector
-from documentStyle.formation.resettableValue import ResettableIntValue
+from documentStyle.styleProperty.resettableValue import ResettableIntValue
 from documentStyle.debugDecorator import report, reportReturn
 from documentStyle.formation.domain import Domain
 
@@ -42,6 +42,7 @@ class BaseStyleProperty(object):
   # stylePropertyValueChanged = Signal()
   
   def __init__(self, name, instrumentSetter, parentSelector, default,
+               resettableValueFactory=ResettableIntValue,
                layoutFactory=None,
                minimum=0, maximum=0, singleStep=0.1, domainModel=None ):
   
@@ -59,7 +60,7 @@ class BaseStyleProperty(object):
     
     # TODO: simplify by asking model for default (requires model not optional.)
     " This is model.  Init with default from instrument. "
-    self.resettableValue = ResettableIntValue(default)
+    self.resettableValue = resettableValueFactory(default)
     assert self.resettableValue.value is not None, "Default is required."
     
     

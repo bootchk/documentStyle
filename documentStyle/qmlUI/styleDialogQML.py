@@ -39,7 +39,7 @@ class StyleSheetDialogQML(QObject):
     '''
     Create QML based dialog.
     '''
-    qmlFilename="resources/qml/"+prefix+"stylesheet.qml"  # e.g. Userstylesheet.qml
+    qmlFilename="resources/qml/styleSheets/"+prefix+"stylesheet.qml"  # e.g. Userstylesheet.qml
     
     qmlMaster = QmlMaster()
     qwin = qmlMaster.appQWindow()

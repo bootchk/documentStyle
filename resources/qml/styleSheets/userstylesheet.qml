@@ -6,7 +6,7 @@ import QtQuick.Controls 1.2
 import QtQuick.Dialogs 1.2
 
 import QmlDelegate 1.0
-import "dialogs" as MyDialogs
+import "../dialogs" as MyDialogs
 
 Item {
 	DialogDelegate {

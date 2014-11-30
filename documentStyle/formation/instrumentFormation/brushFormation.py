@@ -15,12 +15,13 @@ class BrushFormation(InstrumentFormation):
   ''' Specialize to Qt <QBrush> '''
   
   def __init__(self, parentSelector, role=""):
+    
     InstrumentFormation.__init__(self, name="Brush", parentSelector=parentSelector, role=role)
     self.instrument = QBrush()
     self.styleProperties=[BaseStyleProperty("Color", self.instrument.setColor, self.selector,
                                             layoutFactory=ColorStylePropertyLayout,
                                             default=self.instrument.color()),
-                          BaseStyleProperty("Pattern", 
+                          BaseStyleProperty("Style", # Was Pattern
                                             self.instrument.setStyle, self.selector,
                                             default=self.instrument.style(),
                                             layoutFactory=ComboBoxStylePropertyLayout,

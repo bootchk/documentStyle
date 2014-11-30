@@ -7,12 +7,17 @@ import QtQuick.Dialogs 1.2
 //import QtQuick.Window 2.0
 
 import QmlDelegate 1.0
-import "dialogs" as MyDialogs
+import "../dialogs" as MyDialogs
 
 Item {
 	DialogDelegate {
 		id: docDialogDelegate
 		objectName: "docDialogDelegate"
+	}
+	
+	MyDialogs.StyleColorDialog {
+		id: colorDialog
+		model: DocAnyAnyPenColor
 	}
 
 	MyDialogs.StyleDialog {

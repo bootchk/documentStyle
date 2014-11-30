@@ -94,7 +94,11 @@ class BaseResettableValue(QObject):
     
 
 
-
+'''
+Subclasses specialized by type.
+Don't know a way to get around this:
+pyqtProperty needs to know the type
+'''
 
 
 class ResettableIntValue(BaseResettableValue):
@@ -131,4 +135,19 @@ class ResettableIntValue(BaseResettableValue):
     self._isReset = False
     #self.valueChanged.emit()
 
+
+class ResettableColorValue(BaseResettableValue):
   
+  def __init__(self, valueToResetTo):
+    super().__init__(valueToResetTo)
+  
+  @pyqtProperty("QColor")
+  def value(self):
+    return self._value
+  
+  @value.setter
+  def value(self, newValue):
+    self._value = newValue
+    self._isReset = False
+    
+    

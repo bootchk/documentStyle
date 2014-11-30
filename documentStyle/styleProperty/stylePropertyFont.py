@@ -1,7 +1,7 @@
 
 from documentStyle.styleProperty.styleProperty import BaseStyleProperty
 
-#from documentStyle.formation.resettableValue import ResettableIntValue  # , ResettableFloatValue, ResettableColorValue
+#from documentStyle.styleProperty.resettableValue import ResettableIntValue  # , ResettableFloatValue, ResettableColorValue
 
 '''
 Subclasses specialize GUI, i.e. have unique layouts.

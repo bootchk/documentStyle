@@ -2,6 +2,7 @@
 from PyQt5.QtGui import QPen
 from .instrumentFormation import InstrumentFormation
 from documentStyle.styleProperty.styleProperty import BaseStyleProperty
+from documentStyle.styleProperty.resettableValue import ResettableColorValue
 from documentStyle.userInterface.layout.typedStylePropertyLayout import IntStylePropertyLayout, ColorStylePropertyLayout, ComboBoxStylePropertyLayout
 import documentStyle.config as config
 
@@ -22,6 +23,7 @@ class PenFormation(InstrumentFormation):
     InstrumentFormation.__init__(self, name="Pen", parentSelector=parentSelector, role=role)
     self.instrument = QPen()
     self.styleProperties=[BaseStyleProperty("Color", self.instrument.setColor, self.selector,
+                                            resettableValueFactory=ResettableColorValue,
                                              layoutFactory=ColorStylePropertyLayout,
                                              default = self.instrument.color()), 
                           BaseStyleProperty("Width", self.instrument.setWidth, self.selector,
