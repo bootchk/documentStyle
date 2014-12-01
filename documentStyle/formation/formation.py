@@ -4,9 +4,13 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
+from PyQt5.QtCore import pyqtSlot
+
 from documentStyle.userInterface.form.formationForm import FormationForm
 #from documentStyle.userInterface.layout.formationLayout import FormationLayout
 from documentStyle.styling.stylingAct import StylingAct
+from documentStyle.selector import Selector
+from documentStyle.styleProperty.resettableValue import BaseResettableValue
 
 from documentStyle.debugDecorator import report, reportTrueReturn
 
@@ -108,9 +112,24 @@ class Formation(list):
       result = Formation("subFormation", selector)
       for formation in self:
         result.append(formation)
+    
+    assert result is not None, "No match, selector is ill-formed. "
     return result
     
+  @pyqtSlot(str, result=BaseResettableValue)
+  def selectResettableValueByStringSelector(self, string):
+    '''
+    A slot for use by QML.
+    A formation is a model, QML selects resettable values by name.
+    '''
+    selector = Selector.fromString(string)
+    styleProperty = self.selectStyleProperty(selector)
+    assert styleProperty is not None
+    result = styleProperty.resettableValue
+    # assert isintance(result, BaseResettableValue) but polymorphic, a subclass
+    return result
   
+    
   def selectStyleProperty(self, selectorOfStylingAct):
     '''
     First styleProperty selected by selectorOfStylingAct, or None.

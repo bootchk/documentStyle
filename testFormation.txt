@@ -1,0 +1,117 @@
+This tests many aspects of the basic classes: Formation, Selector, StyleProperty, StylingAct
+
+To test:
+
+>cd documentStyle/test
+>python3
+
+import doctest
+doctest.testfile("testFormation.txt")
+
+Result should be 0 failures.
+
+You might need to reload after a fix.
+
+
+
+ >>> from documentStyle.formation.formation import Formation
+ >>> from documentStyle.formation.instrumentFormation.opacityFormation import OpacityFormation
+ >>> from documentStyle.formation.morphFormation import LineFormation
+ >>> from documentStyle.selector import Selector
+ >>> from documentStyle.styling.stylingActSet import StylingActSet
+ 
+ >>> a = Formation('foo', Selector("*","*","*","*"))
+ >>> repr(a)
+ 'foo:AnyAny**'
+ 
+ 
+ test len
+ >>> len(a)
+ 0
+ 
+ test appending a morph formation
+ 
+ >>> a.append(LineFormation())
+ 
+ >>> len(a)
+ 1
+ 
+ >>> anySelector = Selector("*","*","*","*")
+ >>> anySelector
+ Selector(*,*,*,*)
+ 
+ Selecting all subFormations returns a single tree (since that's all we put in)
+ 
+ >>> b = a.selectSubformation(anySelector)
+ >>> b
+ subFormation:AnyAny**
+ 
+ A more specific selector returns essentially the same subformation, except for selector of result
+ 
+ >>> c = a.selectSubformation(Selector("*","Line","*","*"))
+ >>> c
+ Line:AnyLine**
+ 
+ 
+ Iteration over style properties
+ 
+ >>> for formation in b.generateStyleProperties(): print(formation) # doctest:+ELLIPSIS
+ Color:AnyLinePenColor:ResettableValue(original=<PyQt5.QtGui.QColor object at 0x...> value=<PyQt5.QtGui.QColor object at 0x...>
+ Width:AnyLinePenWidth:ResettableValue(original=1 value=1
+ Style:AnyLinePenStyle:ResettableValue(original=1 value=1
+ Opacity:AnyLineOpacityOpacity:ResettableValue(original=1.0 value=1.0
+ 
+ >>> for formation in c.generateStyleProperties(): print(formation) # doctest:+ELLIPSIS
+ Color:AnyLinePenColor:ResettableValue(original=<PyQt5.QtGui.QColor object at 0x...> value=<PyQt5.QtGui.QColor object at 0x...>
+ Width:AnyLinePenWidth:ResettableValue(original=1 value=1
+ Style:AnyLinePenStyle:ResettableValue(original=1 value=1
+ Opacity:AnyLineOpacityOpacity:ResettableValue(original=1.0 value=1.0
+ 
+ Style properties default to not touched
+ 
+ >>> b.isTouched()
+ False
+ 
+ A subformation is not singleValued
+ 
+ >>> b.isSingleValued()
+ True
+ 
+ >>> sp = b.selectStyleProperty(Selector("*","Line","Pen","Width"))
+ >>> sp
+ Width:AnyLinePenWidth:ResettableValue(original=1 value=1
+ 
+ A touched styleProperty will reflect into a SAS
+ 
+ >>> sp.setPropertyValue(4)
+ >>> sp.resettableValue.touched=True
+ 
+ A touched styleProperty is not reset
+ >>> sp.resettableValue.isReset
+ False
+ 
+ Reflecting returns a count of deleted
+ 
+ >>> sas = StylingActSet(anySelector)
+ >>> b. reflectToStylingActSet(sas)
+ 0
+ 
+ The result is a SAS with one SA
+ >>> sas
+ {Selector(*,Line,Pen,Width): StylingAct(AnyLinePenWidth,4)}
+ 
+ >>> for stylingAct in sas.generateStylingActs(): print(stylingAct)
+ StylingAct(AnyLinePenWidth,4)
+ 
+ Create Selector from dotted notation
+ 
+ >>> f = Selector.fromString("Any.Line.Pen.Color")
+ >>> f
+ Selector(Any,Line,Pen,Color)
+ 
+ >>> b.selectResettableValueByStringSelector("Any.Line.Pen.Color") # doctest:+ELLIPSIS
+ <documentStyle.styleProperty.resettableValue.ResettableColorValue object at 0x...>
+ 
+ This here for convenience of copy/paste into a terminal
+ doctest.testfile("testFormation.txt")
+ 

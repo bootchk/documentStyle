@@ -1,6 +1,6 @@
 To test:
 
->cd documentStyle
+>cd documentStyle/test
 >python
 
 import doctest

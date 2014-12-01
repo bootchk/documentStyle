@@ -117,6 +117,8 @@ class BaseStyleProperty(object):
     '''
     Every set() may change state of resettableValue.
     This may be called programmatically, from StylingActs.
+    !!! This does not touch it.
+    Callers must call touched=True separately.
     '''
     #print("StyleProperty.set()", newValue)
     self._throughSet(newValue) # Model

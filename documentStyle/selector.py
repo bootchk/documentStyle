@@ -45,9 +45,17 @@ class Selector(namedtuple('Selector', 'name DEType instrument field')):
     return name + detype + self.instrument + self.field
   
   
+  @classmethod
+  def fromString(cls, string):
+    " Selector from string in dotted notation."
+    words = string.split('.')
+    assert len(words) == 4
+    return cls(words[0], words[1], words[2], words[3])
+  
+  
   def noncommutativeMatches(self, other):
     ''' Non-commutative: self more selective than other raises exception. '''
-    assert other.isAtLeastSelectiveAs(self), str(self) + str(other)
+    assert other.isAtLeastSelectiveAs(self), repr(self) + repr(other)
     return ( self.name == other.name or self.name == "*" ) \
       and  ( self.DEType == other.DEType or self.DEType == "*" ) \
       and  ( self.instrument == other.instrument or self.instrument == "*" ) \
