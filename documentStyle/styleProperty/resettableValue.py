@@ -132,6 +132,11 @@ class ResettableIntValue(BaseResettableValue):
     '''
     #print("set value")
     self._value = newValue
+    '''
+    !!! Only the view knows whether this value change constitutes a touch.
+    Programmatic value changes are not a touch.
+    self.touched = True
+    '''
     self._isReset = False
     #self.valueChanged.emit()
 

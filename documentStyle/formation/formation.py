@@ -106,7 +106,29 @@ class Formation(QObject):
     for formation in self.subFormations:
       formation.applyTo(morph)
     
+  '''
+  Responsibility: expose self to QML as a model
+  '''
+  def exposeToQML(self, view):
+    assert view is not None # created earlier
+    view.rootContext().setContextProperty('stylesheetModel', self)
     
+  
+  @pyqtSlot(str, result=BaseResettableValue)
+  def selectResettableValueByStringSelector(self, string):
+    '''
+    Slot for use by QML.
+    Formation is a model, QML selects resettable values by dotted string name.
+    '''
+    selector = Selector.fromString(string)
+    styleProperty = self.selectStyleProperty(selector)
+    assert styleProperty is not None
+    result = styleProperty.resettableValue
+    # assert isintance(result, BaseResettableValue) but polymorphic, a subclass
+    return result
+  
+  
+      
   '''
   Responsibility: Selectable
   '''
@@ -136,20 +158,6 @@ class Formation(QObject):
         result.append(formation)
     
     assert result is not None, "No match, selector is ill-formed. "
-    return result
-    
-    
-  @pyqtSlot(str, result=BaseResettableValue)
-  def selectResettableValueByStringSelector(self, string):
-    '''
-    Slot for use by QML.
-    Formation is a model, QML selects resettable values by dotted string name.
-    '''
-    selector = Selector.fromString(string)
-    styleProperty = self.selectStyleProperty(selector)
-    assert styleProperty is not None
-    result = styleProperty.resettableValue
-    # assert isintance(result, BaseResettableValue) but polymorphic, a subclass
     return result
   
     
@@ -244,7 +252,7 @@ class Formation(QObject):
       User touched (one or more changes) but last act was to Reset to inherited value.
       Delete any previous styling act. (If initially reset, then user touched, then reset, no styling act exists.)
       '''
-      #print("item.isReset is true")
+      print("item.isReset is true")
       result = derivingStylingActSet.deleteIfExists(item.selector)
     else:
       ''' 
@@ -328,6 +336,9 @@ class Formation(QObject):
     for item in self.generateStyleProperties():
       if item.resettableValue.touched:
         result = True
+        print("StyleProperty was touched")
         break 
     return result
     
+    
+  

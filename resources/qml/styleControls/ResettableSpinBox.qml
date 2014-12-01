@@ -22,6 +22,7 @@ Row {
 	
 	// Passed at instantiation
 	property string text // label.text bound here
+	// This component is generalized with a passed model
 	property var model
 	
 	Label {
@@ -41,7 +42,9 @@ Row {
 		// Usual signal on SpinBox.value property changed.
 		onValueChanged: {
 			print("SpinBox.value changed")
-			// Access model exposed to here via context
+			// Access model from context passed into this component
+			model.value = value	// view=>model
+			// model touched is NOT a side effect of setting value    
 			model.touched = true
 			resetButton.enabled = true
 			}

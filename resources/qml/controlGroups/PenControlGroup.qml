@@ -22,16 +22,23 @@ GroupBox {
 		StyleControls.ResettableSpinBox {
 			id: bar
 			text: "Width"
-			model: DocAnyAnyPenWidth
+			// Model is part of larger model
+			model: stylesheetModel.selectResettableValueByStringSelector("*.*.Pen.Width")
+			//OLD model: DocAnyAnyPenWidth
 			// Layout.fillWidth: true
 			
-			Component.onCompleted: print(x, y, width, height)
+			Component.onCompleted: {
+				print(x, y, width, height)
+				console.assert(typeof stylesheetModel != 'undefined', "stylesheetModel is undefined")
+				print(model)
+				print(model.value)
+			}
 		}
 		
 		StyleControls.ResettableColorChooser {
 			id: myAnyPenColorChooser
 			text: "Color"
-			model: DocAnyAnyPenColor
+			model: stylesheetModel.selectResettableValueByStringSelector("*.*.Pen.Color")
 		}
 		/*
 		StyleControls.MyColorChooser {

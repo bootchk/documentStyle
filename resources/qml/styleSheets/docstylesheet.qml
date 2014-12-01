@@ -24,6 +24,8 @@ Item {
 		id: styleDialog
 		title: "Doc Style Sheet"
 		dialogDelegate: docDialogDelegate
+		// Get model from context
+		property var formationModel: stylesheetModel
 		
 		/*
 		onVisibleChanged: {
@@ -31,6 +33,10 @@ Item {
 			console.log(styleDialog.visible)
 		}
 		*/
+		Component.onCompleted: {
+			print(x, y, width, height)
+			console.assert(typeof stylesheetModel != 'undefined', "stylesheetModel is undefined")
+		}
 	}
 	
 	Connections {

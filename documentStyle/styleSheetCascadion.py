@@ -93,7 +93,8 @@ class StyleSheetCascadion(object):
       " Create QML editor stuff"
       model = QmlModel()
       model.register()
-      self.appStyleSheet.createGui(parentWindow)
+      # Omit App stylesheet GUI, not important to users
+      #self.appStyleSheet.createGui(parentWindow)
       self.userStyleSheet.createGui(parentWindow)
       self.docStyleSheet.createGui(parentWindow)
       # TODO others

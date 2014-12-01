@@ -30,12 +30,10 @@ class StyleSheetDialogQML(QObject):
     # TODO, parentWindow should be the document, which may not be the activeWindow?
     # parentWindow = QCoreApplication.instance().activeWindow()
     super(StyleSheetDialogQML, self).__init__() # parent=parentWindow, flags=flags)
-    self.createDialog(parentWindow, prefix=titleParts[0].lower())
-    self.exposeFormationModelToQML(view=self.styleQuickView, editedFormation=formation, title=titleParts[0])
+    self.createDialog(parentWindow, prefix=titleParts[0].lower(), formation=formation)
     
     
-    
-  def createDialog(self, parentWindow, prefix):
+  def createDialog(self, parentWindow, prefix, formation):
     '''
     Create QML based dialog.
     '''
@@ -43,7 +41,16 @@ class StyleSheetDialogQML(QObject):
     
     qmlMaster = QmlMaster()
     qwin = qmlMaster.appQWindow()
-    self.styleQuickView = qmlMaster.quickViewForQML(qmlFilename, transientParent=qwin)
+    
+    '''
+    Order is important: create quickView, setContext, setSource, findComponent
+    setContext defines names referred to in the source
+    findComponent looks for names defined by the source.
+    '''
+    self.styleQuickView = qmlMaster.createQuickView(transientParent=qwin)
+    self.exposeFormationModelToQML(view=self.styleQuickView, editedFormation=formation, prefix=prefix)
+    # OLD self.styleQuickView = qmlMaster.quickViewForQML(qmlFilename, transientParent=qwin)
+    qmlMaster.setSourceOnQuickView(view=self.styleQuickView, qmlFilename=qmlFilename)
     self.dialogDelegate = qmlMaster.findComponent(quickview=self.styleQuickView, 
                                                   className=QmlDelegate, 
                                                   objectName=prefix+"DialogDelegate")
@@ -53,19 +60,30 @@ class StyleSheetDialogQML(QObject):
     " container takes ownership.  container is a widget"
     self.container = qmlMaster.widgetForQuickView(self.styleQuickView, parentWindow)
     
-    " Remember view so later can setContext."
+    " Remember view so later can update setContext? Not used?"
     config.QMLView = self.styleQuickView
     
     
-  def exposeFormationModelToQML(self, view, editedFormation, title):
+  def exposeFormationModelToQML(self, view, editedFormation, prefix):
+    '''
+    Put formation as model into context of QML dialog.
+    '''
+    print("exposeFormationModelToQML", prefix)
+    editedFormation.exposeToQML(view)
+      
+  """
+  OLD design, not used.
+  
+  def exposeFormationStylePropertiesToQML(self, view, editedFormation, title):
     '''
     Put formation's StyleProperty models into context of QML dialog.
+    
     '''
     print("exposeFormationModelToQML", title)
     # TODO title into QML?
     for styleProperty in editedFormation.generateStyleProperties():
       styleProperty.exposeToQML(view, styleSheetTitle=title)
-    
+  """
   
   def createDialog2(self):
     qmlFilename = "resources/qml/stylesheet.qml"

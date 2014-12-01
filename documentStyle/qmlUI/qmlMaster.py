@@ -98,24 +98,42 @@ class QmlMaster(object):
     return qmlUrl
     
     
+  def createQuickView(self, transientParent=None):
+    '''
+    Create empty QQuickView.
+    More robust: connects to error.
+    Subsequently, you should set context and then setSource()
+    '''
+    result = QQuickView()
+    result.statusChanged.connect(self.onStatusChanged)
+    if transientParent is not None:
+      result.setTransientParent(transientParent)
+    assert result is not None
+    assert isinstance(result, QQuickView)
+    return result
+  
+    
+  def setSourceOnQuickView(self, view, qmlFilename):
+    qurl = self.qmlFilenameToQUrl(qmlFilename)
+    view.setSource(qurl)
+    print("setSource on quickview to:", qurl.path())
+    
+    
   def quickViewForQML(self, qmlFilename, transientParent=None):
     '''
     Create a QQuickView for qmlFilename.
     More robust: connects to error
-    '''
     
-    quickView = QQuickView()
-    quickView.statusChanged.connect(self.onStatusChanged)
-    qurl = self.qmlFilenameToQUrl(qmlFilename)
-    quickView.setSource(qurl)
+    !!! Don't use this if the QML depends on names defined with setContextProperty()
+    '''
+    quickView = self.createQuickView(transientParent)
+    self.setSourceOnQuickView(quickView, qmlFilename)
     '''
     Show() the enclosing QWindow?
     But this means the window for e.g. the toolbar is visible separately?
     '''
     #quickView.show()
-    print("Created QQuickView for:", qurl.path())
-    if transientParent is not None:
-      quickView.setTransientParent(transientParent)
+    
     return quickView
   
   
