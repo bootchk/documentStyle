@@ -60,7 +60,7 @@ class FormationForm(QFormLayout):
       self._addFormationLabelToForm(formation)
     
     if len(formation) > 0:  # recursion termination
-      for subformation in formation:
+      for subformation in formation.generateSubformations():
         # Recurse
         self.addFormationToForm(subformation, labelPrefix="not used", top=False)
     else: # No child formations

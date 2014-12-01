@@ -67,6 +67,11 @@ You might need to reload after a fix.
  Style:AnyLinePenStyle:ResettableValue(original=1 value=1
  Opacity:AnyLineOpacityOpacity:ResettableValue(original=1.0 value=1.0
  
+ Iteration over top-level subformations
+ 
+ >>> for subformation in b.generateSubformations(): print(subformation) # doctest:+ELLIPSIS
+ Line:AnyLine**
+ 
  Style properties default to not touched
  
  >>> b.isTouched()

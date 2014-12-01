@@ -4,7 +4,7 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtCore import QObject, pyqtSlot
 
 from documentStyle.userInterface.form.formationForm import FormationForm
 #from documentStyle.userInterface.layout.formationLayout import FormationLayout
@@ -15,9 +15,11 @@ from documentStyle.styleProperty.resettableValue import BaseResettableValue
 from documentStyle.debugDecorator import report, reportTrueReturn
 
 
-class Formation(list):
+class Formation(QObject):
   '''
   Defines how something draws (appears.)
+  
+  Also, a model for a GUI to edit a stylesheet (for QML GUI.)
   
   A Formation is applied to an Instrument, which is applied to a Document Element.
   Here, and in Qt, these applies are copies of the attributes of the Formation.
@@ -25,7 +27,7 @@ class Formation(list):
   and Instrument attributes applied to a DocumentElement are copies
   (The Formation and Instrument itself are not copied, it is a stamping process.)
   
-  Composite via inherit List.
+  Has-a List (formerly is-a List.)  Now a QObject so that can be exposed to QML.
   
   Called a Formation (not Format): is a noun, and distinguishes from Qt Q...Format.
   
@@ -42,15 +44,19 @@ class Formation(list):
   - know name
   - know selector
   - apply to morph
-  - select styleProperty from self
+  - selectable (styleProperty and their resettableValue) by Selector or dotted string
   - display for editing
   - persist (as attached to styled morphs of a document)
+  - reflect to StylingActSet
+  - iterable over subformations (top) and styleProperties (leaves)
   
+  selection of resettableValues of stylingProperties by dotted string name is for QML
   '''
   def __init__(self, name, selector, role=""):
     '''
     Responsibility: know name
     '''
+    super().__init__()  # init QObject
     assert name is not None
     self.name = name
     self.selector = selector # immutable
@@ -62,7 +68,8 @@ class Formation(list):
     e.g. what role does a Pen play on Text: style the chars or style the frame?
     Usually role is obvious, i.e. role of a Pen on a Line is to style the line.
     '''
-    self.role = role  
+    self.role = role
+    self.subFormations = []
   
   
   def __repr__(self):
@@ -76,7 +83,18 @@ class Formation(list):
     '''
     return self.name +"[" +  ",\n       ".join( map( str, self) ) + "]\n"
           
-            
+          
+  '''
+  List-like.  Delegate to owned list.
+  len, append, and iterable
+  '''
+  def __len__(self):
+    return len(self.subFormations)
+  
+  def append(self, value):
+      self.subFormations.append(value)
+      
+      
                       
   @report
   def applyTo(self, morph):
@@ -85,9 +103,13 @@ class Formation(list):
     
     Apply all contained Formations to morph.
     '''
-    for formation in self:
+    for formation in self.subFormations:
       formation.applyTo(morph)
     
+    
+  '''
+  Responsibility: Selectable
+  '''
   
   def selectSubformation(self, selector):
     '''
@@ -102,7 +124,7 @@ class Formation(list):
     #print "selectSubformation, selector is ", selector
     
     if selector.isDETypeSelector():
-      for formation in self:
+      for formation in self.subFormations:
         if formation.name == selector.DEType:
           result = formation
           break
@@ -110,17 +132,18 @@ class Formation(list):
       assert selector.DEType == "*"
       # All children match, return composite
       result = Formation("subFormation", selector)
-      for formation in self:
+      for formation in self.subFormations:
         result.append(formation)
     
     assert result is not None, "No match, selector is ill-formed. "
     return result
     
+    
   @pyqtSlot(str, result=BaseResettableValue)
   def selectResettableValueByStringSelector(self, string):
     '''
-    A slot for use by QML.
-    A formation is a model, QML selects resettable values by name.
+    Slot for use by QML.
+    Formation is a model, QML selects resettable values by dotted string name.
     '''
     selector = Selector.fromString(string)
     styleProperty = self.selectStyleProperty(selector)
@@ -135,7 +158,7 @@ class Formation(list):
     First styleProperty selected by selectorOfStylingAct, or None.
     Depends on styleProperties in order of selectivity (more selective, i.e. specific, last.)
     '''
-    for childFormation in self:
+    for childFormation in self.subFormations:
       '''
       childFormation.selector is NOT necessarily more selective than selectorOfStylingAct
       E.G. childFormation (*,Line,*,*) is not more selective than selectorOfStylingAct(*,*,Pen,Color) 
@@ -175,7 +198,7 @@ class Formation(list):
     '''
     Tree structured layout into given layout.
     '''
-    for formation in self:
+    for formation in self.subFormations:
       # Indirect recursion through display() which eventually calls displayContentsInLayout again
       layout.addLayout(formation.display())
   
@@ -261,13 +284,24 @@ class Formation(list):
     for item in self.generateStyleProperties():
       item.roll()
     
-  
+  '''
+  Iterable
+  '''
+  def generateSubformations(self):
+    '''
+    Generate my direct children
+    '''
+    for subformation in self.subFormations:
+      yield subformation
+      
+        
   def generateStyleProperties(self):
     '''
-    Recursive generator.
+    Generate leaves.
+    Recursive: subformations in turn generateStyleProperties
     Partially deferred (terminal in InstrumentFormation)
     '''
-    for formation in self:
+    for formation in self.subFormations:
       for styleProperty in formation.generateStyleProperties():
         yield styleProperty
   
@@ -286,6 +320,7 @@ class Formation(list):
     return result
   """
     
+  
   @reportTrueReturn
   def isTouched(self):
     ''' Composite: Are any of my properties touched? Since formation was created for editing. '''

@@ -164,7 +164,7 @@ class IntermediateStyleSheet(StyleSheet):
     #beforeStylingActCount = self.stylingActSetCollection.countStylingActs()
     
     deletedCount = 0
-    for topLevelFormation in editedFormation:
+    for topLevelFormation in editedFormation.generateSubformations():
       '''
       Optimization: only if subformation edited.
       Otherwise, SASCollection has many empty SAS?
