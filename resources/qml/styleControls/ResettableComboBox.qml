@@ -23,13 +23,18 @@ Row {
 	
 	ComboBox{
 		id: combobox
-		model: parent.domain	// 
+		model: parent.domain	// TODO parent. not needed
 		// TODO alias for resetButton??  Seems to work without it
 		currentIndex: parent.model.value
 		         
-		onCurrentIndexChanged: {
-			console.debug("currentIndexChanged")
-			parent.model.value = currentIndex
+		onActivated: {
+			/*
+			 * Similar to currentIndexChanged, but only with user input.
+			 * onCurrentIndexChanged comes on initialization without user input.
+			 * Also, this has a formal parameter "index" which is not same as currentIndex
+			 */
+			console.debug("CombBox.onActivated", index)
+			parent.model.value = index	// Note this is actual parameter of signal, not same as currentIndex
 			parent.model.touched = true
 		}
 	}
@@ -40,3 +45,19 @@ Row {
 		buddyControl: combobox
 	}
 }
+
+/*
+ * How to use a list model (non-contiguous enum)
+ * 
+ * ComboBox {
+    currentIndex: 2
+    model: ListModel {
+        id: cbItems
+        ListElement { text: "Banana"; color: "Yellow" }
+        ListElement { text: "Apple"; color: "Green" }
+        ListElement { text: "Coconut"; color: "Brown" }
+    }
+    width: 200
+    onCurrentIndexChanged: console.debug(cbItems.get(currentIndex).text + ", " + cbItems.get(currentIndex).color)
+}
+ */

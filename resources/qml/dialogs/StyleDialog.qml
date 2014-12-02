@@ -1,5 +1,4 @@
 import QtQuick 2.3
-//import QtQuick.Controls 1.2
 import QtQuick.Dialogs 1.2
 
 import "../dialogContents" as MyDialogContents
@@ -28,5 +27,6 @@ Dialog {
 		dialogDelegate.reject()
 	}
 	
+	// Contents is separate file, unrelated to buttons and handlers
 	MyDialogContents.StyleDialogContents{}
 }

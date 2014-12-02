@@ -337,7 +337,7 @@ class Formation(QObject):
     for item in self.generateStyleProperties():
       if item.resettableValue.touched:
         result = True
-        print("StyleProperty was touched")
+        print("StyleProperty was touched", item)
         break 
     return result
     

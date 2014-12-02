@@ -1,22 +1,18 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.2
-import QtQuick.Layouts 1.1
-
 
 import "../tabs" as MyTabs
 
-/*
-Style dialog top is tabbed.
-*/
 
+// Style dialog contents is tabbed.
 
-//ColumnLayout {
 TabView {
-	// invalid: Layout.fillWidth: true
-	anchors.left: parent.left;
+	anchors.left: parent.left
 	width: 500
 	height: 500
 	/*
+	 * This is cruft trying to get the dialog not to cut off contents
+	 * invalid: Layout.fillWidth: true
 	anchors.leftMargin: 5;
 	anchors.top: parent.top;
 	anchors.topMargin: 5;
@@ -33,12 +29,11 @@ TabView {
         title: "Line"
         MyTabs.LineStyleTab {}
     }
-    
-    // TODO dummy tabs below
     Tab {
         title: "Shape"
-        MyTabs.AnyStyleTab {}
+        MyTabs.ShapeStyleTab {}
     }
+    // TODO dummy tabs below
     Tab {
 		title: "Text"
 		MyTabs.AnyStyleTab {}
@@ -48,4 +43,3 @@ TabView {
 		MyTabs.AnyStyleTab {}
 	}
 }
-//}
