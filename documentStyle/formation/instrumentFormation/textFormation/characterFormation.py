@@ -7,6 +7,7 @@ from documentStyle.formation.instrumentFormation.instrumentFormation import Inst
 
 from documentStyle.styleProperty.styleProperty import BaseStyleProperty
 from documentStyle.styleProperty.stylePropertyFont import FontStyleProperty
+from documentStyle.styleProperty.resettableValue import ResettableColorValue, ResettableFontValue
 from documentStyle.userInterface.layout.typedStylePropertyLayout import ColorStylePropertyLayout, FontStylePropertyLayout
 from documentStyle.styleWrapper.fontStyleWrapper import FontStyleWrapper
 
@@ -32,11 +33,13 @@ class CharacterFormation(TextFormation):
     self.styleProperties=[BaseStyleProperty('Color', 
                                              self.setForegroundColor,  
                                              self.selector,
+                                             resettableValueFactory=ResettableColorValue,
                                              layoutFactory=ColorStylePropertyLayout,
                                              default=self.instrument.foreground().color()), 
                       FontStyleProperty('Font', self.instrument.setFont, self.selector,
                                         # !!! Must be wrapped for PySide and PyQt
                                         default=FontStyleWrapper(self.instrument.font()),
+                                        resettableValueFactory=ResettableFontValue,
                                         layoutFactory=FontStylePropertyLayout,)]
                                         ## model = FontModel),]
 

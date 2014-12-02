@@ -7,6 +7,6 @@ Column {
 	property string selector: "*.Line"
 	
 	MyControlGroups.PenControlGroup {}
-	// Qt Line really has a Brush, but we omit
+	// Qt Line really has a Brush, but we omit, users don't want?
 	MyControlGroups.OpacityControlGroup {}
 }

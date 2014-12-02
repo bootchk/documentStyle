@@ -8,4 +8,5 @@ Column {
 	
 	MyControlGroups.PenControlGroup {}
 	MyControlGroups.BrushControlGroup {}
+	MyControlGroups.OpacityControlGroup {}
 }

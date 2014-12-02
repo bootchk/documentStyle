@@ -19,10 +19,16 @@ The reset button resets the control to an inherited value.
 Row {
 	//anchors.fill: parent
 	
-	// Component is generalized with a passed [text, model, selector] at instantiation
+	// Component is generalized, specialized with a passed [text, model, selector] at instantiation
 	property string text // label.text bound here
 	property var model
 	property string selector
+	
+	// Optional specialization
+	property alias controlDecimals: spinbox.decimals
+	property alias controlStepSize: spinbox.stepSize
+	property alias controlMinimumValue: spinbox.minimumValue
+	property alias controlMaximumValue: spinbox.maximumValue
 	
 	Label {
 		text: parent.text

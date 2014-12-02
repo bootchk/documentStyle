@@ -1,6 +1,6 @@
 
 from PyQt5.QtCore import pyqtProperty, QObject
-from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QColor, QFont
 from PyQt5.QtCore import pyqtSignal as Signal
 
 #from documentStyle.debugDecorator import reportReturn, reportFalseReturn
@@ -112,7 +112,7 @@ class BaseResettableValue(QObject):
 
 '''
 Subclasses specialized by type.
-Don't know a way to get around this:
+Don't know a way to get around this duplication:
 pyqtProperty needs to know the type
 '''
 
@@ -169,7 +169,6 @@ class ResettableColorValue(BaseResettableValue):
     super().__init__(valueToResetTo)
   
   @pyqtProperty("QColor", notify=valueChanged)
-  #@pyqtProperty(int, notify=valueChanged)
   def value(self):
     return self._value
   
@@ -177,7 +176,44 @@ class ResettableColorValue(BaseResettableValue):
   def value(self, newValue):
     assert isinstance(newValue, QColor)
     self._value = newValue
-    self._isReset = False
     self.valueChanged.emit()
+    self.isReset = False
     
+
+class ResettableFloatValue(BaseResettableValue):
+  
+  valueChanged = Signal()
+  
+  def __init__(self, valueToResetTo):
+    super().__init__(valueToResetTo)
+  
+  @pyqtProperty(float, notify=valueChanged)
+  def value(self):
+    return self._value
+  
+  @value.setter
+  def value(self, newValue):
+    assert isinstance(newValue, float)
+    self._value = newValue
+    self.valueChanged.emit()
+    self.isReset = False
+
+
+class ResettableFontValue(BaseResettableValue):
+  
+  valueChanged = Signal()
+  
+  def __init__(self, valueToResetTo):
+    super().__init__(valueToResetTo)
+  
+  @pyqtProperty('QFont', notify=valueChanged)
+  def value(self):
+    return self._value
+  
+  @value.setter
+  def value(self, newValue):
+    assert isinstance(newValue, QFont)
+    self._value = newValue
+    self.valueChanged.emit()
+    self.isReset = False
     

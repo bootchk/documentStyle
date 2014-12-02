@@ -23,15 +23,14 @@ class PenFormation(InstrumentFormation):
     InstrumentFormation.__init__(self, name="Pen", parentSelector=parentSelector, role=role)
     self.instrument = QPen()
     self.styleProperties=[BaseStyleProperty("Color", self.instrument.setColor, self.selector,
+                                            default = self.instrument.color(),
                                             resettableValueFactory=ResettableColorValue,
-                                             layoutFactory=ColorStylePropertyLayout,
-                                             default = self.instrument.color()), 
+                                            layoutFactory=ColorStylePropertyLayout), 
                           BaseStyleProperty("Width", self.instrument.setWidth, self.selector,
                                            default=self.instrument.width(),
                                            layoutFactory=IntStylePropertyLayout,
-                                          minimum=0, maximum=10, singleStep=1),
-                          BaseStyleProperty("Style", self.instrument.setStyle, 
-                                            self.selector,
+                                           minimum=0, maximum=10, singleStep=1),
+                          BaseStyleProperty("Style", self.instrument.setStyle, self.selector,
                                             default=self.instrument.style(), # PySide PenStyleWrapper(self.instrument.style()),
                                             layoutFactory=ComboBoxStylePropertyLayout,
                                             domainModel = config.PenModel)

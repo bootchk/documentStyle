@@ -10,7 +10,6 @@ GroupBox {
 	flat: true
 	property string selector: parent.selector + ".Opacity"
 
-	// A GroupBox is a container, but items are not laid out, unless we specify Column
 	Column {
 		spacing: 10
 		
@@ -18,6 +17,12 @@ GroupBox {
 			text: "     "	// Blank label of proper length, rather than show Opacity:Opacity
 			selector: opacityGroup.selector + ".Opacity"
 			model: stylesheetModel.selectResettableValueByStringSelector(selector)
+			
+			// Specialize to float control
+			controlDecimals: 1
+			controlStepSize: 0.1
+			controlMinimumValue: 0.1	// So user can't make it invisible
+			controlMaximumValue: 1.0
 		}
 	}
 }	

@@ -4,6 +4,7 @@ from documentStyle.instrument.opacityInstrument import POpacityInstrument
 from documentStyle.formation.instrumentFormation.instrumentFormation import InstrumentFormation
 from documentStyle.styleProperty.styleProperty import BaseStyleProperty
 from documentStyle.userInterface.layout.typedStylePropertyLayout import FloatStylePropertyLayout
+from documentStyle.styleProperty.resettableValue import ResettableFloatValue
 
 
 class OpacityFormation(InstrumentFormation):
@@ -20,6 +21,7 @@ class OpacityFormation(InstrumentFormation):
     self.styleProperties=[BaseStyleProperty("Opacity", 
                                          self.instrument.setOpacity,  
                                          self.selector,
+                                         resettableValueFactory=ResettableFloatValue,
                                          layoutFactory=FloatStylePropertyLayout,
                                          default=self.instrument.opacity(),
                                          minimum=0.1, maximum=1.0), 
