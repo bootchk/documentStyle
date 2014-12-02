@@ -2,7 +2,7 @@ import QtQuick 2.3
 import QtQuick.Controls 1.2
 import QtQuick.Dialogs 1.2
 
-import People 1.0
+import "../styleControls" as MyControls
 
 /*
  
@@ -13,17 +13,16 @@ which are the QWidget version of this QML.
 
 Row:  [label, control, reset button]
 
-The reset button resets the control.
+The reset button resets the control to an inherited value.
 */ 
 
 Row {
 	//anchors.fill: parent
 	
-	// Passed at instantiation
+	// Component is generalized with a passed [text, model, selector] at instantiation
 	property string text // label.text bound here
-	// This component is generalized with a passed model and selector
 	property var model
-	property string selector: ""
+	property string selector
 	
 	Label {
 		text: parent.text
@@ -32,21 +31,26 @@ Row {
 	// Simpler than putting model outside control (which requires using Connection.)
 	SpinBox {
 		id: spinbox	// referenced by reset button
-		// Don't bind to model, because we control it only?  It must be a NOTIFYable property!!!
-		// OR bind to value so that on second opening, it follows the model
-		value: model.value	
 		
-		// Model is a property
-		// property QtObject model: Person{}
+		/* 
+		model.value must be a NOTIFYable property!!!
+		Bind view value to model value so that on second opening, and on reset, it follows the model.
+		Although the user is in charge, user can also change the model via the reset button.
+		*/
+		value: model.value	// model=>view
 		
-		// Usual signal on SpinBox.value property changed.
+		/*
+		Usual signal on view SpinBox.value property changed.
+		This is NOT the signal valueChanged from model.
+		*/
 		onValueChanged: {
 			print("SpinBox.value changed")
 			// Access model from context passed into this component
 			model.value = value	// view=>model
 			// model touched is NOT a side effect of setting value    
 			model.touched = true
-			resetButton.enabled = true
+			// Side effect of setting value 
+			// resetButton.enabled = true
 			}
 		
 		// special signal on SpinBox lose focus
@@ -60,26 +64,9 @@ Row {
 		// The view should change to reflect new value
 		// onModelChanged: print("Model changed by business logic")
 	}
-	Button {
-		/*
-		Model is resettable.
-		We do not need to update view from model now,
-		spinBox.value is bound to the model.
-		*/
-		id: resetButton
-		text: "Reset"
-		// Bind to model
-		enabled: ! model.isReset
-		onClicked: {
-			print("button clicked")
-			// Reset model
-			model.isReset = true
-			model.touched = true
-			spinbox.value = model.value	// Do this ourselves, instead of from signal from model
-			// Assert view value is reset also
-			print("model.value", model.value)
-			// Button state
-			enabled = false
-		}
+	
+	MyControls.ResetButton {
+		model: parent.model
+		buddyControl: spinbox
 	}
 }

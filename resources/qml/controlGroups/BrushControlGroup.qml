@@ -20,10 +20,11 @@ GroupBox {
 			model: stylesheetModel.selectResettableValueByStringSelector(selector)
 		}
 		
-		StyleControls.ResettableSpinBox {
+		StyleControls.ResettableComboBox {
 			text: "Style"
 			selector: brushGroup.selector + ".Style"
 			model: stylesheetModel.selectResettableValueByStringSelector(selector)
+			domain: [ "None", "Solid", "Dense1", "Dense2", "Dense3"]	// Must correspond to Qt.PenStyle
 		}
 	}
 }	

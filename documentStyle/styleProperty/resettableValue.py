@@ -62,18 +62,24 @@ class BaseResettableValue(QObject):
   @isReset.setter
   def isReset(self, newResetness):
     ''' 
-    Restore current value to valueToResetTo. 
-    At behest of user.
+    Case newResetness: True
+      Restore current value to valueToResetTo. 
+      At behest of user using the reset button.
+    Case newResetness: False
+      Propagate to view's reset button to show that user has changed value.
+      At behest of user using the primary control
     '''
-    assert newResetness == True # Semantics is: can reset, cannot set isReset to False
-    if self._isReset:
-      #print "Resetting twice?"
+    #OLD assert newResetness == True # Semantics is: can reset, cannot set isReset to False
+    if self._isReset == newResetness :
+      print("ResettableValue: set isReset twice?")
       pass
     '''
     Don't set private _value, use setter so signal is emitted.
     '''
-    self.value = self._valueToResetTo
-    self._isReset = True
+    if newResetness:
+      self.value = self._valueToResetTo
+      
+    self._isReset = newResetness
     self.isResetChanged.emit()
 
 
@@ -142,16 +148,17 @@ class ResettableIntValue(BaseResettableValue):
     '''
     #print("set value")
     self._value = newValue
+    self.valueChanged.emit()
     '''
     !!! Only the view knows whether this value change constitutes a touch.
     Programmatic value changes are not a touch.
     self.touched = True
     '''
     '''
-    !!! Use the setter so signal emitted.
+    !!! Use setter so signal emitted.
     '''
     self.isReset = False
-    self.valueChanged.emit()
+    
 
 
 class ResettableColorValue(BaseResettableValue):

@@ -11,7 +11,7 @@ This is the comment-template for other groups: most comments are here.
 GroupBox {
 	id: penGroup
 	title: "Pen"
-	flat: true
+	flat: true	// save space
 	property string selector: parent.selector + ".Pen"
 
 	// A GroupBox is a container, but items are not laid out unless we specify Column
@@ -27,7 +27,6 @@ GroupBox {
 			selector: penGroup.selector + ".Width"
 			// Model is part of larger model
 			model: stylesheetModel.selectResettableValueByStringSelector(selector)
-			//OLD model: DocAnyAnyPenWidth
 			// Layout.fillWidth: true
 			
 			Component.onCompleted: {
@@ -55,10 +54,11 @@ GroupBox {
 		}
 		*/
 		
-		StyleControls.ResettableSpinBox {
+		StyleControls.ResettableComboBox {
 			text: "Style"
 			selector: penGroup.selector + ".Style"
 			model: stylesheetModel.selectResettableValueByStringSelector(selector)
+			domain: [ "Invisible", "Solid", "Dash", "Dot", "DashDot"]	// Must correspond to Qt.BrushStyle
 		}
 	}
 }	

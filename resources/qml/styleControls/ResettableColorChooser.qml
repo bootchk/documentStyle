@@ -1,24 +1,15 @@
 import QtQuick 2.3
 import QtQuick.Controls 1.2
-//import QtQuick.Dialogs 1.2
 import QtQuick.Controls.Styles 1.2
 
-// import People 1.0
+import "../styleControls" as MyControls
 
 /*
- 
-See:
-	-userInterface.resettableControls.spinBox.py
-	-userInterface.layout.stylePropertyLayout.py
-which are the QWidget version of this QML.
-
-Row:  [label, control, reset button]
-
-The reset button resets the control.
+ See: ResettableSpinBox which is the commented template for this.
+ This is the equivalent of a QWidget.
 */ 
 Row {
-	// Passed at instantiation
-	property string text // label.text bound here
+	property string text
 	property var model
 	property string selector
 	
@@ -31,6 +22,8 @@ Row {
 	Rectangle {
 	    id: colorIndicator
 	    color: model.value
+	    // resetButton references colorIndicator.value
+	    property alias value: colorIndicator.color
 	    visible: true
 	    width: parent.height - 2	// theme.itemSizeSmall
 	    height: parent.height - 2	//40	// theme.itemSizeSmall
@@ -57,13 +50,6 @@ Row {
 		// color: colorDialog.color
 		onClicked: {
 			print("color button clicked")
-			/*
-			Sailfish
-			var dialog = pageStack.push("ColorDialog")
-		    dialog.accepted.connect(function() {
-		            colorIndicator.color = dialog.color
-		        })
-		    */
 			colorDialog.accepted.connect(function() {
 		            // No need, is bound: colorIndicator.color = colorDialog.currentColor
 		            // label.color = colorDialog.currentColor
@@ -77,12 +63,14 @@ Row {
 		}
 	}
 
+	MyControls.ResetButton {
+		id: resetButton
+		model: parent.model
+		buddyControl: colorIndicator
+	}
+	
+	/*
 	Button {
-		/*
-		Model is resettable.
-		We do not need to update view from model now,
-		spinBox.value is bound to the model.
-		*/
 		id: resetButton
 		text: "Reset"
 		// bind enable to model
@@ -99,4 +87,5 @@ Row {
 			enabled = false
 		}
 	}
+	*/
 }
