@@ -108,15 +108,15 @@ class TextItem(ContextMenuStyleable, Styleable, QGraphicsTextItem):
     
   def scaleInstrument(self, instrument, baseValue=1):
     ''' Stub. '''
-    pass
+    print("setPen on Text: dummy.  Should scale pen of frame of text.")
   
   def setPen(self, instrument):
     ''' Stub. '''
-    pass
+    print("setPen on Text: dummy.  Should set frame of text.")
   
   def setBrush(self, instrument):
     ''' Stub. '''
-    pass
+    print("setBrush on Text: dummy.  Should set background of text.")
   
   
 class EllipseItem(ContextMenuStyleable, Styleable, QGraphicsEllipseItem):
