@@ -14,17 +14,20 @@ GroupBox {
 	 Column {
 		spacing: 10
 		
+		// Style ahead of Color so user sees that Style is None before choosing Color
+		StyleControls.ResettableComboBox {
+					text: "Style"
+					selector: brushGroup.selector + ".Style"
+					model: stylesheetModel.selectResettableValueByStringSelector(selector)
+					domain: [ "None", "Solid", "Dense1", "Dense2", "Dense3"]	// Must correspond to Qt.PenStyle
+				}
+		
 		StyleControls.ResettableColorChooser {
 			text: "Color"
 			selector: brushGroup.selector + ".Color"
 			model: stylesheetModel.selectResettableValueByStringSelector(selector)
 		}
 		
-		StyleControls.ResettableComboBox {
-			text: "Style"
-			selector: brushGroup.selector + ".Style"
-			model: stylesheetModel.selectResettableValueByStringSelector(selector)
-			domain: [ "None", "Solid", "Dense1", "Dense2", "Dense3"]	// Must correspond to Qt.PenStyle
-		}
+		
 	}
 }	

@@ -33,13 +33,12 @@ TabView {
         title: "Shape"
         MyTabs.ShapeStyleTab {}
     }
-    // TODO dummy tabs below
     Tab {
 		title: "Text"
-		MyTabs.AnyStyleTab {}
+		MyTabs.TextStyleTab {}
 	}
 	Tab {
 		title: "Image"
-		MyTabs.AnyStyleTab {}
+		MyTabs.ImageStyleTab {}
 	}
 }
