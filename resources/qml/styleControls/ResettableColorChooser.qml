@@ -20,6 +20,7 @@ Row {
 	// Passed at instantiation
 	property string text // label.text bound here
 	property var model
+	property string selector
 	
 	Label {
 		id: label
@@ -29,7 +30,7 @@ Row {
 	// This doesn't work:    width: theme.itemSizeSmall
 	Rectangle {
 	    id: colorIndicator
-	    color: "red"
+	    color: model.value
 	    visible: true
 	    width: parent.height - 2	// theme.itemSizeSmall
 	    height: parent.height - 2	//40	// theme.itemSizeSmall
@@ -64,8 +65,13 @@ Row {
 		        })
 		    */
 			colorDialog.accepted.connect(function() {
-		            colorIndicator.color = colorDialog.currentColor
-		            label.color = colorDialog.currentColor
+		            // No need, is bound: colorIndicator.color = colorDialog.currentColor
+		            // label.color = colorDialog.currentColor
+		            model.value = colorDialog.currentColor	// side effect should be enabling of reset button?
+		            model.touched = true
+		            // This is not allowed by model: model.isReset = false
+		            // The above setting of model.value does not seem to have proper side effect, so do it here.
+		            resetButton.enabled = true
 		        })
 			colorDialog.open()
 		}
@@ -79,14 +85,14 @@ Row {
 		*/
 		id: resetButton
 		text: "Reset"
-		// enable according to model TODO
-		enabled: false
+		// bind enable to model
+		enabled: ! model.isReset
 		onClicked: {
-			print("button clicked")
+			print("Color reset button clicked")
 			// Reset model
-			model.isReset = true
+			model.isReset = true	// Side effect is model.value changes and valueChanged emitted
 			model.touched = true
-			spinbox.value = model.value	// Do this ourselves, instead of from signal from model
+			// colorIndicator.color = model.value	// Do this ourselves, instead of from signal from model
 			// Assert view value is reset also
 			print("model.value", model.value)
 			// Button state

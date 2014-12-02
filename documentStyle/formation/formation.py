@@ -112,6 +112,7 @@ class Formation(QObject):
   def exposeToQML(self, view):
     assert view is not None # created earlier
     view.rootContext().setContextProperty('stylesheetModel', self)
+    print("After setContextProperty")
     
   
   @pyqtSlot(str, result=BaseResettableValue)

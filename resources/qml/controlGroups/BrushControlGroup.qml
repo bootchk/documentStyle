@@ -3,29 +3,27 @@ import QtQuick.Controls 1.2
 
 import "../styleControls" as StyleControls
 
-/*
-Group of controls for Brush.
-*/
-GroupBox {
-		id: brushGroup
-		title: "Brush"
-		flat: true
 
-	// A GroupBox is a container, but items are not laid out.
+// Group of controls for Brush.
+GroupBox {
+	id: brushGroup
+	title: "Brush"
+	flat: true
+	property string selector: parent.selector + ".Brush"
+
 	 Column {
-		id: layout
 		spacing: 10
 		
 		StyleControls.ResettableColorChooser {
-			id: myAnyBrushColorChooser
 			text: "Color"
-			model: DocAnyAnyBrushColor
+			selector: brushGroup.selector + ".Color"
+			model: stylesheetModel.selectResettableValueByStringSelector(selector)
 		}
 		
 		StyleControls.ResettableSpinBox {
-			id: docAnyAnyBrushStyle
 			text: "Style"
-			model: DocAnyAnyBrushStyle
+			selector: brushGroup.selector + ".Style"
+			model: stylesheetModel.selectResettableValueByStringSelector(selector)
 		}
 	}
 }	

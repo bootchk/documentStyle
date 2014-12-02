@@ -76,7 +76,8 @@ class BaseStyleProperty(object):
   exposeToQML() is analagous to getLayout().
   Neither is necessary unless self is part of an editedFormation
   '''
-  
+  """
+  OLD design
   def exposeToQML(self, view, styleSheetTitle):
     '''
     Expose self's model (resettableValue) to QQuickView of QML.
@@ -85,7 +86,7 @@ class BaseStyleProperty(object):
     '''
     assert view is not None # created earlier
     view.rootContext().setContextProperty(self._QMLName(styleSheetTitle), self.resettableValue)
-
+  
   
   def _QMLName(self, styleSheetTitle):
     '''
@@ -96,7 +97,7 @@ class BaseStyleProperty(object):
     result = styleSheetTitle + str(self.selector)
     print("setContextProperty", result)
     return result
-  
+  """
   
   def getLayout(self, isLabeled=False):
     ''' 

@@ -1,16 +1,11 @@
 import QtQuick 2.3
 
-
 import "../controlGroups" as MyControlGroups
 
 
 Column {
-	id: anyStyleTabColumn
+	property string selector: "*.*"
 	
-	MyControlGroups.PenControlGroup {
-		id: penControlGroup
-	}
-	MyControlGroups.BrushControlGroup {
-		id: brushControlGroup
-	}
+	MyControlGroups.PenControlGroup {}
+	MyControlGroups.BrushControlGroup {}
 }

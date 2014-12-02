@@ -17,24 +17,24 @@ The reset button resets the control.
 */ 
 
 Row {
-	id: row
 	//anchors.fill: parent
 	
 	// Passed at instantiation
 	property string text // label.text bound here
-	// This component is generalized with a passed model
+	// This component is generalized with a passed model and selector
 	property var model
+	property string selector: ""
 	
 	Label {
-		id: label
 		text: parent.text
 	}
 	// Demonstrate model owned by control.
 	// Simpler than putting model outside control (which requires using Connection.)
 	SpinBox {
-		id: spinbox
-		// bind to model.  It must be a NOTIFYable property!!!
-		// value: model.value	
+		id: spinbox	// referenced by reset button
+		// Don't bind to model, because we control it only?  It must be a NOTIFYable property!!!
+		// OR bind to value so that on second opening, it follows the model
+		value: model.value	
 		
 		// Model is a property
 		// property QtObject model: Person{}
@@ -68,7 +68,8 @@ Row {
 		*/
 		id: resetButton
 		text: "Reset"
-		enabled: false
+		// Bind to model
+		enabled: ! model.isReset
 		onClicked: {
 			print("button clicked")
 			// Reset model

@@ -1,12 +1,13 @@
 
 from PyQt5.QtCore import pyqtProperty, QObject
-#from PyQt5.QtCore import pyqtSignal as Signal
+from PyQt5.QtGui import QColor
+from PyQt5.QtCore import pyqtSignal as Signal
 
 #from documentStyle.debugDecorator import reportReturn, reportFalseReturn
 
 
 class BaseResettableValue(QObject):
-  '''
+  ''')  # 
   A value whose current value can be reset to an valueToResetTo,
   and whose current value can be rolled into valueToResetTo.
   
@@ -29,10 +30,10 @@ class BaseResettableValue(QObject):
   but not absolutely necessary.
   '''
   
-  
+  isResetChanged = Signal()
   
   def __init__(self, valueToResetTo):
-    super().__init__()  # MUST init QObject
+    super().__init__()  # MUST init QObject)  # 
     self._value = valueToResetTo
     self._valueToResetTo = valueToResetTo
     self._isReset = True
@@ -50,7 +51,7 @@ class BaseResettableValue(QObject):
   isReset property
   '''
   
-  @pyqtProperty(bool)
+  @pyqtProperty(bool, notify=isResetChanged)
   def isReset(self):
     ''' A getter for convenience of debugging. '''
     return self._isReset
@@ -68,12 +69,21 @@ class BaseResettableValue(QObject):
     if self._isReset:
       #print "Resetting twice?"
       pass
-    self._value = self._valueToResetTo
+    '''
+    Don't set private _value, use setter so signal is emitted.
+    '''
+    self.value = self._valueToResetTo
     self._isReset = True
+    self.isResetChanged.emit()
 
 
   '''
   touched property
+  
+  User chose a value, or chose reset button.
+  We don't know which here, so we can't set isReset:
+  User chose a value, isReset should be False.
+  User chose reset button, isReset should be True.
   '''
   @pyqtProperty(bool)
   def touched(self):
@@ -103,7 +113,7 @@ pyqtProperty needs to know the type
 
 class ResettableIntValue(BaseResettableValue):
   
-  #valueChanged = Signal()
+  valueChanged = Signal()
   # TODO does this clash with pre-defined QML signal valueChanged?
   
   def __init__(self, valueToResetTo):
@@ -113,7 +123,7 @@ class ResettableIntValue(BaseResettableValue):
   Define getter of 'value' property.  
   The C++ type of the property is int
   '''
-  @pyqtProperty(int)  # , notify=valueChanged)
+  @pyqtProperty(int, notify=valueChanged)
   def value(self):
     #print("get value", self._value)
     return self._value
@@ -137,22 +147,30 @@ class ResettableIntValue(BaseResettableValue):
     Programmatic value changes are not a touch.
     self.touched = True
     '''
-    self._isReset = False
-    #self.valueChanged.emit()
+    '''
+    !!! Use the setter so signal emitted.
+    '''
+    self.isReset = False
+    self.valueChanged.emit()
 
 
 class ResettableColorValue(BaseResettableValue):
   
+  valueChanged = Signal()
+  
   def __init__(self, valueToResetTo):
     super().__init__(valueToResetTo)
   
-  @pyqtProperty("QColor")
+  @pyqtProperty("QColor", notify=valueChanged)
+  #@pyqtProperty(int, notify=valueChanged)
   def value(self):
     return self._value
   
   @value.setter
   def value(self, newValue):
+    assert isinstance(newValue, QColor)
     self._value = newValue
     self._isReset = False
+    self.valueChanged.emit()
     
     

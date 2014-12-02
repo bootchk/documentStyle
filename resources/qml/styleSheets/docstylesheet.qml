@@ -17,7 +17,7 @@ Item {
 	
 	MyDialogs.StyleColorDialog {
 		id: colorDialog
-		model: DocAnyAnyPenColor
+		model: stylesheetModel.selectResettableValueByStringSelector("*.*.Pen.Color")
 	}
 
 	MyDialogs.StyleDialog {
@@ -25,7 +25,7 @@ Item {
 		title: "Doc Style Sheet"
 		dialogDelegate: docDialogDelegate
 		// Get model from context
-		property var formationModel: stylesheetModel
+		// Global:  property var formationModel: stylesheetModel
 		
 		/*
 		onVisibleChanged: {

@@ -5,7 +5,7 @@ import "../controlGroups" as MyControlGroups
 
 
 Column {
-	id: lineStyleTabColumn
+	property string selector: "*.Line"
 	
 	MyControlGroups.PenControlGroup {}
 	
