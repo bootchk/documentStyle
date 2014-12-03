@@ -6,7 +6,7 @@ This is outer shell with delegate and connections.
 Other notes:
 1. stylesheetModel is in root context and is globally referenced
 2. other dialogs are owned by components (e.g. style dialog owned by font style control)
-3. 
+3. Whether the 'dialog' is modal, or has  buttons, can be changed later
 */
 
 

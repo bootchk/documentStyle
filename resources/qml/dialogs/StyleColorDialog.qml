@@ -4,7 +4,6 @@ import QtQuick.Dialogs 1.2
 
 
 ColorDialog {
-	//id: colorDialog
 	title: "Choose color"
 	// This general dialog is specialized at instantiation with a model
 	property var model

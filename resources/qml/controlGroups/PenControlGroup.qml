@@ -31,6 +31,7 @@ GroupBox {
 			// Layout.fillWidth: true
 			
 			Component.onCompleted: {
+				print("Completed ResettableSpinBox")
 				print(x, y, width, height)
 				console.assert(typeof stylesheetModel != 'undefined', "stylesheetModel is undefined")
 				print(model)
@@ -50,10 +51,6 @@ GroupBox {
 				print(model.value)
 			}
 		}
-		/* CRUFT
-		StyleControls.MyColorChooser {
-		}
-		*/
 		
 		StyleControls.ResettableComboBox {
 			text: "Style"
