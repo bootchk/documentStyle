@@ -1,24 +1,22 @@
 
 import QtQuick 2.3
-import QtQuick.Controls 1.2
 import QtQuick.Dialogs 1.2
 
 
 ColorDialog {
-	id: colorDialog
+	//id: colorDialog
 	title: "Choose color"
-	property var model	// passed
+	// This general dialog is specialized at instantiation with a model
+	property var model
 	
 	onAccepted: {
-		console.log("You chose: " + colorDialog.color)
+		console.log("You chose: " + color)
 		print(currentColor)
-		// model.
-		// Qt bug, color is not updated properly
+		// Qt bug, color is not updated properly, use currentColor
 		model.value = currentColor
-		// Resettable 
 		model.touched = true
 		
-		// resetButton.enabled = true
+		// resetButton.enabled = true ???
 	}
 	onRejected: {
 		console.log("Canceled")

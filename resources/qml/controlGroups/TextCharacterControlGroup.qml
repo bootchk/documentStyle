@@ -14,13 +14,11 @@ GroupBox {
 	 Column {
 		spacing: 10
 		
-		// TODO FontChooser
-		StyleControls.ResettableComboBox {
-					text: "Font"
-					selector: characterGroup.selector + ".Font"
-					model: stylesheetModel.selectResettableValueByStringSelector(selector)
-					domain: [ "None", "Solid", "Dense1", "Dense2", "Dense3"]	// Must correspond to Qt.PenStyle
-				}
+		StyleControls.ResettableFontChooser {
+			text: "Font"
+			selector: characterGroup.selector + ".Font"
+			model: stylesheetModel.selectResettableValueByStringSelector(selector)
+		}
 		
 		StyleControls.ResettableColorChooser {
 			text: "Color"

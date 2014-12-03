@@ -1,5 +1,5 @@
 
-
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QTextBlockFormat
 
 from .textFormation import TextFormation
@@ -33,7 +33,8 @@ class BlockFormation(TextFormation):
     This is the count of indents, more or less tabs.
     '''
     self.styleProperties=[# WAS 'Alignment'
-                          BaseStyleProperty('Aligned', self.instrument.setAlignment, self.selector,
+                          BaseStyleProperty('Aligned', self.adaptAlignment, self.selector,
+                                            #self.instrument.setAlignment, 
                                               # PySide default=AlignmentStyleWrapper(self.instrument.alignment()),
                                               default=self.instrument.alignment(),
                                               layoutFactory=ComboBoxStylePropertyLayout,
@@ -72,6 +73,36 @@ class BlockFormation(TextFormation):
     
   @reportReturn
   def adaptLineSpacing(self, value):
-    # Always lineHeightType=proportional, values always percent
+    '''
+    Adapt model to instrument setter, which takes two parameters.
+    Always lineHeightType=proportional, values always percent e.g. 100, 150, 200
+    '''
     assert value > 0
     self.instrument.setLineHeight(value, QTextBlockFormat.ProportionalHeight)
+    
+    
+  @reportReturn
+  def adaptAlignment(self, value):
+    '''
+    Convert int to Qt.Alignment type
+    Solves problem in QML that I don't fully understand.
+    Note below that Python doesn't care about the comparison types,
+    but PyQt gives TypeError if use unadapted value of type int.
+    
+    Possibly we could also fix by defining ResettableAlignmentValue of type QtCore.Alignment ?
+    '''
+    assert value > 0, "Zero is not a proper flag."
+    
+    if value == Qt.AlignLeft:
+      adaptedValue = Qt.AlignLeft
+    elif value == Qt.AlignRight:
+      adaptedValue = Qt.AlignRight
+    elif value == Qt.AlignHCenter:  # !!!! Horizontal
+      adaptedValue = Qt.AlignHCenter
+    elif value == Qt.AlignJustify:
+      adaptedValue = Qt.AlignJustify
+    else:
+      print("Unknown alignment value")
+      adaptedValue = Qt.AlignLeft # defaults to some valid value
+    print("adaptAlignment called", adaptedValue)
+    self.instrument.setAlignment(adaptedValue)

@@ -3,7 +3,7 @@ import QtQuick.Dialogs 1.2
 
 import "../dialogContents" as MyDialogContents
 
-
+// Main editor of stylesheet, current design: a dialog.
 Dialog {
 	id: dialog
 	property var dialogDelegate

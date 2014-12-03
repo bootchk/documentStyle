@@ -10,6 +10,7 @@ About
 This is a subsystem of classes for styling document elements of a document.
 
 The subsystem includes GUI, for editing stylesheets and editing the style of document elements.
+GUI alternatives: QWidget or QML
 
 One emphasis is on understandable object design (not performance.)  
 Certain of the classes (e.g. StyleSheet, Selector) are familiar.
@@ -131,6 +132,10 @@ This entails cleanly separating the view and the model.
 
 The file TODO.txt is a list of minor things probably will never get done.
 
-A button on StyleSheetDialogs to reset all values to cascaded values (erase in-lining.)
+TODO A button on StyleSheetDialogs to reset all values to cascaded values (erase in-lining.)
+
+TODO OK button enabled only if user touches a style property
+
+TODO non-modal stylesheet dialog (style document as user touches properties.)
 
 

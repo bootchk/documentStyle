@@ -1,5 +1,5 @@
 import QtQuick 2.3
-import QtQuick.Controls 1.2
+import QtQuick.Controls 1.2		// for GroupBox
 
 import "../styleControls" as StyleControls
 import "../listModels" as ListModels

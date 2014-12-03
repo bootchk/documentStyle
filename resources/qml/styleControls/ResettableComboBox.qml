@@ -23,8 +23,10 @@ Row {
 	
 	ComboBox{
 		id: combobox
-		model: parent.domain	// TODO parent. not needed
+		model: domain
 		// TODO alias for resetButton??  Seems to work without it
+		
+		// TODO since model is a ListModel, convert from parent.model.value to ListModel.index to currentIndex
 		currentIndex: parent.model.value
 		         
 		onActivated: {
@@ -40,6 +42,14 @@ Row {
 			parent.model.value = model.get(index).value	
 			parent.model.touched = true
 		}
+	}
+	
+	Connections{
+		target: model
+		onValueChanged: {
+			console.log("parent model value changed")
+			//combobox.find()
+		}	
 	}
 
 	MyControls.ResetButton {

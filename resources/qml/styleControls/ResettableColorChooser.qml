@@ -3,6 +3,7 @@ import QtQuick.Controls 1.2
 import QtQuick.Controls.Styles 1.2
 
 import "../styleControls" as MyControls
+import "../dialogs" as MyDialogs
 
 /*
  See: ResettableSpinBox which is the commented template for this.
@@ -12,6 +13,11 @@ Row {
 	property string text
 	property var model
 	property string selector
+	
+	// chooser dialog owned by this control, specialized with model
+	property var chooserDialog: MyDialogs.StyleColorDialog {
+		model: stylesheetModel.selectResettableValueByStringSelector(selector)
+	}
 	
 	Label {
 		id: label
@@ -35,7 +41,7 @@ Row {
 		// This doesn't work
 		style: ButtonStyle {
 		        background: Rectangle {
-		        	color: colorDialog.currentColor
+		        	color: chooserDialog.color	// binding
 		            implicitWidth: 100
 		            implicitHeight: 25
 		            border.width: control.activeFocus ? 2 : 1
@@ -47,19 +53,11 @@ Row {
 		            }
 		        }
 		    }
-		// color: colorDialog.color
+		
 		onClicked: {
 			print("color button clicked")
-			colorDialog.accepted.connect(function() {
-		            // No need, is bound: colorIndicator.color = colorDialog.currentColor
-		            // label.color = colorDialog.currentColor
-		            model.value = colorDialog.currentColor	// side effect should be enabling of reset button?
-		            model.touched = true
-		            // This is not allowed by model: model.isReset = false
-		            // The above setting of model.value does not seem to have proper side effect, so do it here.
-		            resetButton.enabled = true
-		        })
-			colorDialog.open()
+			// chooserDialog knows model and changes it onAccepted
+			chooserDialog.open()
 		}
 	}
 
