@@ -34,7 +34,10 @@ Row {
 			 * Also, this has a formal parameter "index" which is not same as currentIndex
 			 */
 			console.debug("CombBox.onActivated", index)
-			parent.model.value = index	// Note this is actual parameter of signal, not same as currentIndex
+			// Note index is actual parameter of signal, not same as currentIndex
+			// OLD, for continguous enums: parent.model.value = index
+			// New use a list of [text,value] pairs i.e. ListModel of ListElements
+			parent.model.value = model.get(index).value	
 			parent.model.touched = true
 		}
 	}
@@ -45,19 +48,3 @@ Row {
 		buddyControl: combobox
 	}
 }
-
-/*
- * How to use a list model (non-contiguous enum)
- * 
- * ComboBox {
-    currentIndex: 2
-    model: ListModel {
-        id: cbItems
-        ListElement { text: "Banana"; color: "Yellow" }
-        ListElement { text: "Apple"; color: "Green" }
-        ListElement { text: "Coconut"; color: "Brown" }
-    }
-    width: 200
-    onCurrentIndexChanged: console.debug(cbItems.get(currentIndex).text + ", " + cbItems.get(currentIndex).color)
-}
- */

@@ -2,6 +2,7 @@ import QtQuick 2.3
 import QtQuick.Controls 1.2
 
 import "../styleControls" as StyleControls
+import "../listModels" as ListModels
 
 /*
 Group of controls for pen.
@@ -58,7 +59,8 @@ GroupBox {
 			text: "Style"
 			selector: penGroup.selector + ".Style"
 			model: stylesheetModel.selectResettableValueByStringSelector(selector)
-			domain: [ "Invisible", "Solid", "Dash", "Dot", "DashDot"]	// Must correspond to Qt.BrushStyle
+			domain: ListModels.PenStyleListModel{}
+			//[ "Invisible", "Solid", "Dash", "Dot", "DashDot"]	// Must correspond to Qt.BrushStyle
 		}
 	}
 }	

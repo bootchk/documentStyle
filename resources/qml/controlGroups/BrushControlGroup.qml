@@ -2,7 +2,7 @@ import QtQuick 2.3
 import QtQuick.Controls 1.2
 
 import "../styleControls" as StyleControls
-
+import "../listModels" as ListModels
 
 // Group of controls for Brush.
 GroupBox {
@@ -19,7 +19,7 @@ GroupBox {
 					text: "Style"
 					selector: brushGroup.selector + ".Style"
 					model: stylesheetModel.selectResettableValueByStringSelector(selector)
-					domain: [ "None", "Solid", "Dense1", "Dense2", "Dense3"]	// Must correspond to Qt.PenStyle
+					domain: ListModels.BrushStyleListModel{}
 				}
 		
 		StyleControls.ResettableColorChooser {
@@ -27,7 +27,5 @@ GroupBox {
 			selector: brushGroup.selector + ".Color"
 			model: stylesheetModel.selectResettableValueByStringSelector(selector)
 		}
-		
-		
 	}
 }	
