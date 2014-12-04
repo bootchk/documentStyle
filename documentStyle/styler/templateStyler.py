@@ -42,5 +42,5 @@ class TemplateStyler(Styler):
   def formation(self):
     return self._formation
     
-  def styleDocElementFromStyle(self, newFormation):
+  def styleLeafFromFormation(self, newFormation):
     self._formation = newFormation

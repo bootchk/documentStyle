@@ -1,5 +1,5 @@
 /*
-QML for stylesheet editor.
+QML for pixmap stylesheet editor.
 
 This is outer shell with delegate and connections.
 
@@ -18,8 +18,8 @@ import "../dialogs" as MyDialogs
 Item {
 	// Delegate allowing Python side to open this dialog
 	DialogDelegate {
-		id: docDialogDelegate
-		objectName: "docDialogDelegate"
+		id: pixmapDialogDelegate
+		objectName: "pixmapDialogDelegate"
 	}
 	
 	// Subdialogs e.g. StyleColorDialog are owned by controls that use them

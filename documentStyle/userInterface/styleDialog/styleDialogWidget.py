@@ -16,7 +16,6 @@ class StyleSheetDialogWidget(QDialog):
   '''
   QWidget GUI form of StyleSheetDialog
   
-  
   Smart: configures itself according to a passed Formation.
   
   Only changes the passed Formation, which subsequently should used:
@@ -129,3 +128,6 @@ class StyleSheetDialogWidget(QDialog):
     self.rejected.connect(cancelSlot)
     
     
+  def wasAccepted(self):
+    " Implement deferred "
+    return self.result() == QDialog.Accepted

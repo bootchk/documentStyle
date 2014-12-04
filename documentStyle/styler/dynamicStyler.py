@@ -42,32 +42,33 @@ class DynamicStyler(Styler):
     
     
   @report
-  def styleDocElementFromStyling(self, styling):
+  def styleLeafFromFormation(self, formation):
     '''
     See docstring at super.
     Misnamed, called to style a documentElement OR a Tool.
     '''
-    assert isinstance(styling, Formation)
+    assert isinstance(formation, Formation)
     
-    # For now, user might not have touched a styling (since OK button on dialog is never disabled.)
+    # For now, user might not have touched a formation (since OK button on dialog is never disabled.)
     # If not touched, just return.
-    # TODO assert styling.isTouched() and fix dialog so it cannot be OK'd if not touched.
-    if not styling.isTouched():
+    # TODO assert formation.isTouched() and fix dialog so it cannot be OK'd if not touched.
+    if not formation.isTouched():
       return
     
     # See similar code at IntermediateStyleSheet.reflectEditsToStylingActSetCollection
-    # Assert there is only one StylingActSet that matches styling.selector?
-    targetStylingActSet = self._styleSheet.stylingActSetCollection.getMatchingOrNewStylingActSet(styling.selector)
+    # Assert there is only one StylingActSet that matches formation.selector?
+    targetStylingActSet = self._styleSheet.stylingActSetCollection.getMatchingOrNewStylingActSet(formation.selector)
     # targetStylingActSet refers to styling acts on the owning DocumentElement of this Styler
     #print("targetSASC", targetStylingActSet)
-    deletedCount = styling.reflectToStylingActSet(targetStylingActSet)
+    deletedCount = formation.reflectToStylingActSet(targetStylingActSet)
     #print("Styling documentElement or Tool, deleted count", deletedCount)
   
   
   @report
-  def styleDocElementFromStyleSheet(self, sourceStylesheet):
+  def styleLeafFromStyleSheet(self, sourceStylesheet):
     '''
     Copy styling acts from stylesheet to self's stylesheet.
+    Self is owned by a leaf, a DocumentElement or Tool.
     '''
     assert isinstance(sourceStylesheet, DocumentElementStyleSheet), str(type(sourceStylesheet))
     # For now, SAS doesn't know its selector, so pass self.selector
@@ -97,7 +98,6 @@ class DynamicStyler(Styler):
     return self._styleSheet.parent.name == 'Doc', 'parent is a DocumentStyleSheet'
   
   
-  
   @report
   def getEditedStyle(self, parentWindow, titleParts):
     ''' 
@@ -105,21 +105,31 @@ class DynamicStyler(Styler):
     Return Style, or None if canceled.
     !!! Does not apply Style to DocumentElement
     '''
-    editableCopyOfStyle = self.formation()
+    self.createGui(parentWindow, titleParts)
+    self.dialog.converseAppModal() 
+    if self.dialog.wasAccepted():
+      result = self.editedFormation
+    else:
+      result = None
+    return result
+    
+    
+  def createGui(self, parentWindow, titleParts):
+    " Compare to IntermediateStyleSheet."
+    self.editedFormation = self.formation()   # New copy
+    assert self.editedFormation is not None
     '''
     Parent to app's activeWindow.
     FUTURE, if a document element is its own window, parent to it?
     Or position the dialog closer to the document element.
     '''
-    styleDialog = EditableStyleSheetDialog(parentWindow=parentWindow,
-                                           formation=editableCopyOfStyle, 
-                                           titleParts=titleParts)
-    styleDialog.exec_()
-    if styleDialog.result() == QDialog.Accepted:
-      return editableCopyOfStyle
-    else:
-      return None
-    
+    self.dialog = EditableStyleSheetDialog(parentWindow = parentWindow,
+                                      formation=self.editedFormation, 
+                                      titleParts = titleParts)
+                                      # WAS flags=Qt.Sheet)
+                                      # but that is not needed if open() which is window modal
+    self.dialog.connectSignals(acceptSlot=self.dialog.standardAccept, 
+                               cancelSlot=self.dialog.standardCancel)
     
   """
   OLD

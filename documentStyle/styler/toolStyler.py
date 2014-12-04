@@ -42,12 +42,8 @@ class ToolStyler(DynamicStyler):
       # canceled, self's styleSheet unchanged
       result = False
     else:
-      '''
-      update self's styleSheet.
-      Doesn't affect any document elements now.
-      Strangely named: actually reflects styling acts to stylesheet of tool, which is not a DE.
-      '''
-      self.styleDocElementFromStyling(styling=styling)
+      " update self's styleSheet.  Doesn't affect any document elements now. "
+      self.styleLeafFromFormation(formation=styling)
       result = True
     return result
     
@@ -62,7 +58,7 @@ class ToolStyler(DynamicStyler):
     #print('foo', documentElement.styler._styleSheet)
     #documentElement.styler._styleSheet._dump()
     # Stamp documentElement's styler from my stylesheet i.e. change model
-    documentElement.styler.styleDocElementFromStyleSheet(self.styleSheet())
+    documentElement.styler.styleLeafFromStyleSheet(self.styleSheet())
     
     # Now documentElement.styler.stylesheet has styling acts the same as self
     # TODO assertions that check that new styling acts were added.

@@ -6,6 +6,8 @@ import "../dialogContents" as MyDialogContents
 // Main editor of stylesheet, current design: a dialog.
 Dialog {
 	id: dialog
+	modality: Qt.ApplicationModal
+	
 	property var dialogDelegate
 	 
 	// Usually hidden unless call open()

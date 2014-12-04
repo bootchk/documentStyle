@@ -120,7 +120,7 @@ class Styleable(object):
     !!! Styler (certain subclasses) may convert Formation into StylingActs on StyleSheet.
     !!! Does not apply style (i.e. send it to GraphicsFramework.
     '''
-    self.styler.styleDocElementFromStyling(styling)
+    self.styler.styleLeafFromFormation(formation=styling)
   
   
   @report
