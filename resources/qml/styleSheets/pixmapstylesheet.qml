@@ -26,8 +26,8 @@ Item {
 	
 	MyDialogs.StyleDialog {
 		id: styleDialog
-		title: "Doc Style Sheet"
-		dialogDelegate: docDialogDelegate
+		title: "Pixmap Style Sheet"
+		dialogDelegate: pixmapDialogDelegate
 		
 		Component.onCompleted: {
 			print(x, y, width, height)
@@ -36,7 +36,7 @@ Item {
 	}
 	
 	Connections {
-	    target: docDialogDelegate
+	    target: pixmapDialogDelegate
 	    onActivated: {
 	    	console.log("Dialog activated")
 	    	styleDialog.open()

@@ -189,10 +189,10 @@ class Styleable(object):
   def editStyle(self, parentWindow):
     ''' 
     Let user edit style of DocumentElement.
-    Return Style, or None if canceled.
-    !!! Does not apply Style to DocumentElement
+    If not canceled, apply Style to DocumentElement
     
     Implementation: delegate to styler.
+    Note styler may call back to self.applyStyle()
     '''
     '''
     assert getStylingDocumentElementType() is a string that describes document element type
@@ -200,8 +200,9 @@ class Styleable(object):
     Style type may be general, e.g. it may be 'Shape' whereas element is specifically a 'Rect' subclass of Shape.
     '''
     titleParts = (self.getStylingDocumentElementType(), "Element Style")
-    return self.styler.getEditedStyle(parentWindow = parentWindow,
-                                      titleParts=titleParts)
+    self.styler.editStyleOfDocElement(parentWindow = parentWindow,
+                                      titleParts=titleParts,
+                                      docElement=self)
     
 
   @report

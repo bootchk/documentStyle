@@ -127,7 +127,3 @@ class StyleSheetDialogWidget(QDialog):
     self.accepted.connect(acceptSlot)
     self.rejected.connect(cancelSlot)
     
-    
-  def wasAccepted(self):
-    " Implement deferred "
-    return self.result() == QDialog.Accepted

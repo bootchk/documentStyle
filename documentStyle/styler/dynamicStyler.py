@@ -6,10 +6,9 @@ This is free software, covered by the GNU General Public License.
 from copy import deepcopy
 
 from PyQt5.QtCore import QCoreApplication
-from PyQt5.QtWidgets import QDialog
 
 from .styler import Styler
-from documentStyle.styleSheet.intermediateStyleSheet import IntermediateStyleSheet
+# from documentStyle.styleable import Styleable circular?
 from documentStyle.styleSheet.documentElementStyleSheet import DocumentElementStyleSheet
 from documentStyle.formation.formation import Formation
 from documentStyle.userInterface.styleDialog.styleDialog import EditableStyleSheetDialog
@@ -99,23 +98,29 @@ class DynamicStyler(Styler):
   
   
   @report
-  def getEditedStyle(self, parentWindow, titleParts):
+  #def getEditedStyle(self, parentWindow, titleParts):
+  def editStyleOfDocElement(self, parentWindow, titleParts, docElement):
     ''' 
     Let user edit style held by styler.
-    Return Style, or None if canceled.
-    !!! Does not apply Style to DocumentElement
+    If not canceled, apply Style to DocumentElement
     '''
+    self._editedDocElement = docElement
     self.createGui(parentWindow, titleParts)
     self.dialog.converseAppModal() 
-    if self.dialog.wasAccepted():
-      result = self.editedFormation
-    else:
-      result = None
-    return result
+    '''
+    Some implementations of EditableStyleSheetDialog (the QML implementation)
+    do not stop event loop (e.g. for app modal dialog)
+    so always use signals to continue with result.
+    We can't assume dialog result exists here.
+    '''
     
     
   def createGui(self, parentWindow, titleParts):
-    " Compare to IntermediateStyleSheet."
+    '''
+    Compare to IntermediateStyleSheet.
+    
+    
+    '''
     self.editedFormation = self.formation()   # New copy
     assert self.editedFormation is not None
     '''
@@ -128,9 +133,24 @@ class DynamicStyler(Styler):
                                       titleParts = titleParts)
                                       # WAS flags=Qt.Sheet)
                                       # but that is not needed if open() which is window modal
-    self.dialog.connectSignals(acceptSlot=self.dialog.standardAccept, 
-                               cancelSlot=self.dialog.standardCancel)
+    self.dialog.connectSignals(acceptSlot=self.accept, 
+                               cancelSlot=self.cancel)
     
+  
+  def accept(self):
+    '''
+    User accepted dialog.
+    Result is in self.editedFormation.
+    Apply it to styleable that was passed to this editing session.
+    '''
+    # assert isinstance(self._editedDocElement, Styleable)
+    self._editedDocElement.applyStyle(self.editedFormation)
+
+
+  def cancel(self):
+    self._editedDocElement = None
+
+  
   """
   OLD
   " Delegate serialization to my stylesheet"

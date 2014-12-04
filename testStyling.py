@@ -69,6 +69,9 @@ class ContextMenuStyleable(object):
       print(">>>capturing original Style")
       self.oldStyle = self.serializedStyle()
     
+    self.editStyle(parentWindow=mainWindow.view)
+    """
+    OLD.  Now editStyle applies any result and does not return a result.
     styling = self.editStyle(parentWindow=mainWindow.view)
     if styling is None:
       # testing undo: be careful in testing, if you cancel a dialog it might have this unexpected result.
@@ -79,7 +82,7 @@ class ContextMenuStyleable(object):
       # A real app would call item.polish() after the dialog
       print(">>>applyingStyle to element after dialog")
       self.applyStyle(styling=styling)
-      
+    """
     
       
 class LineItem(ContextMenuStyleable, Styleable, QGraphicsLineItem):

@@ -43,5 +43,5 @@ class Styler(object):
   def addToStyleCascade(self):
     raise NotImplementedError("Deferred")
 
-  def getEditedStyle(self, parentWindow, titleParts):
+  def editStyleOfDocElement(self, parentWindow, titleParts, docElement):
     raise NotImplementedError("Deferred")

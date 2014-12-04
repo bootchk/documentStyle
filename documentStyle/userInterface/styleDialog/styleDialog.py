@@ -6,7 +6,6 @@ This is free software, covered by the GNU General Public License.
 
 # TODO remove: this module should not depend on QtWidgets
 from PyQt5.QtWidgets import QDialogButtonBox
-from PyQt5.QtCore import pyqtSlot
 
 from documentStyle.userInterface.styleDialog.styleDialogWidget import StyleSheetDialogWidget
 from documentStyle.qmlUI.styleDialogQML import StyleSheetDialogQML
@@ -27,6 +26,7 @@ class StyleDialog(StyleSheetDialogQML):
   buttonBox()
   isEditable()
   open()
+  converseAppModal()
   connectSignals()
   
   Two subclasses: editable and noneditable.
@@ -42,22 +42,6 @@ class StyleDialog(StyleSheetDialogQML):
     " Synchronous (doesn't return) and app modal (no other windows take user input and centered in parent) "
     self.exec_()
     #print("After exec_")
-
-  def wasAccepted(self):
-    return super().wasAccepted()
-
-
-  '''
-  Slots for default accept/cancel actions: just update our wrapped result
-  '''
-  @pyqtSlot()
-  def standardAccept(self):
-    print("standardAccept called")
-    self._wasAccepted = True
-  
-  @pyqtSlot()
-  def standardCancel(self):
-    self._wasAccepted = False
   
 
 

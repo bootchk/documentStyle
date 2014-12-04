@@ -119,9 +119,5 @@ class StyleSheetDialogQML(QObject):
     self.dialogDelegate.rejected.connect(cancelSlot)
     
     
-  def wasAccepted(self):
-    " accept/cancel signals must have been connected to standard handlers to set attribute _wasAccepted. "
-    return self._wasAccepted
-    
   
     
