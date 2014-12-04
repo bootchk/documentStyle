@@ -73,7 +73,7 @@ class StylePicker(Resettable, QPushButton):
     If user did not cancel, but chose same style as before, we still set value:
     this is use case where user is in-lining to stabilize color to same as cascaded color.
     '''
-    self.setWrappedValue(value)  # Setting widget value, which propagates to StyleProperty
+    self.setValue(value)  # Setting widget value, which propagates to StyleProperty
     
     
   """
@@ -90,8 +90,6 @@ class StylePicker(Resettable, QPushButton):
     super(StylePicker, self).mouseReleaseEvent(event)
     self._chooseNewValue()
   """
-
-  
   
   
   def _chooseNewValue(self):
@@ -103,17 +101,6 @@ class StylePicker(Resettable, QPushButton):
     '''
     return self.subDialog(parent=self.parentWidget(), # parent to StyleDialog (parent of StylePicker)
                           initialValue=self._value)
-
-    
-  
-  def setWrappedValue(self, value):
-    '''
-    Set value after wrapping given value to a type that is pickleable.
-    Default: no actual wrapping.
-    Some subclasses reimplement.
-    '''
-    assert isinstance(value, self.styleType) # e.g. QColor, QFont
-    self.setValue(value)
     
     
   '''

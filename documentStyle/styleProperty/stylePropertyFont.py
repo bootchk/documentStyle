@@ -1,38 +1,46 @@
 
+from PyQt5.QtGui import QFont
+
 from documentStyle.styleProperty.styleProperty import BaseStyleProperty
 
-#from documentStyle.styleProperty.resettableValue import ResettableIntValue  # , ResettableFloatValue, ResettableColorValue
 
 '''
-Subclasses specialize GUI, i.e. have unique layouts.
-And some subclasses use wrapped style values.
+Subclasses specialize to wrap unpickleable ResettableValue values.
 
-BaseStyleProperty knows nothing about GUI.
-These know they use QWidget GUI.
-Alternatively, the GUI is QML.
-
-TODO refactor using Pluggable Behavior??
-'''
-
-'''
 These return pickleable values via wrapping or other adaption.
-Reimplement propagateValueToInstrument() to wrap instruments type with a pickleable type
+This is the API to StylingAct, which requires pickleable values.
 '''
   
-class Wrappable(object):
+class FontStyleProperty(BaseStyleProperty):
   '''
-  Mixin class for StyleProperty classes that wrap.
+  Reimplement getPropertyValue, setPropertyValue to unwrap before setting, wrap after getting
+  
+  Property values internal are not pickleable.
+  They are the native type of the instrument e.g. QFont, which is the one that is not pickleable.
   '''
-  def propagateValueToInstrument(self):
-    ''' Apply unwrapped value to instrument. '''
-    self.instrumentSetter(self.resettableValue.value.rawValue())
   
   
+  def setPropertyValue(self, newValue):
+    '''
+    Reimplement
+    '''
+    # newValue is not pickleable
+    assert isinstance(newValue, str)
+    unwrappedValue = QFont()
+    success = unwrappedValue.fromString(newValue)
+    if not success:
+      raise RuntimeError("Failed to unwrap font string.")
+    # assert QFont is still valid, just not the desired one.
+    super().setPropertyValue(unwrappedValue)
+    
   
+  def getPropertyValue(self):
+    unwrappedValue = super().getPropertyValue()
+    " QFont.toString() is pickleable "
+    result = unwrappedValue.toString()
+    # assert result is pickleable
+    return result
   
-class FontStyleProperty(Wrappable, BaseStyleProperty):
-  ''' Needed for both PySide and PyQt. '''
-  pass
   
   
   

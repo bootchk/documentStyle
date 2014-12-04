@@ -4,11 +4,12 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 from PyQt5.QtGui import QColor # debugging
-#from documentStyle.styleWrapper.fontStyleWrapper import FontStyleWrapper
 
 from documentStyle.selector import Selector
 
 from documentStyle.debugDecorator import report, reportTrueReturn
+
+
 
 class StylingAct(object):
   '''
@@ -16,13 +17,18 @@ class StylingAct(object):
   A record of change (a delta or diff.)
   Can be executed by StyleSheet on a (applyTo) Formation.
   
+  !!! A StylingAct is pickleable (as part of a pickleable StyleSheet.)
+  
+  Essentially a tuple (selector, value).
+  The value is equivalent to a StyleProperty value,
+  except that the latter are not pickleable (in the case of QFont, because of a limitation in PyQt.)
+  The setPropertyValue, getPropertyValue() getter/setters convert (adapt) for pickleability.
+  
   TODO Subclasses: NamingStylingAct InlineStylingAct
   '''
 
 
   def __init__(self, selector, value):
-    '''
-    '''
     #print "new StylingAct", selector, value
     assert isinstance(selector, Selector)
     self.selector = selector

@@ -31,7 +31,7 @@ class BaseStyleProperty(object):
   Abstract: partially deferred.
   
   Responsibilities:
-  - conventional Property responsibilities: get and set
+  - conventional Property getter/setter: getPropertyValue and setPropertyValue
   - knows selector
   - knows resetness and how to roll: delegated to ResettableValue
   - know widget (GUI view) that controls model (resettableValue)
@@ -112,7 +112,11 @@ class BaseStyleProperty(object):
                                     labelText = self.name,
                                     isLabeled=isLabeled)
     
+  '''
+  Getter/setter
   
+  Some subclasses (Font) reimplement to wrap unpickleable values.
+  '''
   @report
   def setPropertyValue(self, newValue):
     '''
@@ -120,6 +124,8 @@ class BaseStyleProperty(object):
     This may be called programmatically, from StylingActs.
     !!! This does not touch it.
     Callers must call touched=True separately.
+    
+    not require newValue is pickleable
     '''
     #print("StyleProperty.set()", newValue)
     self._throughSet(newValue) # Model
@@ -127,9 +133,13 @@ class BaseStyleProperty(object):
     # self.stylePropertyValueChanged.emit()
     
   
-  def get(self):
-    " get from self (master), not from instrument. "
-    return self.resettableValue.value
+  def getPropertyValue(self):
+    '''
+    get from self (master), not from instrument. 
+    '''
+    result = self.resettableValue.value
+    # not assert result is pickleable
+    return result
   
   
   def _throughSet(self, value):
@@ -144,8 +154,8 @@ class BaseStyleProperty(object):
   def propagateValueToInstrument(self):
     '''
     Propagate my value thru facade to framework instrument.
-    
-    Default implementation.  Some subclasses reimplement to wrap values.
+    Final implementation.
+    Internal value is native type of instrument.
     '''
     value = self.resettableValue.value
     self.instrumentSetter(value)

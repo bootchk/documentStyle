@@ -10,8 +10,6 @@ from PyQt5.QtGui import QFont
 
 from .stylePickerWidget import StylePicker
 
-from documentStyle.styleWrapper.fontStyleWrapper import FontStyleWrapper
-
 
 
 class FontPicker(StylePicker):
@@ -34,8 +32,8 @@ class FontPicker(StylePicker):
     Adapt (flip) to tuple required by Super
     '''
     # Use overloaded PyQt signature whose first parameter is initial, not a keyword.
-    # Unwrap initialValue
-    result, ok = QFontDialog.getFont(initialValue.rawValue(), parent=parent)
+    assert isinstance( initialValue, QFont)
+    result, ok = QFontDialog.getFont(initialValue, parent=parent)
     assert isinstance(ok, bool), str(type(ok))
     assert result is None or isinstance(result, QFont), str(type(result))
     '''
@@ -52,9 +50,6 @@ class FontPicker(StylePicker):
   """
   
   
-  def setWrappedValue(self, value):
-    ''' Reimplement to wrap value so it is pickleable. '''
-    self.setValue(FontStyleWrapper(value))
     
     
   def setValue(self, newValue):
@@ -62,14 +57,13 @@ class FontPicker(StylePicker):
     Set widget <style>: font
     AND set widget local attribute.
     
-    !!! Takes a wrapped value.  Note use of wrapped versus unwrapped value.
+    !!! Takes a value of type native to instrument i.e. QFont which is not pickleable.
     '''
-    assert isinstance(newValue, FontStyleWrapper) # Not: QFont
-    newQFont = newValue.rawValue()
+    assert isinstance(newValue, QFont)
     
-    self._feedbackFont(newQFont)
+    self._feedbackFont(newValue)
     self._value = newValue
-    self.valueChanged.emit(newQFont)  # Propagate, e.g. to model
+    self.valueChanged.emit(newValue)  # Propagate, e.g. to model
   
   
   

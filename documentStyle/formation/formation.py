@@ -37,7 +37,7 @@ class Formation(QObject):
   Unlike QStyleOption, which Style functions read,
   a Formation applies itself to a Styleable object.
   
-  Can be attached to DocumentElements and persisted (template styling)
+  Can be attached to DocumentElements and persisted (template styling, not implemented)
   OR can be computed on the fly from cascading StyleSheets (if stylesheets persist, no need for Formations to persist.)
   
   Responsibilities:
@@ -46,11 +46,15 @@ class Formation(QObject):
   - apply to morph
   - selectable (styleProperty and their resettableValue) by Selector or dotted string
   - display for editing
-  - persist (as attached to styled morphs of a document)
   - reflect to StylingActSet
   - iterable over subformations (top) and styleProperties (leaves)
+  - persist (as attached to styled morphs of a document, not implemented )
   
   selection of resettableValues of stylingProperties by dotted string name is for QML
+  
+  Formations and StyleProperties do not currently pickle (persist).
+  Only StylingActs are pickled.
+  PyQt does not pickle QFont.  It prevents StyleProperty from pickling easily.
   '''
   def __init__(self, name, selector, role=""):
     '''
@@ -259,7 +263,7 @@ class Formation(QObject):
       ''' 
       User edited (in-lined.)  Create or replace styling act.
       '''
-      stylingAct = StylingAct(item.selector, item.get())
+      stylingAct = StylingAct(item.selector, item.getPropertyValue())
       #print("New styling act", stylingAct)
       derivingStylingActSet.put(stylingAct)
       result = False
@@ -273,7 +277,7 @@ class Formation(QObject):
       property was inherited, but was overridden.  StylingAct will be new.
       OR property was not inherited, but might have been changed.  StylingAct will be updated.
       '''
-      stylingAct = StylingAct(item.selector, item.get())
+      stylingAct = StylingAct(item.selector, item.getPropertyValue())
       derivingStylingActSet.put(stylingAct)
     elif item.wasReset():
       # property was not inherited (overridden), but was reinherited.  StylingAct revoked.
