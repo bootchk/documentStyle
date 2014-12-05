@@ -245,7 +245,7 @@ class MainWindow(QMainWindow):
     
   def newToolStyler(self):
     # Tool styler not used in the GUI, but define it to test code imports
-    toolStyler = ToolStyler('Line', 'Freehand')
+    toolStyler = ToolStyler('Line', 'FreehandTool')
     toolStyler.saveAsSetting()
     unused = ToolStyler.getToolStylerFromSettings('Freehand')
     self.toolStyler = toolStyler

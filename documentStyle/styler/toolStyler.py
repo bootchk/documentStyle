@@ -27,7 +27,7 @@ class ToolStyler(DynamicStyler):
     assert isinstance(DEType, str)  # Type of style for element e.g. 'Line'
     selector = DETypeSelector(DEType)
     super(ToolStyler, self).__init__(selector)
-    self.toolName = toolName  # Type of element e.g. 'Freehand'
+    self.toolName = toolName  # Type of elementTool e.g. 'Freehand Tool'
     # ensure self is in style cascade (DESS() ensures it.)
     
   
@@ -36,16 +36,23 @@ class ToolStyler(DynamicStyler):
     Let user edit style of tool that creates DocumentElement.
     Return Style, or None if canceled.
     '''
-    styling = self.getEditedStyle(parentWindow = parentWindow,
-                                  titleParts=(self.toolName, "Tool Style"))
-    if styling is None:
-      # canceled, self's styleSheet unchanged
-      result = False
-    else:
-      " update self's styleSheet.  Doesn't affect any document elements now. "
-      self.styleLeafFromFormation(formation=styling)
-      result = True
-    return result
+    self.editStyleOfDocElement(parentWindow = parentWindow,
+                              titleParts=(self.toolName, "Style"),  # WAS "Tool Style".  "Tool" migrated to toolname.
+                              docElement=self)
+    '''
+    Execution continues.
+    see self.accept()
+    '''
+  
+  def accept(self):
+    '''
+    User accepted dialog.
+    Result is in self.editedFormation.
+    Apply it to tool that was passed to this editing session.
+    Update self's styleSheet.  Doesn't affect any document elements now.
+    '''
+    # assert isinstance(self._editedDocElement, Styleable)
+    self.styleLeafFromFormation(formation=self.editedFormation)
     
     
 

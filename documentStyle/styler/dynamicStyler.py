@@ -11,7 +11,7 @@ from .styler import Styler
 # from documentStyle.styleable import Styleable circular?
 from documentStyle.styleSheet.documentElementStyleSheet import DocumentElementStyleSheet
 from documentStyle.formation.formation import Formation
-from documentStyle.userInterface.styleDialog.styleDialog import EditableStyleSheetDialog
+
 
 from documentStyle.debugDecorator import report
 
@@ -59,7 +59,7 @@ class DynamicStyler(Styler):
     targetStylingActSet = self._styleSheet.stylingActSetCollection.getMatchingOrNewStylingActSet(formation.selector)
     # targetStylingActSet refers to styling acts on the owning DocumentElement of this Styler
     #print("targetSASC", targetStylingActSet)
-    deletedCount = formation.reflectToStylingActSet(targetStylingActSet)
+    _ = formation.reflectToStylingActSet(targetStylingActSet) # returns deletedCount, not used
     #print("Styling documentElement or Tool, deleted count", deletedCount)
   
   
@@ -97,28 +97,10 @@ class DynamicStyler(Styler):
     return self._styleSheet.parent.name == 'Doc', 'parent is a DocumentStyleSheet'
   
   
-  
-    
-    
-  def createGui(self, parentWindow, titleParts):
-    '''
-    Compare to IntermediateStyleSheet.
-    '''
-    self.editedFormation = self.formation()   # New copy
-    assert self.editedFormation is not None
-    '''
-    Parent to app's activeWindow.
-    FUTURE, if a document element is its own window, parent to it?
-    Or position the dialog closer to the document element.
-    '''
-    self.dialog = EditableStyleSheetDialog(parentWindow = parentWindow,
-                                      formation=self.editedFormation, 
-                                      titleParts = titleParts)
-                                      # WAS flags=Qt.Sheet)
-                                      # but that is not needed if open() which is window modal
-    self.dialog.connectSignals(acceptSlot=self.accept, 
-                               cancelSlot=self.cancel)
-    
+  '''
+  Handlers for editor dialog.
+  Specialized by subclass.
+  '''
   
   def accept(self):
     '''
@@ -128,10 +110,6 @@ class DynamicStyler(Styler):
     '''
     # assert isinstance(self._editedDocElement, Styleable)
     self._editedDocElement.applyStyle(self.editedFormation)
-
-
-  def cancel(self):
-    self._editedDocElement = None
 
   
   """
