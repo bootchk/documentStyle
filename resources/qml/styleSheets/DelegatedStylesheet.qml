@@ -37,7 +37,7 @@ Item {
 	Connections {
 	    target: dialogDelegate
 	    onActivated: {
-	    	console.log("Dialog activated")
+	    	console.log("Dialog activated from PyQt business side")
 	    	styleDialog.open()
 	    	console.log("After dialog activated")
 	    	console.assert(styleDialog.visible)

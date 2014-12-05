@@ -43,5 +43,21 @@ class Styler(object):
   def addToStyleCascade(self):
     raise NotImplementedError("Deferred")
 
+  #OLD def getEditedStyle(self, parentWindow, titleParts):
+  # TODO really should be Leaf, also edits style of Tool
   def editStyleOfDocElement(self, parentWindow, titleParts, docElement):
-    raise NotImplementedError("Deferred")
+    ''' 
+    Let user edit style held by styler.
+    If not canceled, apply Style to DocumentElement
+    '''
+    self._editedDocElement = docElement
+    self.createGui(parentWindow, titleParts)
+    self.dialog.converseAppModal() 
+    '''
+    Some implementations of EditableStyleSheetDialog (the QML implementation)
+    do not stop event loop (e.g. for app modal dialog)
+    so always use signals to continue with result.
+    We can't assume dialog result exists here.
+    '''
+    
+    

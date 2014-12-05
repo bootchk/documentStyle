@@ -97,29 +97,12 @@ class DynamicStyler(Styler):
     return self._styleSheet.parent.name == 'Doc', 'parent is a DocumentStyleSheet'
   
   
-  @report
-  #def getEditedStyle(self, parentWindow, titleParts):
-  def editStyleOfDocElement(self, parentWindow, titleParts, docElement):
-    ''' 
-    Let user edit style held by styler.
-    If not canceled, apply Style to DocumentElement
-    '''
-    self._editedDocElement = docElement
-    self.createGui(parentWindow, titleParts)
-    self.dialog.converseAppModal() 
-    '''
-    Some implementations of EditableStyleSheetDialog (the QML implementation)
-    do not stop event loop (e.g. for app modal dialog)
-    so always use signals to continue with result.
-    We can't assume dialog result exists here.
-    '''
+  
     
     
   def createGui(self, parentWindow, titleParts):
     '''
     Compare to IntermediateStyleSheet.
-    
-    
     '''
     self.editedFormation = self.formation()   # New copy
     assert self.editedFormation is not None
