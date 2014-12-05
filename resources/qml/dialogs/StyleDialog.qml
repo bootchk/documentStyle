@@ -1,5 +1,6 @@
 import QtQuick 2.3
 import QtQuick.Dialogs 1.2
+import QtQuick.Controls 1.1
 
 import "../dialogContents" as MyDialogContents
 
@@ -9,16 +10,22 @@ Dialog {
 	modality: Qt.ApplicationModal
 	
 	property var dialogDelegate
+	property var dialogSourceURL
 	 
 	// Usually hidden unless call open()
 	// visible: true
 	// Not a property: anchors.centerIn: parent
 	// Not a property: flags: Qt.Dialog
-	title: "My dialog"
+	title: "template"
 	standardButtons: StandardButton.Ok | StandardButton.Cancel
 	//minimumWidth: 400
 	//Layout.fillWidth: true
-	 
+	
+	// Contents is separate file, unrelated to buttons and handlers
+	// static: MyDialogContents.StyleDialogContents{}
+	// dynamic:
+	Loader { source: dialogSourceURL }
+	
 	onAccepted: {
 		console.log("Accepted")
 		dialogDelegate.accept()
@@ -29,6 +36,5 @@ Dialog {
 		dialogDelegate.reject()
 	}
 	
-	// Contents is separate file, unrelated to buttons and handlers
-	MyDialogContents.StyleDialogContents{}
+	
 }

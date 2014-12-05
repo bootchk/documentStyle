@@ -1,5 +1,5 @@
 /*
-QML for pixmap stylesheet editor.
+QML for stylesheet editor.
 
 This is outer shell with delegate and connections.
 
@@ -14,22 +14,25 @@ import QtQuick 2.3
 
 import QmlDelegate 1.0
 import "../dialogs" as MyDialogs
-import "../tabs" as MyTabs
+import "../dialogContents" as MyDialogContents
 
 Item {
+	// specialized at instantiation
+	property var dialogContentsURL
+	
 	// Delegate allowing Python side to open this dialog
 	DialogDelegate {
-		id: pixmapDialogDelegate
-		objectName: "pixmapDialogDelegate"
+		id: docDialogDelegate
+		objectName: "docDialogDelegate"
 	}
 	
 	// Subdialogs e.g. StyleColorDialog are owned by controls that use them
 	
 	MyDialogs.StyleDialog {
 		id: styleDialog
-		title: "Pixmap Style Sheet"
-		dialogDelegate: pixmapDialogDelegate
-		dialogContents: MyTabs.ImageStyleTab{}
+		title: "Doc Style Sheet"
+		dialogDelegate: docDialogDelegate
+		dialogSourceURL: dialogContentsURL
 		
 		Component.onCompleted: {
 			print(x, y, width, height)
@@ -38,7 +41,7 @@ Item {
 	}
 	
 	Connections {
-	    target: pixmapDialogDelegate
+	    target: docDialogDelegate
 	    onActivated: {
 	    	console.log("Dialog activated")
 	    	styleDialog.open()
