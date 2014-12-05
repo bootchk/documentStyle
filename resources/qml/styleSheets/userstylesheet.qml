@@ -1,36 +1,10 @@
-// QML for stylesheet editor
-// The shell with delegate and connections.
-
 import QtQuick 2.3
-import QtQuick.Controls 1.2
-import QtQuick.Dialogs 1.2
 
-import QmlDelegate 1.0
-import "../dialogs" as MyDialogs
+import "../styleSheets" as MyStylesheets
 
-Item {
-	DialogDelegate {
-		id: userDialogDelegate
-		objectName: "userDialogDelegate"
+// Specialize it with url of content of dialog node of the tree
+// Document stylesheet is full (contrast to DocElementStylesheet which are partial.)
+MyStylesheets.DelegatedStylesheet{ 
+	dialogContentsURL: "../dialogContents/FullStylesheetContents.qml"
+	titlePrefix: "User"
 	}
-
-	MyDialogs.StyleDialog {
-		id: styleDialog
-		title: "User Style Sheet"
-		dialogDelegate: userDialogDelegate
-	}
-	
-	Connections {
-	    target: userDialogDelegate
-	    onActivated: {
-	    	console.log("Dialog activated")
-	    	styleDialog.open()
-	    	console.log("After dialog activated")
-	    	console.assert(styleDialog.visible)
-	    }	
-	 }
-	 Connections {
-    	target: styleDialog
-    	onVisibleChanged: console.log("Dialog visible changed")
-	}
-}

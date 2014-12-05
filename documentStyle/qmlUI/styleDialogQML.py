@@ -46,6 +46,8 @@ class StyleSheetDialogQML(QObject):
     Order is important: create quickView, setContext, setSource, findComponent
     setContext defines names referred to in the source
     findComponent looks for names defined by the source.
+    
+    Note each .qml file has a DialogDelegate, all with same objectName "dialogDelegate" but separate instances.
     '''
     self.styleQuickView = qmlMaster.createQuickView(transientParent=qwin)
     self.exposeFormationModelToQML(view=self.styleQuickView, editedFormation=formation, prefix=prefix)
@@ -53,7 +55,7 @@ class StyleSheetDialogQML(QObject):
     qmlMaster.setSourceOnQuickView(view=self.styleQuickView, qmlFilename=qmlFilename)
     self.dialogDelegate = qmlMaster.findComponent(quickview=self.styleQuickView, 
                                                   className=QmlDelegate, 
-                                                  objectName=prefix+"DialogDelegate")
+                                                  objectName="dialogDelegate")
     assert self.dialogDelegate is not None
     
     "Wrap it, so it is visible?"

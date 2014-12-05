@@ -1,0 +1,6 @@
+These components are used in places:
+
+1. As tabs of TabView in editor (dialog) of full stylesheet for Document
+2. As entire contents of editor (dialog) of stylesheet for DocumentElement
+3. As entire contents of editor (dialog) of stylesheet for Tool 
+(that styles DocumentElement when user uses tool to create DocumentElement.)

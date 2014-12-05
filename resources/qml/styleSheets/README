@@ -1,0 +1,5 @@
+The component DelegatedStylesheet.qml is used by other files in this directory.
+
+Other files are not capitalized because they are not classes,
+but loaded by Python side.
+One per editor (dialog) per business object Class that can be styled.

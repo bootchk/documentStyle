@@ -13,4 +13,8 @@ import QtQuick 2.3
 import "../styleSheets" as MyStylesheets
 
 // Specialize it with url of content of dialog node of the tree
-MyStylesheets.DelegatedStylesheet{ dialogContentsURL: "../dialogContents/StyleDialogContents.qml" }
+// Document stylesheet is full (contrast to DocElementStylesheet which are partial.)
+MyStylesheets.DelegatedStylesheet{ 
+   dialogContentsURL: "../dialogContents/FullStylesheetContents.qml" 
+   titlePrefix: "Doc"
+   }

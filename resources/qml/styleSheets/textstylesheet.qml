@@ -5,6 +5,6 @@ import "../styleSheets" as MyStylesheets
 // Specialize
 // DocumentElement stylesheet is partial (only one tab of a full stylesheet)
 MyStylesheets.DelegatedStylesheet{ 
-   dialogContentsURL: "../tabs/ImageStyleTab.qml" 
-   titlePrefix: "Image"
+   dialogContentsURL: "../tabs/TextStyleTab.qml" 
+   titlePrefix: "Text"
    }
