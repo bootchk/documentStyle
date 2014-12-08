@@ -1,0 +1,6 @@
+A control group is a group of related style controls, for an Instrument.
+An Instrument usually has an analog in Qt, e.g. QPen, QBrush, etc.
+
+Here, SOME of the instruments (Pen and Brush) have an additional property: role.
+The role is used for DocumentElements having many parts (e.g. frame and body.)
+The instrument may style only one part, and the role tells that part.

@@ -8,7 +8,7 @@ Column {
 	
 	MyControlGroups.TextCharacterControlGroup {} 
 	MyControlGroups.TextBlockControlGroup {}
-	MyControlGroups.PenControlGroup {}	// role:Frame}
-	MyControlGroups.BrushControlGroup {}	//role:Ground}
+	MyControlGroups.PenControlGroup {role: "Frame:" }
+	MyControlGroups.BrushControlGroup {role: "Ground:"}	
 	MyControlGroups.OpacityControlGroup {}
 }

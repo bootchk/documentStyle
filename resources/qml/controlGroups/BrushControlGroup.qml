@@ -7,7 +7,8 @@ import "../listModels" as ListModels
 // Group of controls for Brush.
 GroupBox {
 	id: brushGroup
-	title: "Brush"
+	property string role: ""
+	title: role + "Brush"
 	flat: true
 	property string selector: parent.selector + ".Brush"
 

@@ -11,7 +11,9 @@ This is the comment-template for other groups: most comments are here.
 */
 GroupBox {
 	id: penGroup
-	title: "Pen"
+	property string role: ""	// defaults to None i.e. implicit
+	title: role + "Pen"
+	
 	flat: true	// save space
 	property string selector: parent.selector + ".Pen"
 
