@@ -9,12 +9,12 @@ import "../styleControls" as MyControls
  This is the equivalent of a QWidget.
 */ 
 Row {
+	spacing: 10
+	
 	property string text
 	property var model
 	property string selector
 	property var domain	// combobox's sub model
-	
-	spacing: 10
 	
 	Label {
 		id: label

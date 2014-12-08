@@ -25,12 +25,14 @@ Button {
 		// Reset model
 		model.isReset = true	// view=>model
 		model.touched = true
+		
 		/*
 		Do this ourselves?
 		But isReset = true should change model.value and emit valueChanged to bound buddyControl.value
 		*/
 		buddyControl.value = model.value	// model=>view
 		print("model.value", model.value)
+		
 		/*
 		Button state.
 		Again, this is bound to model.isReset, which should emit isResetChanged.

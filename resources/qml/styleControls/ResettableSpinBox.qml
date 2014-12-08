@@ -17,6 +17,8 @@ The reset button resets the control to an inherited value.
 */ 
 
 Row {
+	spacing: 10
+	
 	//anchors.fill: parent
 	
 	// Component is generalized, specialized with a passed [text, model, selector] at instantiation
