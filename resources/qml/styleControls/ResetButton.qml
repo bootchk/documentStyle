@@ -14,8 +14,9 @@ Button {
 	property var model
 	property var buddyControl
 	
-	// TODO icon
-	text: "Reset"
+	// text: ""	// "Inherit"
+	//iconSource: "reload.svg"
+	iconName: "reload"	// Load from theme by name
 	
 	// Bind to model
 	enabled: ! model.isReset	// model=>view
