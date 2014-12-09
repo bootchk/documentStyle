@@ -1,12 +1,9 @@
-'''
-'''
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QBrush
 
 import documentStyle.config as config
 
-#from documentStyle.styleWrapper.styleWrapper import BrushStyleWrapper
 
 
 class AdaptedBrushModel(object):

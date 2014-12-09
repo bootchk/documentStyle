@@ -51,7 +51,6 @@ class GraphicEffectFormation(InstrumentFormation):
     morph.setGraphicsEffect(effect)
     
   
-  # TODO this should be a StyleWrapper ?
   def adaptEncoding(self, codedValue):
     '''
     Adapt coded value to a QGraphicEffect value

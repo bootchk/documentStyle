@@ -1,5 +1,5 @@
 
-from documentStyle.instrument.opacityInstrument import POpacityInstrument
+from documentStyle.instrument.opacityInstrument import OpacityInstrument
 
 from documentStyle.formation.instrumentFormation.instrumentFormation import InstrumentFormation
 from documentStyle.styleProperty.styleProperty import BaseStyleProperty
@@ -16,7 +16,7 @@ class OpacityFormation(InstrumentFormation):
   
   def __init__(self, parentSelector):
     InstrumentFormation.__init__(self, name="Opacity", parentSelector=parentSelector)
-    self.instrument = POpacityInstrument()
+    self.instrument = OpacityInstrument()
     # !!! minimum is 0.1 otherwise it dissappears and user can't access
     self.styleProperties=[BaseStyleProperty("Opacity", 
                                          self.instrument.setOpacity,  

@@ -4,8 +4,6 @@ Copyright 2013 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-#from documentStyle.styleWrapper.styleWrapper import LineSpacingStyleWrapper
-
 import documentStyle.config as config
 
 class AdaptedLineSpacingModel(object):
@@ -16,8 +14,8 @@ class AdaptedLineSpacingModel(object):
   and the values are in percent.
   '''
   def __init__(self):
-    self.values = {config.i18ns.Single : 100,
-                   config.i18ns.OnePointFive : 150,
-                  config.i18ns.Double : 200,
+    self.values = {config.i18ns.Single : 0,   #100,
+                  config.i18ns.Double : 1, #200,
+                  config.i18ns.OnePointFive : 2, # 150,
                   }
     # TODO more values

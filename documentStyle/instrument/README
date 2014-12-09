@@ -1,0 +1,10 @@
+Adaptors for Qt's objects that are instruments.
+
+As needed, we adapt:
+- model values (text spacing and aligning)
+- signatures (char)
+- when there is no corresponding Qt instrument class (opacity)
+
+Some Qt instruments do not need adaption:
+- QPen
+- QBrush

@@ -7,9 +7,6 @@ from documentStyle.styleProperty.resettableValue import ResettableColorValue
 from documentStyle.userInterface.layout.typedStylePropertyLayout import ColorStylePropertyLayout, ComboBoxStylePropertyLayout
 import documentStyle.config as config
 
-#from ...model.brush import BrushModel
-#from ...styleWrapper.styleWrapper import BrushStyleWrapper
-
 
 
 class BrushFormation(InstrumentFormation):
@@ -28,7 +25,6 @@ class BrushFormation(InstrumentFormation):
                                             default=self.instrument.style(),
                                             # ResettableIntValue defaults and works
                                             layoutFactory=ComboBoxStylePropertyLayout,
-                                            # PySide default=BrushStyleWrapper(self.instrument.style()),
                                             domainModel = config.BrushModel),]
     
     '''

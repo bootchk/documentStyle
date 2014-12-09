@@ -6,8 +6,6 @@ from documentStyle.styleProperty.resettableValue import ResettableColorValue
 from documentStyle.userInterface.layout.typedStylePropertyLayout import IntStylePropertyLayout, ColorStylePropertyLayout, ComboBoxStylePropertyLayout
 import documentStyle.config as config
 
-#from documentStyle.styleWrapper.styleWrapper import PenStyleWrapper
-
 
 class PenFormation(InstrumentFormation):
   '''
@@ -31,7 +29,7 @@ class PenFormation(InstrumentFormation):
                                            layoutFactory=IntStylePropertyLayout,
                                            minimum=0, maximum=10, singleStep=1),
                           BaseStyleProperty("Style", self.instrument.setStyle, self.selector,
-                                            default=self.instrument.style(), # PySide PenStyleWrapper(self.instrument.style()),
+                                            default=self.instrument.style(),
                                             layoutFactory=ComboBoxStylePropertyLayout,
                                             domainModel = config.PenModel)
                           ]

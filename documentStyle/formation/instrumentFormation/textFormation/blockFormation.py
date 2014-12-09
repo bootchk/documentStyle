@@ -7,7 +7,6 @@ from documentStyle.styleProperty.styleProperty import BaseStyleProperty
 from documentStyle.userInterface.layout.typedStylePropertyLayout import ComboBoxStylePropertyLayout
 #, UnwrappedComboBoxStylePropertyLayout
 import documentStyle.config as config
-#from documentStyle.styleWrapper.styleWrapper import AlignmentStyleWrapper
 
 from documentStyle.debugDecorator import report
 
