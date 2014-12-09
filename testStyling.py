@@ -284,7 +284,8 @@ class App(QApplication):
     mainWindow.show()
     self.mainWindow = mainWindow
     
-    self.cascadion = StyleSheetCascadion(parentWindow=mainWindow)
+    self.cascadion = StyleSheetCascadion()
+    self.cascadion.preGui(parentWindow=mainWindow)
     mainWindow.newToolStyler()  # depends on cascadion
     self.documentView = mainWindow.newDocument()  # depends on cascadion
     

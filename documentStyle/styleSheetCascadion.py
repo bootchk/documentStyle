@@ -37,11 +37,10 @@ class StyleSheetCascadion(object):
   - know what part of cascade may change (be able to connect signals)
   '''
 
-  def __init__(self, parentWindow):
+  def __init__(self):
     '''
     Create cascading sequence of stylesheets.
-    Ordering is important.
-    !!! Getting userStyleSheet from setting is built-in, but some apps may not want this.
+    
     '''
     # !!! styleSheet() also a method of Qt QGV
     
@@ -49,13 +48,18 @@ class StyleSheetCascadion(object):
     # create singletons requiring translation
     config.i18ns = config.Translations()
     
-    self._initModels()
+    self._initModels()  # Needed by GUI
     self._initStyleSheets()
-    self._initGui(parentWindow)
+    " assert cascade of stylesheets exists, but not prepared for GUI edit. "
     
     
     
   def _initStyleSheets(self):
+    '''
+    Create cascade of stylesheets.
+    Order is important.
+    !!! Getting userStyleSheet from setting is built-in, but some apps may not want this.
+    '''
     # Root (default) stylesheet
     self.appStyleSheet = AppStyleSheet() 
     
@@ -90,25 +94,32 @@ class StyleSheetCascadion(object):
     '''
   
   
-  def _initGui(self, parentWindow):
+  def preGui(self, parentWindow):
     '''
-    Init editors for stylesheets.
+    Prepare for editing stylesheets.
+    
     For QWidgets, formerly these were created on the fly.
-    For QML
     '''
-    print("TODO: _initGui was called")
+    print("preGui called")
     if config.useQML:
-      " Create QML editor stuff"
+      " Register dialog delegates. "
       model = QmlModel()
       model.register()
-      # Omit App stylesheet GUI, not important to users
-      #self.appStyleSheet.createGui(parentWindow)
-      self.userStyleSheet.createGui(parentWindow)
-      self.docStyleSheet.createGui(parentWindow)
-      # TODO others
+      
     '''
-    Otherwise (QWidget gui) gui is created as needed (when edit() is called.)
+    Not calling _createEditors now.
+    Editors are created as needed (when edit() is called.)
     '''
+  
+  def _createEditors(self, parentWindow):
+    '''
+    Create editors in a batch, ahead of user request.
+    Omit App stylesheet GUI, not important to users
+    '''
+    #self.appStyleSheet.createGui(parentWindow)
+    self.userStyleSheet.createGui(parentWindow)
+    self.docStyleSheet.createGui(parentWindow)
+  
   
   def _initModels(self):
     " Create domain models. Needed by QWidget GUI, not QML? "
