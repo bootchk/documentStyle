@@ -5,8 +5,10 @@ import QtQuick 2.3
 // These are horizontal alignments!!!
 
 ListModel {
-      ListElement { text: "Left"; value: Qt.AlignLeft }
-      ListElement { text: "Right"; value: Qt.AlignRight }
-      ListElement { text: "Center"; value: Qt.AlignHCenter }
-      ListElement { text: "Justify"; value: Qt.AlignJustify }
+	// OLD map to Qt values such as Qt.AlignLeft
+	// NEW map to contiguous enum
+  ListElement { text: "Left"; value: 0 }
+  ListElement { text: "Right"; value: 1 }
+  ListElement { text: "Center"; value: 2 }
+  ListElement { text: "Justify"; value: 3 }
 }
