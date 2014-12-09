@@ -27,11 +27,11 @@ class AdaptedPenModel(object):
                    "DashDot": PenStyleWrapper(qtEnum.DashDotLine),
                    }
     """
-    self.values = {config.i18ns.NoneName : qtEnum.NoPen,
-                   config.i18ns.Solid : qtEnum.SolidLine,
-                   config.i18ns.Dashed : qtEnum.DashLine,
-                   config.i18ns.Dotted : qtEnum.DotLine,
-                   config.i18ns.DashDot : qtEnum.DashDotLine,
+    self.values = {config.i18ns.NoneName : qtEnum.NoPen,  # 0
+                   config.i18ns.Solid : qtEnum.SolidLine, # 1
+                   config.i18ns.Dashed : qtEnum.DashLine, # 2
+                   config.i18ns.Dotted : qtEnum.DotLine,  # 3
+                   config.i18ns.DashDot : qtEnum.DashDotLine, # 4
                    }
     
     # TODO more values Qt::DashDotDotLine  Qt::CustomDashLine

@@ -78,8 +78,16 @@ class StyleSheetCascadion(object):
     self.docStyleSheet = IntermediateStyleSheet(name='Doc')
     self.docStyleSheet.setParent(self.userStyleSheet)
     
-    # DocumentElementStyleSheets are created and owned by DocumentElements
-    # and are parented automatically (in init()) to docStyleSheet
+    '''
+    DocumentElementStyleSheets are created and owned by DocumentElements
+    and are parented automatically (in init()) to docStyleSheet.
+    GUI is created on the fly?
+    
+    Tool stylesheets are created and owned by Tools.
+    GUI created on the fly?
+    
+    TODO Optimization: only create GUI's once.
+    '''
   
   
   def _initGui(self, parentWindow):
@@ -103,11 +111,12 @@ class StyleSheetCascadion(object):
     '''
   
   def _initModels(self):
-    " Create domain models. Needed by GUI, except for QML? "
-    config.BrushModel = AdaptedBrushModel()
-    config.PenModel = AdaptedPenModel()
-    config.LineSpacingModel = AdaptedLineSpacingModel()
-    config.AlignmentModel = AdaptedAlignmentModel()
+    " Create domain models. Needed by QWidget GUI, not QML? "
+    if not config.useQML:
+      config.BrushModel = AdaptedBrushModel()
+      config.PenModel = AdaptedPenModel()
+      config.LineSpacingModel = AdaptedLineSpacingModel()
+      config.AlignmentModel = AdaptedAlignmentModel()
     
     
     

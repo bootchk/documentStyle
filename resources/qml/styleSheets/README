@@ -3,3 +3,23 @@ The component DelegatedStylesheet.qml is used by other files in this directory.
 Other files are not capitalized because they are not classes,
 but loaded by Python side.
 One per editor (dialog) per business object Class that can be styled.
+
+
+Full stylesheets use all the Tabs in a TabbedView
+Full stylesheets are Doc and User stylesheets.
+(We omit the App stylesheet.)
+
+
+Tool stylesheets are many to one to Tabs
+
+Tool stylesheet	     !    Tab
+-----------------------------
+freehandtoolstylesheet	line
+line		            line
+rect		            shape
+ellipse                 shape
+text		            text
+pixmap		            image
+
+DocumentElements are many to one to DocumentElementStylesheets.
+(In a similar fashion as tool stylesheets are to tabs.)

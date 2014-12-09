@@ -20,11 +20,12 @@ class AdaptedBrushModel(object):
                    "Quadrule": BrushStyleWrapper(qtEnum.CrossPattern),
                    "Crosshatch": BrushStyleWrapper(qtEnum.DiagCrossPattern),}
     """# BrushModel = AdaptedBrushModel()
-    self.values = {config.i18ns.NoneName : qtEnum.NoBrush,
-                   config.i18ns.Solid : qtEnum.SolidPattern,
-                   config.i18ns.HalfDense : qtEnum.Dense4Pattern,
-                   config.i18ns.Quadrule : qtEnum.CrossPattern,
-                   config.i18ns.Crosshatch : qtEnum.DiagCrossPattern,}
+    self.values = {config.i18ns.NoneName : qtEnum.NoBrush,  # 0
+                   config.i18ns.Solid : qtEnum.SolidPattern,  # 1
+                   config.i18ns.HalfDense : qtEnum.Dense4Pattern, # 5
+                   config.i18ns.Quadrule : qtEnum.CrossPattern, # 11
+                   config.i18ns.Crosshatch : qtEnum.DiagCrossPattern, #14
+                   }
     # TODO more values
     """
     Qt.Dense1Pattern   2   Extremely dense brush pattern.

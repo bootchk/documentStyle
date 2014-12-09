@@ -4,8 +4,6 @@ from PyQt5.QtQml import qmlRegisterType
 
 
 from documentStyle.qmlUI.qmlDelegate import QmlDelegate
-from documentStyle.qmlUI.person import Person
-from documentStyle.styleProperty.resettableValue import BaseResettableValue
 
 
 class QmlModel(object):
@@ -17,7 +15,7 @@ class QmlModel(object):
     pass
   
   def register(self):
-    uri = "org.qtproject.demo.weather"
+    # uri = "org.qtproject.demo.weather"
     '''
     Register Python types.
     - URI is 'People' (i.e. library or module e.g. 'import People 1.0' in QML
@@ -32,12 +30,12 @@ class QmlModel(object):
     '''
     qmlRegisterType(QmlDelegate, 'QmlDelegate', 1, 0, 'DialogDelegate')
     
-    # temp: model for business, i.e. a style property
-    qmlRegisterType(Person, 'People', 1, 0, 'Person')
+    '''
+    BaseResettableValue is a type which QML interacts with, but need not know (be registered.)
+    In this design, a Formation is set in the QML context,
+    and QML calls model (Formation.selectResettableValueByStringSelector('Any.Line.Pen.Color') 
+    to get an instance of this type, used as a model for individual style property controls.
+    '''
+    #qmlRegisterType(BaseResettableValue, 'ResettableValue', 1, 0, 'ResettableValue')
     
-    '''
-    Register a type which QML must know, but which we don't set in context.
-    In this design, QML calls model (Formation.selectResettableValueByStringSelector('Any.Line.Pen.Color')
-    to return an instance of this type.
-    '''
-    qmlRegisterType(BaseResettableValue, 'ResettableValue', 1, 0, 'ResettableValue')
+    

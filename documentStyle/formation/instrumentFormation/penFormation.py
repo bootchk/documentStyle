@@ -33,11 +33,6 @@ class PenFormation(InstrumentFormation):
                                             layoutFactory=ComboBoxStylePropertyLayout,
                                             domainModel = config.PenModel)
                           ]
-  '''
-  Old getters: self.instrument.color, ), 
-  self.instrument.width, 
-  self.instrument.style, 
-  '''
 
 
   def applyTo(self, morph):

@@ -1,5 +1,8 @@
 Classes for domains of style property values.
 
+These are only used for QWidget views of StyleProperty.
+QML views defined these models separately (redundantly and differently, using continguous enums?)
+
 Rationale:
 - framework enum classes are not pickleable
 -- enums of int (deficiency of PySide pickling)
