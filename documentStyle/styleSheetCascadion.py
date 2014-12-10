@@ -122,12 +122,13 @@ class StyleSheetCascadion(object):
   
   
   def _initModels(self):
-    " Create domain models. Needed by QWidget GUI, not QML? "
-    if not config.useQML:
-      config.BrushModel = AdaptedBrushModel()
-      config.PenModel = AdaptedPenModel()
-      config.LineSpacingModel = AdaptedLineSpacingModel()
-      config.AlignmentModel = AdaptedAlignmentModel()
+    " Create domain models. Needed by QWidget GUI, not QML. "
+    # Temp always.
+    # if not config.useQML:
+    config.BrushModel = AdaptedBrushModel()
+    config.PenModel = AdaptedPenModel()
+    config.LineSpacingModel = AdaptedLineSpacingModel()
+    config.AlignmentModel = AdaptedAlignmentModel()
     
     
     

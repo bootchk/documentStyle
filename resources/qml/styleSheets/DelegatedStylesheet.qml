@@ -10,6 +10,8 @@ import QmlDelegate 1.0
 import "../dialogs" as MyDialogs
 
 Item {
+	id: stylesheetWindow
+	
 	// specialized at instantiation
 	property var dialogContentsURL
 	property string titlePrefix
@@ -38,6 +40,8 @@ Item {
 	    target: dialogDelegate
 	    onActivated: {
 	    	console.log("Dialog activated from PyQt business side")
+	    	stylesheetWindow.x = 400	// TEMP test
+	    	stylesheetWindow.y = 400
 	    	styleDialog.open()
 	    	console.log("After dialog activated")
 	    	console.assert(styleDialog.visible)

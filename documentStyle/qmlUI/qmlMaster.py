@@ -107,6 +107,7 @@ class QmlMaster(object):
     result = QQuickView()
     result.statusChanged.connect(self.onStatusChanged)
     if transientParent is not None:
+      print("transientParent is:", transientParent, transientParent.isTopLevel())
       result.setTransientParent(transientParent)
     assert result is not None
     assert isinstance(result, QQuickView)
@@ -143,7 +144,7 @@ class QmlMaster(object):
     See QTBUG-32934, you can't find the QWindow from the container QWidget, you must remember it.
     '''
     quickview = self.quickViewForQML(qmlFilename, transientParent)
-    widget = QWidget.createWindowContainer(quickview)
+    widget = self.wrapWidgetAroundQuickView(quickview, parentWindow=transientParent)
     return widget, quickview
   
   
@@ -155,13 +156,23 @@ class QmlMaster(object):
     you get strange behaviour such as QML Dialog not visible when you open() it.
     '''
     quickview = self.quickViewForQML(qmlFilename)
-    result = self.widgetForQuickView(quickview, parentWindow)
+    result = self.wrapWidgetAroundQuickView(quickview, parentWindow)
     return result
   
   
-  def widgetForQuickView(self, quickview, parentWindow):
-    ''' Wrap QQuickView in QWidget window. '''
-    return QWidget.createWindowContainer(quickview, parent=parentWindow)
+  def wrapWidgetAroundQuickView(self, quickview, parentWindow):
+    '''
+    Create QWidget window wrapping given quickview.
+    Widget is parented by not positioned.
+    QQuickView is empty of QML.
+    '''
+    assert parentWindow is not None
+    result = QWidget.createWindowContainer(quickview, parent=parentWindow)
+    assert isinstance(result, QWidget)
+    print("Position of widgetForQML", str(result.pos()), result.pos().x(), result.pos().y())
+    result.move(200,200)
+    print("Position of widgetForQML", str(result.pos()), result.pos().x(), result.pos().y())
+    return result
   
   
   def appQWindow(self):
@@ -187,3 +198,45 @@ class QmlMaster(object):
     print("status changed", status)
     # TODO look for errors
     
+"""
+An experiment to use QQuickWidget.
+It hangs at setSource
+Dec. 8, 2014
+ 
+  def createDialog(self, parentWindow, prefix, formation):
+    '''
+    Create QML based dialog.
+    
+    This implementation uses QQuickWidget
+    '''
+    qmlFilename="resources/qml/styleSheets/"+prefix+"stylesheet.qml"  # e.g. Userstylesheet.qml
+    
+    qmlMaster = QmlMaster()
+    
+    '''
+    Order is important: create quickView, setContext, setSource, findComponent
+    setContext defines names referred to in the source
+    findComponent looks for names defined by the source.
+    
+    Note each .qml file has a DialogDelegate, all with same objectName "dialogDelegate" but separate instances.
+    '''
+    self.qw = QQuickWidget(parent=parentWindow)
+    self.exposeFormationModelToQML(view=self.qw, editedFormation=formation, prefix=prefix)
+    self.qw.statusChanged.connect(self.onStatusChanged)
+    self.qw.sceneGraphError.connect(self.onSceneGraphError)
+    print("before set source")
+    self.qw.setSource(QUrl.fromLocalFile(qmlFilename))
+    #self.qw.setSource(qmlMaster.qmlFilenameToQUrl(qmlFilename))
+    print("after set source")
+    self.dialogDelegate = qmlMaster.findComponent(quickview=self.qw, 
+                                                  className=QmlDelegate, 
+                                                  objectName="dialogDelegate")
+    assert self.dialogDelegate is not None
+    self.qw.show()
+  
+  def onStatusChanged(self, status):
+    print("status changed", status)
+
+  def onSceneGraphError(self, error, message):
+    print("scene graph error", error, message)
+"""

@@ -30,6 +30,7 @@ class StyleComboBox(Resettable, QComboBox):
   def __init__(self, domainModel, resettableValue ):
   
     QComboBox.__init__(self)
+    assert domainModel is not None
     self.domainModel = domainModel
     self.addItems(list(domainModel.values.keys()))
     

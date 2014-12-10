@@ -32,14 +32,31 @@ class StyleDialog(StyleSheetDialogQML):
   Two subclasses: editable and noneditable.
   The Editable one has accept/reject buttons.  Noneditable can only be closed.
   
+  '''
   
   '''
-  " This is here so we can rename it to mean asynchronous window modal (not synchronous app modal) "
+  Note there is no Qt method to show a dialog as a popup: under the cursor, but modal.
+  print("here")
+  self.move(0,0)  TODO to cursor
+  self.show()
+  '''
+  
   def open(self):
+    '''
+    Show:
+    - asynchronous (call returns immediately)
+    - window modal (other app top windows may receive input, but not the parent window. I.E. transient.
+    - position in center of parent or drawer from parent (depends on platform)
+    '''
     super().open()
   
   def converseAppModal(self):
-    " Synchronous (doesn't return) and app modal (no other windows take user input and centered in parent) "
+    '''
+    Show:
+    - Synchronous for some implementations (QWidget) (call doesn't return)
+    - app modal (no other app windows take user input)
+    - position in center in parent
+    '''
     self.exec_()
     #print("After exec_")
   

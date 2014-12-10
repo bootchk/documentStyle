@@ -4,8 +4,9 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PyQt5.QtCore import QObject
+from PyQt5.QtCore import QObject, QUrl
 from PyQt5.QtCore import pyqtSignal as Signal
+from PyQt5.QtQuickWidgets import QQuickWidget
 
 from documentStyle.qmlUI.qmlMaster import QmlMaster
 from documentStyle.qmlUI.qmlDelegate import QmlDelegate
@@ -60,10 +61,13 @@ class StyleSheetDialogQML(QObject):
     
     "Wrap it, so it is visible?"
     " container takes ownership.  container is a widget"
-    self.container = qmlMaster.widgetForQuickView(self.styleQuickView, parentWindow)
+    self.container = qmlMaster.wrapWidgetAroundQuickView(self.styleQuickView, parentWindow)
     
     " Remember view so later can update setContext? Not used?"
     config.QMLView = self.styleQuickView
+  
+  
+  
     
     
   def exposeFormationModelToQML(self, view, editedFormation, prefix):
