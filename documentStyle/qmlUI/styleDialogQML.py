@@ -38,7 +38,12 @@ class StyleSheetDialogQML(QObject):
     '''
     Create QML based dialog.
     '''
-    qmlFilename="resources/qml/styleSheets/"+prefix+"stylesheet.qml"  # e.g. Userstylesheet.qml
+    '''
+    assert prefix in ['user', 'doc', 'line', ..., 'lineTool', ...]
+    I.E. prefix identifies a member of a kind of style sheet: where kinds are [full, documenElement, tool]
+    '''
+    styleQmlPath = "resources/qml/style/"
+    qmlFilename= styleQmlPath + "styleSheets/"+prefix+"stylesheet.qml"  # e.g. Userstylesheet.qml
     
     qmlMaster = QmlMaster()
     qwin = qmlMaster.appQWindow()
