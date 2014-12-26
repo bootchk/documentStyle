@@ -14,8 +14,8 @@ from documentStyle.qmlUI.styleDialogQML import StyleSheetDialogQML
 Choice of implementation: QML or QWidget.
 Uncomment one, and see config.useQML
 '''
-class StyleDialog(StyleSheetDialogQML): 
-#class StyleDialog(StyleSheetDialogWidget):
+#class StyleDialog(StyleSheetDialogQML): 
+class StyleDialog(StyleSheetDialogWidget):
   '''
   let user edit StyleSheet (which may be style of DocumentElement)
   

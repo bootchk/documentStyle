@@ -36,6 +36,7 @@ class ToolStyler(DynamicStyler):
     Let user edit style of tool that creates DocumentElement.
     Return Style, or None if canceled.
     '''
+    print("Calling editStyleofDocElement with toolname:", self.toolName)
     self.editStyleOfDocElement(parentWindow = parentWindow,
                               titleParts=(self.toolName, "Style"),  # WAS "Tool Style".  "Tool" migrated to toolname.
                               docElement=self)
