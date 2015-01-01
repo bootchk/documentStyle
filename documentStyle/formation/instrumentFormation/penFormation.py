@@ -3,8 +3,9 @@ from PyQt5.QtGui import QPen
 from .instrumentFormation import InstrumentFormation
 from documentStyle.styleProperty.styleProperty import BaseStyleProperty
 from documentStyle.styleProperty.resettableValue import ResettableColorValue
-from documentStyle.userInterface.layout.typedStylePropertyLayout import IntStylePropertyLayout, ColorStylePropertyLayout, ComboBoxStylePropertyLayout
+from documentStyle.ui.layout.typedStylePropertyLayout import IntStylePropertyLayout, ColorStylePropertyLayout, ComboBoxStylePropertyLayout
 import documentStyle.config as config
+
 
 
 class PenFormation(InstrumentFormation):

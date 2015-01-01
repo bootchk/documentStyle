@@ -6,7 +6,7 @@ from documentStyle.formation.instrumentFormation.instrumentFormation import Inst
 from documentStyle.styleProperty.styleProperty import BaseStyleProperty
 from documentStyle.styleProperty.stylePropertyFont import FontStyleProperty
 from documentStyle.styleProperty.resettableValue import ResettableColorValue, ResettableFontValue
-from documentStyle.userInterface.layout.typedStylePropertyLayout import ColorStylePropertyLayout, FontStylePropertyLayout
+from documentStyle.ui.layout.typedStylePropertyLayout import ColorStylePropertyLayout, FontStylePropertyLayout
 
 
 

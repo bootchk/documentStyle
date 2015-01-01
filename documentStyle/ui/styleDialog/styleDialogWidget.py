@@ -90,7 +90,7 @@ class StyleSheetDialogWidget(QDialog):
     
     Canonical way: nest widget, layout, scrollarea
     '''
-    formationLayout = formation.display(top=True)
+    formationLayout = formation.getLayout(top=True)
     viewport = QWidget()
     viewport.setLayout(formationLayout)
     

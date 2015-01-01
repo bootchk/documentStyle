@@ -5,8 +5,8 @@ This is free software, covered by the GNU General Public License.
 '''
 
 from PyQt5.QtWidgets import QPushButton
-from PyQt5.QtGui import QFont
-from documentStyle.userInterface.resettableControls.resettable import Resettable
+#from PyQt5.QtGui import QFont
+from documentStyle.ui.resettableControls.resettable import Resettable
 import documentStyle.config as config
 
 '''

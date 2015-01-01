@@ -4,7 +4,7 @@ from documentStyle.instrument.blockInstrument import BlockInstrument
 from documentStyle.formation.instrumentFormation.instrumentFormation import InstrumentFormation
 
 from documentStyle.styleProperty.styleProperty import BaseStyleProperty
-from documentStyle.userInterface.layout.typedStylePropertyLayout import ComboBoxStylePropertyLayout
+from documentStyle.ui.layout.typedStylePropertyLayout import ComboBoxStylePropertyLayout
 #, UnwrappedComboBoxStylePropertyLayout
 import documentStyle.config as config
 

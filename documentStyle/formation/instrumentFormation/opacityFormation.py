@@ -3,7 +3,7 @@ from documentStyle.instrument.opacityInstrument import OpacityInstrument
 
 from documentStyle.formation.instrumentFormation.instrumentFormation import InstrumentFormation
 from documentStyle.styleProperty.styleProperty import BaseStyleProperty
-from documentStyle.userInterface.layout.typedStylePropertyLayout import FloatStylePropertyLayout
+from documentStyle.ui.layout.typedStylePropertyLayout import FloatStylePropertyLayout
 from documentStyle.styleProperty.resettableValue import ResettableFloatValue
 
 

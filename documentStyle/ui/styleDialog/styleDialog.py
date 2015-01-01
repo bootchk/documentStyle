@@ -7,15 +7,15 @@ This is free software, covered by the GNU General Public License.
 # TODO remove: this module should not depend on QtWidgets
 from PyQt5.QtWidgets import QDialogButtonBox
 
-from documentStyle.userInterface.styleDialog.styleDialogWidget import StyleSheetDialogWidget
+from documentStyle.ui.styleDialog.styleDialogWidget import StyleSheetDialogWidget
 from documentStyle.qmlUI.styleDialogQML import StyleSheetDialogQML
 
 '''
 Choice of implementation: QML or QWidget.
 Uncomment one, and see config.useQML
 '''
-#class StyleDialog(StyleSheetDialogQML): 
-class StyleDialog(StyleSheetDialogWidget):
+class StyleDialog(StyleSheetDialogQML): 
+#class StyleDialog(StyleSheetDialogWidget):
   '''
   let user edit StyleSheet (which may be style of DocumentElement)
   

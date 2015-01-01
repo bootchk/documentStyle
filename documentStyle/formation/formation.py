@@ -6,8 +6,10 @@ This is free software, covered by the GNU General Public License.
 
 from PyQt5.QtCore import QObject, pyqtSlot
 
-from documentStyle.userInterface.form.formationForm import FormationForm
-#from documentStyle.userInterface.layout.formationLayout import FormationLayout
+import documentStyle.config as config
+if not config.useQML:
+  from documentStyle.ui.form.formationForm import FormationForm
+
 from documentStyle.styling.stylingAct import StylingAct
 from documentStyle.selector import Selector
 from documentStyle.styleProperty.resettableValue import BaseResettableValue
@@ -45,7 +47,7 @@ class Formation(QObject):
   - know selector
   - apply to morph
   - selectable (styleProperty and their resettableValue) by Selector or dotted string
-  - display for editing
+  - getLayout for editing
   - reflect to StylingActSet
   - iterable over subformations (top) and styleProperties (leaves)
   - persist (as attached to styled morphs of a document, not implemented )
@@ -188,32 +190,31 @@ class Formation(QObject):
 
   '''
   Display (GUI editing.)
+  This is only used for QWidget implementation of GUI.
   '''
   
-  def display(self, top=False):
+  def getLayout(self, top=False):
     '''
-    Responsibility: Display for editing in list like form (indented tree)
-    See also: StyleProperty.display()
-    
-    Returns QWidget (QLayout or QFormLayout)
+    Responsibility: return QWidget (QLayout or QFormLayout) for editing in list like form (indented tree)
+    See also: StyleProperty.getLayout()
     '''
     # This ALTERNATIVE creates a QFormLayout
     return FormationForm(formation=self, top=top)
     # This ALTERNATIVE creates a QGridLayout
     #return FormationLayout(formation=self, top=top)
     
-    
 
-  '''
-  Layout editing.
-  '''
   def displayContentsInLayout(self, layout):
     '''
     Tree structured layout into given layout.
     '''
     for formation in self.subFormations:
-      # Indirect recursion through display() which eventually calls displayContentsInLayout again
-      layout.addLayout(formation.display())
+      # Indirect recursion through getLayout() which eventually calls displayContentsInLayout again
+      layout.addLayout(formation.getLayout())
+  
+  
+  
+  
   
   
   def isSingleValued(self):

@@ -16,7 +16,7 @@ from documentStyle.formation.instrumentFormation.opacityFormation import Opacity
 
 from documentStyle.formation.morphFormation import ShapeFormation, LineFormation, TextFormation, PixmapFormation
 
-from documentStyle.userInterface.styleDialog.styleDialog import NoneditableStyleSheetDialog
+from documentStyle.ui.styleDialog.styleDialog import NoneditableStyleSheetDialog
 
 import documentStyle.config as config
 

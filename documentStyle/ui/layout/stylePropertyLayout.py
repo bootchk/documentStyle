@@ -7,7 +7,7 @@ This is free software, covered by the GNU General Public License.
 from PyQt5.QtWidgets import QHBoxLayout, QLabel # QPushButton, QSlider, QColor, QFont, QBoxLayout, 
 
 from documentStyle.styleProperty.resettableValue import BaseResettableValue
-from ..resettableControls.buddyButton import BuddyIconButton
+from documentStyle.ui.resettableControls.buddyButton import BuddyIconButton
 import documentStyle.config as config
 
 from documentStyle.debugDecorator import reportReturn

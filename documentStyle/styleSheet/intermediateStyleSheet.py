@@ -14,7 +14,7 @@ from documentStyle.styling.stylingActSet import StylingActSet
 from documentStyle.styling.stylingActSetCollection import StylingActSetCollection
 
 from documentStyle.selector import newAllSelector
-from documentStyle.userInterface.styleDialog.styleDialog import EditableStyleSheetDialog
+from documentStyle.ui.styleDialog.styleDialog import EditableStyleSheetDialog
 
 from documentStyle.debugDecorator import report, reportReturn
 

@@ -4,7 +4,7 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from documentStyle.userInterface.styleDialog.styleDialog import EditableStyleSheetDialog
+from documentStyle.ui.styleDialog.styleDialog import EditableStyleSheetDialog
 
 
 class Styler(object):

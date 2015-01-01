@@ -4,7 +4,7 @@ from PyQt5.QtGui import QBrush
 from .instrumentFormation import InstrumentFormation
 from documentStyle.styleProperty.styleProperty import BaseStyleProperty
 from documentStyle.styleProperty.resettableValue import ResettableColorValue
-from documentStyle.userInterface.layout.typedStylePropertyLayout import ColorStylePropertyLayout, ComboBoxStylePropertyLayout
+from documentStyle.ui.layout.typedStylePropertyLayout import ColorStylePropertyLayout, ComboBoxStylePropertyLayout
 import documentStyle.config as config
 
 
