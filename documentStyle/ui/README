@@ -4,16 +4,19 @@ It contains two implementations:
 - qmlUI
 - qwidgetUI
 
-You don't need the code for both (you can exclude one from freeze.)
+You choose the implementation by setting config.useQML
 
-A StyleDialogFactory knows which one you are using,
-and selectively imports on of the two.
+You don't need the code for both (you can exclude one from freeze.)
+Similarly, if you don't use the QML implementation, you don't need to package the QML resources.
+
+The translations should also be split into those needed by QWidget and those that are in the QML.
+TODO for now QML is untranslated?
+
+A DialogFactory knows which one you are using, and selectively imports one of the two.
 (There is no performance issue for selective import: Python caches it.)
 
 There are other traces and selective imports of the QWidget implementation in Formation.
 
 Note that layout is specific to QWidget implementation, but cannot be excluded
 (Formations are initialized with a Layout factory.)
-
-OLD:  Switch back and forth by changing styleDialog.py:
-inherit from StyleDialogWidget or StyleDialogQML.
+TODO improve that

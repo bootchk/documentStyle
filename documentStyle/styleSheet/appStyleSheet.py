@@ -16,7 +16,7 @@ from documentStyle.formation.instrumentFormation.opacityFormation import Opacity
 
 from documentStyle.formation.morphFormation import ShapeFormation, LineFormation, TextFormation, PixmapFormation
 
-from documentStyle.ui.styleDialog.styleDialog import NoneditableStyleSheetDialog
+from documentStyle.ui.dialogFactory import dialogFactory
 
 import documentStyle.config as config
 
@@ -113,7 +113,7 @@ class AppStyleSheet(StyleSheet):
     assert result is not None
     return result
     
-    
+  " Don't call for QML: omitting appStyleSheet for QML implementation: low usefulness "
   def createGui(self, parentWindow):
     '''
     Display read-only a form comprising section for each DocumentElementType.
@@ -122,7 +122,11 @@ class AppStyleSheet(StyleSheet):
     This may not seem useful, but user needs to know what styling is default,
     so can understand inheritance via cascading.
     '''
-    self.dialog = NoneditableStyleSheetDialog(parentWindow=parentWindow,
+    if config.useQML:
+      print("Omitted")
+      return
+    
+    self.dialog = dialogFactory.produceNoneditableDialog(parentWindow=parentWindow,
                                          formation=self._newAppStyleSheetFormation(), 
                                           titleParts = (config.i18ns.AppStyleSheet, ""))
     '''

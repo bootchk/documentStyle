@@ -14,7 +14,7 @@ from documentStyle.styling.stylingActSet import StylingActSet
 from documentStyle.styling.stylingActSetCollection import StylingActSetCollection
 
 from documentStyle.selector import newAllSelector
-from documentStyle.ui.styleDialog.styleDialog import EditableStyleSheetDialog
+from documentStyle.ui.dialogFactory import dialogFactory
 
 from documentStyle.debugDecorator import report, reportReturn
 
@@ -119,11 +119,10 @@ class IntermediateStyleSheet(StyleSheet):
     '''
     self.editedFormation = self.getFormation(newAllSelector())  # Temporary: previous is garbage collected.
     assert self.editedFormation is not None
-    # dialog = NoneditableStyleDialog(parentWindow=None, formation=formation)
     
     # parentWindow is document so dialog centers in document.  
     # If parentWindow were mainWindow (toplevel), Qt not center dialog
-    self.dialog = EditableStyleSheetDialog(parentWindow = parentWindow,
+    self.dialog = dialogFactory.produceEditableDialog(parentWindow = parentWindow,
                                       formation=self.editedFormation, 
                                       titleParts = (self.name, "Style Sheet"))
                                       # WAS flags=Qt.Sheet)

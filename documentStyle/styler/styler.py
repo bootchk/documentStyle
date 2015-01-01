@@ -4,7 +4,7 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from documentStyle.ui.styleDialog.styleDialog import EditableStyleSheetDialog
+from documentStyle.ui.dialogFactory import dialogFactory
 
 
 class Styler(object):
@@ -86,7 +86,7 @@ class Styler(object):
     FUTURE, if a document element is its own window, parent to it?
     Or position the dialog closer to the document element.
     '''
-    self.dialog = EditableStyleSheetDialog(parentWindow = parentWindow,
+    self.dialog = dialogFactory.produceEditableDialog(parentWindow = parentWindow,
                                       formation=self.editedFormation, 
                                       titleParts = titleParts)
                                       # WAS flags=Qt.Sheet)

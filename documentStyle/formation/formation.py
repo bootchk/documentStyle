@@ -8,7 +8,7 @@ from PyQt5.QtCore import QObject, pyqtSlot
 
 import documentStyle.config as config
 if not config.useQML:
-  from documentStyle.ui.form.formationForm import FormationForm
+  from documentStyle.ui.widgetUI.form.formationForm import FormationForm
 
 from documentStyle.styling.stylingAct import StylingAct
 from documentStyle.selector import Selector

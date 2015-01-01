@@ -7,6 +7,7 @@ import sys
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QWidget, QScrollArea, QLabel
+from PyQt5.QtWidgets import QDialogButtonBox
 
 import documentStyle.config as config
 
@@ -126,4 +127,46 @@ class StyleSheetDialogWidget(QDialog):
     '''
     self.accepted.connect(acceptSlot)
     self.rejected.connect(cancelSlot)
+    
+    
+  def converseAppModal(self):
+    '''
+    Show:
+    - Synchronous for some implementations (QWidget) (call doesn't return)
+    - app modal (no other app windows take user input)
+    - position in center in parent
+    '''
+    self.exec_()
+    #print("After exec_")
+    
+    
+    
+class EditableStyleSheetDialogWidget(StyleSheetDialogWidget):
+  '''
+  Editable has buttons and is enabled.
+  '''
+  
+  def buttonBox(self):
+    " buttonBox, with connected signals"
+    buttonBox = QDialogButtonBox(QDialogButtonBox.Ok
+                                 | QDialogButtonBox.Cancel)
+    #buttonBox.button(QDialogButtonBox.Ok).clicked.connect(self.apply)
+    buttonBox.accepted.connect(self.accept)
+    buttonBox.rejected.connect(self.reject)
+    return buttonBox
+
+  def isEditable(self):
+    return True
+  
+  
+class NoneditableStyleSheetDialogWidget(StyleSheetDialogWidget):
+  
+  def buttonBox(self):
+    return None
+
+  def isEditable(self):
+    return False
+  
+  def connectSignals(self, acceptSlot, cancelSlot):
+    pass
     

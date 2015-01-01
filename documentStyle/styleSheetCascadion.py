@@ -15,7 +15,7 @@ from documentStyle.model.textalignment import AdaptedAlignmentModel
 import documentStyle.config as config
 from documentStyle.debugDecorator import report
 
-from documentStyle.qmlUI.qmlModel import QmlModel
+from documentStyle.ui.qmlUI.qmlModel import QmlModel
 
 from . import compat
 

@@ -4,12 +4,11 @@ Copyright 2012 Lloyd Konneker
 This is free software, covered by the GNU General Public License.
 '''
 
-from PyQt5.QtCore import QObject, QUrl
+from PyQt5.QtCore import QObject  # , QUrl
 from PyQt5.QtCore import pyqtSignal as Signal
-from PyQt5.QtQuickWidgets import QQuickWidget
 
-from documentStyle.qmlUI.qmlMaster import QmlMaster
-from documentStyle.qmlUI.qmlDelegate import QmlDelegate
+from documentStyle.ui.qmlUI.qmlMaster import QmlMaster
+from documentStyle.ui.qmlUI.qmlDelegate import QmlDelegate
 
 import documentStyle.config as config
 
@@ -96,6 +95,7 @@ class StyleSheetDialogQML(QObject):
       styleProperty.exposeToQML(view, styleSheetTitle=title)
   """
   
+  """
   def createDialog2(self):
     qmlFilename = "resources/qml/stylesheet.qml"
     
@@ -107,7 +107,8 @@ class StyleSheetDialogQML(QObject):
                                                   className=QmlDelegate, 
                                                   objectName="dialogDelegate")
     assert self.dialogDelegate is not None
-    
+  """
+  
   def open(self):
     '''
     execute the dialog.
@@ -116,7 +117,14 @@ class StyleSheetDialogQML(QObject):
     '''
     self.dialogDelegate.activate()
     
-  def exec_(self):
+    
+  def converseAppModal(self):
+    '''
+    Show:
+    - Synchronous for some implementations (QWidget) (call doesn't return)
+    - app modal (no other app windows take user input)
+    - position in center in parent
+    '''
     "TODO app modal"
     self.dialogDelegate.activate()
     

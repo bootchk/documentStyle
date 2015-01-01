@@ -3,7 +3,7 @@ from PyQt5.QtQml import qmlRegisterType
 # qmlRegisterSingletonType #, QQmlComponent, QQmlEngine
 
 
-from documentStyle.qmlUI.qmlDelegate import QmlDelegate
+from documentStyle.ui.qmlUI.qmlDelegate import QmlDelegate
 
 
 class QmlModel(object):
