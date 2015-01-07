@@ -16,6 +16,7 @@ import documentStyle.config as config
 from documentStyle.debugDecorator import report
 
 from documentStyle.ui.qmlUI.qmlModel import QmlModel
+from documentStyle.qmlResources import styleResourceManager
 
 from . import compat
 
@@ -43,6 +44,8 @@ class StyleSheetCascadion(object):
     
     '''
     # !!! styleSheet() also a method of Qt QGV
+    
+    styleResourceManager.setStyleQmlResourceRoot()
     
     # assert translator installed
     # create singletons requiring translation

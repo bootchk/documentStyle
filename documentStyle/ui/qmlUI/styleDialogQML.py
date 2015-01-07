@@ -9,6 +9,7 @@ from PyQt5.QtCore import pyqtSignal as Signal
 
 from documentStyle.ui.qmlUI.qmlMaster import QmlMaster
 from documentStyle.ui.qmlUI.qmlDelegate import QmlDelegate
+from documentStyle.qmlResources import styleResourceManager
 
 import documentStyle.config as config
 
@@ -41,8 +42,7 @@ class StyleSheetDialogQML(QObject):
     assert prefix in ['user', 'doc', 'line', ..., 'lineTool', ...]
     I.E. prefix identifies a member of a kind of style sheet: where kinds are [full, documenElement, tool]
     '''
-    styleQmlPath = "resources/qml/style/"
-    qmlFilename= styleQmlPath + "styleSheets/"+prefix+"stylesheet.qml"  # e.g. Userstylesheet.qml
+    qmlFilename= styleResourceManager.styleQmlPath() + "styleSheets/"+prefix+"stylesheet.qml"  # e.g. Userstylesheet.qml
     
     qmlMaster = QmlMaster()
     qwin = qmlMaster.appQWindow()

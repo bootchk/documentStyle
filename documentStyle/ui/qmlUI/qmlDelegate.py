@@ -2,7 +2,6 @@
 from PyQt5.QtCore import QObject
 from PyQt5.QtCore import pyqtSlot as Slot
 from PyQt5.QtCore import pyqtSignal as Signal
-# pyqtProperty
  
  
 
