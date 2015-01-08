@@ -18,8 +18,6 @@ from documentStyle.debugDecorator import report
 from documentStyle.ui.qmlUI.qmlModel import QmlModel
 from documentStyle.qmlResources import styleResourceManager
 
-from . import compat
-
 
 
 
@@ -173,12 +171,16 @@ class StyleSheetCascadion(object):
     styleSheetPickledInSettings = settings.value('UserStyleSheet')
     
     if styleSheetPickledInSettings is not None:
+      """
       if compat.PY2:
         assert styleSheetPickledInSettings is None or isinstance(styleSheetPickledInSettings, unicode)
         return pickle.loads(str(styleSheetPickledInSettings))
       else:
         assert styleSheetPickledInSettings is None or isinstance(styleSheetPickledInSettings, bytes)
         return pickle.loads(styleSheetPickledInSettings)
+      """
+      assert styleSheetPickledInSettings is None or isinstance(styleSheetPickledInSettings, bytes)
+      return pickle.loads(styleSheetPickledInSettings)
     else:
       return None
     # Assert caller will link stylesheet into cascade and restyle document
