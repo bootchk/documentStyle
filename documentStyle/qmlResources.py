@@ -1,24 +1,22 @@
 
 
-from PyQt5.QtCore import QFileInfo
-
-
 class StyleResourceManager():
   '''
   Know path to qml resources.
   '''
   
-  def setStyleQmlResourceRoot(self):
+  def setStyleQmlResourceRoot(self, resourceRoot):
     '''
-    Assert self's file is at same level in directory structure as resources directory.
-    E.G. self is at       documentStyle/qmlResources.py
-    and resources are at documentStyle/resources
-    Thus self.root becomes 'documentStyle/', i.e. the name of this submodule.
+    Assert resourceRoot is a directory containing subdirectory resources/qml/style containing this projects .qml files.
     
-    Or if pyqtdeployed, self is an executable somewhere on target device file system,
-    and Qt (using its rcc mechanism) find resources in the excecutable's compiled resources on that path.
+    Typically the app using this subsystem passes
+    the result of 'QFileInfo(__file__).absolutePath()' called in its main .py file.
+    
+    If pyqtdeployed, main is an executable somewhere on target device file system,
+    and Qt (using its rcc mechanism) findd resources in the executable's compiled resources on that path.
     '''
-    self.root = QFileInfo(__file__).absolutePath()
+    self.root = resourceRoot
+    
   
   
   def styleQmlPath(self):

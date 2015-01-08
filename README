@@ -124,6 +124,27 @@ To change set of properties for an instrument, change a subclass of InstrumentFo
 
 E.G. to eliminate the "Indent" style property for a Text morph, edit BlockFormation.__init__().
 
+
+QML vs QWidget implementation
+=============================
+
+Originally this project used QWidgets but now uses QML.
+The reason is: QML should be portable to mobile devices with better look and feel.
+
+Implementations are in separate subdirectories ui/widgetUI and ui/qmlUI.
+A switch in config.py named 'useQML' selects the implementation.
+Switch is done using dynamic imports (not at the top of .py files.)
+
+The API has changed to support QML: a parameter 'resourceRoot' must be passed to StyleSheetCascadion().
+That is the root directory of resources owned by the calling app (of which documentStyle is a subsystem.)
+The documentStyle subsystem will look in the subdirectory <resourceRoot>/resources/qml/style for .qml files.
+That directory of this project must be copied to the calling app's resources
+(and packaged with the calling app, using some process such as pyrcc, rcc, or pyqtdeploy.)
+See testStyling.py for an example.
+
+If you use the QML implementation, you don't need ui/widgetUI subpackage.
+
+
 Status
 ======
 

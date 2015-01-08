@@ -38,14 +38,14 @@ class StyleSheetCascadion(object):
   - know what part of cascade may change (be able to connect signals)
   '''
 
-  def __init__(self):
+  def __init__(self, resourceRoot):
     '''
     Create cascading sequence of stylesheets.
     
     '''
     # !!! styleSheet() also a method of Qt QGV
     
-    styleResourceManager.setStyleQmlResourceRoot()
+    styleResourceManager.setStyleQmlResourceRoot(resourceRoot)
     
     # assert translator installed
     # create singletons requiring translation

@@ -284,7 +284,9 @@ class App(QApplication):
     mainWindow.show()
     self.mainWindow = mainWindow
     
-    self.cascadion = StyleSheetCascadion()
+    resourceRoot = QFileInfo(__file__).absolutePath() + '/documentStyle'
+    
+    self.cascadion = StyleSheetCascadion(resourceRoot=resourceRoot)
     self.cascadion.preGui(parentWindow=mainWindow)
     mainWindow.newToolStyler()  # depends on cascadion
     self.documentView = mainWindow.newDocument()  # depends on cascadion
