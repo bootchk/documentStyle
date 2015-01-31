@@ -6,11 +6,14 @@ Hides details but also more robust than Qt methods.
 Note findChild was broken until recently, see PyQt mail list report.
 result = qmlRoot.findChild(model.person.Person, "person")
 '''
-from PyQt5.QtCore import qWarning, QObject, QUrl
+from PyQt5.QtCore import qWarning, QObject
 from PyQt5.QtGui import QGuiApplication
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtQuick import QQuickItem, QQuickView
 from PyQt5.QtQml import QQmlProperty
+
+from documentStyle.qmlResources import styleResourceManager
+
 
 
 class QmlMaster(object):
@@ -90,13 +93,6 @@ class QmlMaster(object):
       #if isinstance(item, model.person.Person):
       #  print("Is Person")
     
-  def qmlFilenameToQUrl(self, qml):
-    qmlUrl=QUrl(qml)
-    assert qmlUrl.isValid()
-    #print(qmlUrl.path())
-    #assert qmlUrl.isLocalFile()
-    return qmlUrl
-    
     
   def createQuickView(self, transientParent=None):
     '''
@@ -114,13 +110,14 @@ class QmlMaster(object):
     return result
   
     
-  def setSourceOnQuickView(self, view, qmlFilename):
-    qurl = self.qmlFilenameToQUrl(qmlFilename)
+  def setSourceOnQuickView(self, view, qmlSubpath):
+    print("setSourceOnQuickView to subpath: ", qmlSubpath)
+    qurl = styleResourceManager.qmlFilenameToQUrl(qmlSubpath=qmlSubpath)
     view.setSource(qurl)
     print("setSource on quickview to:", qurl.path())
     
     
-  def quickViewForQML(self, qmlFilename, transientParent=None):
+  def quickViewForQML(self, qmlSubpath, transientParent=None):
     '''
     Create a QQuickView for qmlFilename.
     More robust: connects to error
@@ -128,7 +125,7 @@ class QmlMaster(object):
     !!! Don't use this if the QML depends on names defined with setContextProperty()
     '''
     quickView = self.createQuickView(transientParent)
-    self.setSourceOnQuickView(quickView, qmlFilename)
+    self.setSourceOnQuickView(quickView, qmlSubpath=qmlSubpath)
     '''
     Show() the enclosing QWindow?
     But this means the window for e.g. the toolbar is visible separately?

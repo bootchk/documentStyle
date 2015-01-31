@@ -42,7 +42,8 @@ class StyleSheetDialogQML(QObject):
     assert prefix in ['user', 'doc', 'line', ..., 'lineTool', ...]
     I.E. prefix identifies a member of a kind of style sheet: where kinds are [full, documenElement, tool]
     '''
-    qmlFilename= styleResourceManager.styleQmlPath() + "styleSheets/"+prefix+"stylesheet.qml"  # e.g. Userstylesheet.qml
+    #qmlFilename = styleResourceManager.styleQmlPath() + "styleSheets/"+prefix+"stylesheet.qml"  # e.g. Userstylesheet.qml
+    qmlSubpath = styleResourceManager.styleQmlSubpath() + "styleSheets/"+prefix+"stylesheet.qml"  # e.g. Userstylesheet.qml
     
     qmlMaster = QmlMaster()
     qwin = qmlMaster.appQWindow()
@@ -57,7 +58,7 @@ class StyleSheetDialogQML(QObject):
     self.styleQuickView = qmlMaster.createQuickView(transientParent=qwin)
     self.exposeFormationModelToQML(view=self.styleQuickView, editedFormation=formation, prefix=prefix)
     # OLD self.styleQuickView = qmlMaster.quickViewForQML(qmlFilename, transientParent=qwin)
-    qmlMaster.setSourceOnQuickView(view=self.styleQuickView, qmlFilename=qmlFilename)
+    qmlMaster.setSourceOnQuickView(view=self.styleQuickView, qmlSubpath=qmlSubpath)
     self.dialogDelegate = qmlMaster.findComponent(quickview=self.styleQuickView, 
                                                   className=QmlDelegate, 
                                                   objectName="dialogDelegate")

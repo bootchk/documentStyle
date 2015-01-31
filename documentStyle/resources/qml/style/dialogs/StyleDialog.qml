@@ -21,9 +21,12 @@ Dialog {
 	//minimumWidth: 400
 	//Layout.fillWidth: true
 	
-	// Contents is separate file, unrelated to buttons and handlers
-	// static: MyDialogContents.StyleDialogContents{}
-	// dynamic:
+	/*
+	Contents is separate file, unrelated to buttons and handlers.
+	
+	Style dialog contents depends (varies with) model, i.e. is dynamic.
+	E.g. Full style sheet is tabbed, style sheet for Tool is not tabbed, etc.
+	*/ 
 	Loader { source: dialogSourceURL }
 	
 	onAccepted: {
