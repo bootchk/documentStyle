@@ -180,8 +180,11 @@ class QmlMaster(object):
     Needed to transientParent a QQuickView to app QWindow.
     '''
     qwinList = QGuiApplication.topLevelWindows()
-    #print("window count", len(qwinList))
-    #print(qwinList[0])
+    print("window count", len(qwinList))
+    print("topLevelWindows():")
+    for win in qwinList:
+      print("window: ", win)
+    
     if len(qwinList)==1:
       result = qwinList[0]
     else:
