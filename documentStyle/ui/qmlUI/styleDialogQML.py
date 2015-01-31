@@ -7,9 +7,10 @@ This is free software, covered by the GNU General Public License.
 from PyQt5.QtCore import QObject  # , QUrl
 from PyQt5.QtCore import pyqtSignal as Signal
 
+from qtEmbeddedQmlFramework.resourceManager import resourceMgr
+
 from documentStyle.ui.qmlUI.qmlMaster import QmlMaster
 from documentStyle.ui.qmlUI.qmlDelegate import QmlDelegate
-from documentStyle.qmlResources import styleResourceManager
 
 import documentStyle.config as config
 
@@ -33,7 +34,7 @@ class StyleSheetDialogQML(QObject):
     super(StyleSheetDialogQML, self).__init__() # parent=parentWindow, flags=flags)
     self.createDialog(parentWindow, prefix=titleParts[0].lower(), formation=formation)
     
-    
+ 
   def createDialog(self, parentWindow, prefix, formation):
     '''
     Create QML based dialog.
@@ -42,8 +43,8 @@ class StyleSheetDialogQML(QObject):
     assert prefix in ['user', 'doc', 'line', ..., 'lineTool', ...]
     I.E. prefix identifies a member of a kind of style sheet: where kinds are [full, documenElement, tool]
     '''
-    #qmlFilename = styleResourceManager.styleQmlPath() + "styleSheets/"+prefix+"stylesheet.qml"  # e.g. Userstylesheet.qml
-    qmlSubpath = styleResourceManager.styleQmlSubpath() + "styleSheets/"+prefix+"stylesheet.qml"  # e.g. Userstylesheet.qml
+    qmlSubpath = "style/styleSheets/"+prefix+"stylesheet.qml"  # e.g. Userstylesheet.qml
+    # resourceMgr.styleQmlSubpath() + 
     
     qmlMaster = QmlMaster()
     qwin = qmlMaster.appQWindow()

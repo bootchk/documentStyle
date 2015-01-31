@@ -12,8 +12,8 @@ from PyQt5.QtWidgets import QWidget
 from PyQt5.QtQuick import QQuickItem, QQuickView
 from PyQt5.QtQml import QQmlProperty
 
-from documentStyle.qmlResources import styleResourceManager
-
+#from documentStyle.qmlResources import styleResourceManager
+from qtEmbeddedQmlFramework.resourceManager import resourceMgr
 
 
 class QmlMaster(object):
@@ -112,7 +112,8 @@ class QmlMaster(object):
     
   def setSourceOnQuickView(self, view, qmlSubpath):
     print("setSourceOnQuickView to subpath: ", qmlSubpath)
-    qurl = styleResourceManager.qmlFilenameToQUrl(qmlSubpath=qmlSubpath)
+    
+    qurl = resourceMgr.urlToQMLResource(resourceSubpath=qmlSubpath)
     view.setSource(qurl)
     print("setSource on quickview to:", qurl.path())
     

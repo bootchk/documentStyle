@@ -16,7 +16,6 @@ import documentStyle.config as config
 from documentStyle.debugDecorator import report
 
 from documentStyle.ui.qmlUI.qmlModel import QmlModel
-from documentStyle.qmlResources import styleResourceManager
 
 
 
@@ -36,14 +35,14 @@ class StyleSheetCascadion(object):
   - know what part of cascade may change (be able to connect signals)
   '''
 
-  def __init__(self, resourceRoot):
+  def __init__(self):
     '''
     Create cascading sequence of stylesheets.
     
     '''
     # !!! styleSheet() also a method of Qt QGV
     
-    styleResourceManager.setStyleQmlResourceRoot(resourceRoot)
+    # if QML is being used, will access global singleton resourceMgr
     
     # assert translator installed
     # create singletons requiring translation

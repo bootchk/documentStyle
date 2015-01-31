@@ -21,11 +21,13 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 
+from qtEmbeddedQmlFramework.resourceManager import resourceMgr
+
 from documentStyle.styleSheetCascadion import StyleSheetCascadion
 from documentStyle.styleable import Styleable
 from documentStyle.styler.toolStyler import ToolStyler
 
-#import documentStyle.config as config
+import documentStyle.config as config
 
 mainWindow = None   # global
 
@@ -284,9 +286,20 @@ class App(QApplication):
     mainWindow.show()
     self.mainWindow = mainWindow
     
-    resourceRoot = QFileInfo(__file__).absolutePath() + '/documentStyle'
+    if config.useQML:
+      """
+      qtEmbeddedQmlFramework knows how to locate qml resources, even if embedded.
+      
+      Alternative old code:
+      
+      resourceRoot = QFileInfo(__file__).absolutePath() + '/documentStyle'
+      self.cascadion = StyleSheetCascadion(resourceRoot=resourceRoot)
+      """
+      resourceMgr.setResourceRoot(fileMainWasLoadedFrom=__file__, appPackageName='documentStyle')
+      # cacadion might use global resourceMgr, but it is not passed.
+      
+    self.cascadion = StyleSheetCascadion()
     
-    self.cascadion = StyleSheetCascadion(resourceRoot=resourceRoot)
     self.cascadion.preGui(parentWindow=mainWindow)
     mainWindow.newToolStyler()  # depends on cascadion
     self.documentView = mainWindow.newDocument()  # depends on cascadion

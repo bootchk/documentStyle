@@ -3,6 +3,7 @@
 	<name>documentStyle</name>
 	<comment></comment>
 	<projects>
+		<project>qtEmbeddedQmlFramework</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
