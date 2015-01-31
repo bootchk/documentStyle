@@ -7,7 +7,6 @@ Note findChild was broken until recently, see PyQt mail list report.
 result = qmlRoot.findChild(model.person.Person, "person")
 '''
 from PyQt5.QtCore import qWarning, QObject
-from PyQt5.QtGui import QGuiApplication
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtQuick import QQuickItem, QQuickView
 from PyQt5.QtQml import QQmlProperty
@@ -102,9 +101,9 @@ class QmlMaster(object):
     '''
     result = QQuickView()
     result.statusChanged.connect(self.onStatusChanged)
-    if transientParent is not None:
-      print("transientParent is:", transientParent, transientParent.isTopLevel())
-      result.setTransientParent(transientParent)
+    assert transientParent is not None
+    print("transientParent is:", transientParent, transientParent.isTopLevel())
+    result.setTransientParent(transientParent)
     assert result is not None
     assert isinstance(result, QQuickView)
     return result
@@ -170,26 +169,6 @@ class QmlMaster(object):
     print("Position of widgetForQML", str(result.pos()), result.pos().x(), result.pos().y())
     result.move(200,200)
     print("Position of widgetForQML", str(result.pos()), result.pos().x(), result.pos().y())
-    return result
-  
-  
-  def appQWindow(self):
-    '''
-    QWindow of app, or None.
-    
-    Needed to transientParent a QQuickView to app QWindow.
-    '''
-    qwinList = QGuiApplication.topLevelWindows()
-    print("window count", len(qwinList))
-    print("topLevelWindows():")
-    for win in qwinList:
-      print("window: ", win)
-    
-    if len(qwinList)==1:
-      result = qwinList[0]
-    else:
-      print("Fail to find single QWindow for app.")
-      result = None
     return result
     
     

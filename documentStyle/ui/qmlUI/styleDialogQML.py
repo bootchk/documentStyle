@@ -7,7 +7,7 @@ This is free software, covered by the GNU General Public License.
 from PyQt5.QtCore import QObject  # , QUrl
 from PyQt5.QtCore import pyqtSignal as Signal
 
-from qtEmbeddedQmlFramework.resourceManager import resourceMgr
+from qtEmbeddedQmlFramework.windowManager import windowMgr
 
 from documentStyle.ui.qmlUI.qmlMaster import QmlMaster
 from documentStyle.ui.qmlUI.qmlDelegate import QmlDelegate
@@ -44,11 +44,8 @@ class StyleSheetDialogQML(QObject):
     I.E. prefix identifies a member of a kind of style sheet: where kinds are [full, documenElement, tool]
     '''
     qmlSubpath = "style/styleSheets/"+prefix+"stylesheet.qml"  # e.g. Userstylesheet.qml
-    # resourceMgr.styleQmlSubpath() + 
     
     qmlMaster = QmlMaster()
-    qwin = qmlMaster.appQWindow()
-    
     '''
     Order is important: create quickView, setContext, setSource, findComponent
     setContext defines names referred to in the source
@@ -56,7 +53,7 @@ class StyleSheetDialogQML(QObject):
     
     Note each .qml file has a DialogDelegate, all with same objectName "dialogDelegate" but separate instances.
     '''
-    self.styleQuickView = qmlMaster.createQuickView(transientParent=qwin)
+    self.styleQuickView = qmlMaster.createQuickView(transientParent=windowMgr.getRootWindow())
     self.exposeFormationModelToQML(view=self.styleQuickView, editedFormation=formation, prefix=prefix)
     # OLD self.styleQuickView = qmlMaster.quickViewForQML(qmlFilename, transientParent=qwin)
     qmlMaster.setSourceOnQuickView(view=self.styleQuickView, qmlSubpath=qmlSubpath)

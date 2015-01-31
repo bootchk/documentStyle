@@ -22,6 +22,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 
 from qtEmbeddedQmlFramework.resourceManager import resourceMgr
+from qtEmbeddedQmlFramework.windowManager import windowMgr
 
 from documentStyle.styleSheetCascadion import StyleSheetCascadion
 from documentStyle.styleable import Styleable
@@ -287,6 +288,8 @@ class App(QApplication):
     self.mainWindow = mainWindow
     
     if config.useQML:
+      windowMgr.findRootWindow()  # needed as parent of QQuickViews
+      
       """
       qtEmbeddedQmlFramework knows how to locate qml resources, even if embedded.
       
