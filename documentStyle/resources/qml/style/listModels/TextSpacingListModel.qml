@@ -1,4 +1,4 @@
-import QtQuick 2.3
+import QtQuick 2.4
 
 // model for brush pattern (style)
 // No corresponding model in Qt enums?

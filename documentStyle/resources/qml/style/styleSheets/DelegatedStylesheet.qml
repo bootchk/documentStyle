@@ -4,7 +4,7 @@ QML for stylesheet editor.
 This is outer shell with delegate and connections.
 */
 
-import QtQuick 2.3
+import QtQuick 2.4
 
 import QmlDelegate 1.0
 import "../dialogs" as MyDialogs

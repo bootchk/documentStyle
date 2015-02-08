@@ -1,4 +1,4 @@
-import QtQuick 2.3
+import QtQuick 2.4
 
 // model for brush pattern (style)
 // Must correspond to Qt.AlignmentFlag 1,2,4,8

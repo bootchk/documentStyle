@@ -1,4 +1,4 @@
-import QtQuick 2.3
+import QtQuick 2.4
 
 // model for pen pattern (style)
 // Must correspond to Qt.PenStyle

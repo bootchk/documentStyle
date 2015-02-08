@@ -8,7 +8,7 @@ Other notes:
 */
 
 
-import QtQuick 2.3
+import QtQuick 2.4
 
 import "../styleSheets" as MyStylesheets
 
